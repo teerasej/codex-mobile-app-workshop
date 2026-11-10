@@ -1,0 +1,67 @@
+ :root {
+  --vp-font-family-base: 'Noto Sans Thai', system-ui, sans-serif;
+  --vp-c-brand-1: #11786b;
+  --vp-c-brand-2: #159384;
+  --vp-c-brand-3: #11786b;
+  --vp-c-brand-soft: rgba(17,120,107,.12);
+  --vp-home-hero-name-color: #11786b;
+  --vp-c-bg: #fffefb;
+  --vp-c-bg-alt: #f5f6f3;
+  --vp-c-bg-soft: #f2f5f1;
+}
+.dark { --vp-c-brand-1: #61cabb; --vp-c-brand-2: #83dacd; --vp-c-brand-3: #1c8b7e; --vp-home-hero-name-color: #61cabb; --vp-c-bg: #171e20; --vp-c-bg-alt: #11191b; --vp-c-bg-soft: #202c2e; }
+.VPHero .text { white-space: pre-line; line-height: 1.32 !important; max-width: 900px !important; }
+.VPHero .name { line-height: 1.35 !important; }
+.VPHero .tagline { line-height: 1.8 !important; max-width: 750px !important; font-size: 20px !important; }
+.VPHero .main { max-width: 100%; }
+.VPHero { background: radial-gradient(ellipse at 86% 20%, rgba(38,155,134,.10), transparent 55%); }
+.VPNavBarTitle .title { font-size: 15px; }
+.vp-doc { line-height: 1.95; }
+.vp-doc h1 { line-height: 1.55; }
+.vp-doc h2, .vp-doc h3 { line-height: 1.65; }
+.vp-doc p, .vp-doc li { line-height: 1.95; }
+.vp-doc table { width: 100%; }
+.vp-doc th, .vp-doc td { min-width: 110px; line-height: 1.8; }
+.vp-doc blockquote { border-color: var(--vp-c-brand-1); }
+.vp-doc div[class*='language-'] pre { line-height: 1.75; }
+.course-diagram { overflow-x: auto; padding: 16px 0; }
+.course-diagram svg { width: 530px; min-width: 530px; max-width: none !important; }
+.journey-section { max-width: 1280px; margin: 16px auto 0; padding: 0 64px; }
+.journey-heading { margin-bottom: 28px; }
+.eyebrow { font-size: 12px; letter-spacing: .14em; color: var(--vp-c-brand-1); font-weight: 700; }
+.journey-heading h2 { font-size: 28px; line-height: 1.6; margin: 10px 0 8px; font-weight: 600; }
+.journey-heading p { color: var(--vp-c-text-2); }
+.journey-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.day-card { display: flex; flex-direction: column; border: 1px solid var(--vp-c-divider); border-radius: 16px; padding: 24px 20px; background: var(--vp-c-bg-soft); transition: border-color .2s, transform .2s; }
+.day-card:hover { border-color: var(--vp-c-brand-1); transform: translateY(-3px); }
+.day-card:focus-visible { outline: 3px solid var(--vp-c-brand-1); outline-offset: 4px; }
+.day-top { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+.day-number { font-size: 11px; letter-spacing: .08em; font-weight: 700; border: 1px solid var(--vp-c-divider); padding: 3px 8px; border-radius: 6px; }
+.day-tech { font-size: 14px; font-weight: 700; color: var(--vp-c-brand-1); }
+.day-card h3 { font-size: 18px; font-weight: 600; line-height: 1.65; margin-bottom: 12px; }
+.day-card p { font-size: 14px; line-height: 1.9; color: var(--vp-c-text-2); margin-bottom: 22px; }
+.day-result { font-size: 12px; line-height: 1.9; border-top: 1px solid var(--vp-c-divider); padding-top: 15px; margin-top: auto; display: flex; justify-content: space-between; gap: 8px; }
+.home-content { max-width: 1152px; margin: 48px auto 64px; padding: 0 24px; }
+.home-content h2 { margin-top: 36px; }
+.download-list { display: grid; gap: 10px; }
+.download-list a { border: 1px solid var(--vp-c-divider); border-radius: 8px; padding: 12px 16px; display: flex; justify-content: space-between; gap: 12px; text-decoration: none; flex-wrap: wrap; }
+.download-list a span:first-child { overflow-wrap: anywhere; }
+.download-label { font-size: 12px; white-space: nowrap; }
+.file-download a { border: 1px solid var(--vp-c-brand-1); border-radius: 8px; padding: 8px 12px; display: inline-block; font-size: 14px; overflow-wrap: anywhere; }
+@media (max-width: 1100px) { .journey-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 639px) { .journey-section { padding: 0 24px; } .journey-grid { grid-template-columns: 1fr; } .journey-heading h2 { font-size: 24px; } .VPHero .tagline { font-size: 17px !important; } .home-content { padding: 0 24px; margin-top: 36px; } }
+@media (prefers-reduced-motion: reduce) { .day-card { transition: none; } .day-card:hover { transform: none; } }
+/* Course cards are whole-card links; keep their text readable as card content. */
+.vp-doc a.day-card { text-decoration: none; color: var(--vp-c-text-1); }
+.markdown-comparison { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; margin: 20px 0; }
+.markdown-comparison > div { min-width: 0; }
+@media (max-width: 1100px) { .markdown-comparison { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 360px) {
+  .VPNavBar .container > .title { min-width: 0; flex-shrink: 1; }
+  .VPNavBarTitle { min-width: 0; flex-shrink: 1; }
+  .VPNavBarTitle .title { min-width: 0; }
+  .VPNavBarTitle .title span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+.vp-doc .day-card h3 { margin: 0 0 12px; padding: 0; border: 0; }
+.vp-doc .day-card p { margin: 0 0 22px; }
+.vp-doc .journey-heading h2 { margin: 10px 0 8px; padding: 0; border: 0; }

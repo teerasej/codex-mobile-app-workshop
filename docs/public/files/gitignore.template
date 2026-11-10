@@ -1,0 +1,21 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.local/
+*.log
+client/.dart_tool/
+client/build/
+client/.flutter-plugins-dependencies
+client/android/local.properties
+client/android/key.properties
+*.jks
+*.keystore
+
+# Private instructor/student credential exports stay outside this repository.
+student-*.zip
+instructor-handoff-*.xlsx

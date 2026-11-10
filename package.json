@@ -1,0 +1,27 @@
+{
+  "name": "codex-mobile-app-workshop",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "npm run docs:dev",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "check:content": "python3 scripts/check_content.py"
+  },
+  "engines": {
+    "node": ">=24 <26"
+  },
+  "devDependencies": {
+    "vitepress": "1.6.4",
+    "vitepress-plugin-mermaid": "2.0.17",
+    "mermaid": "11.17.2",
+    "@fontsource/noto-sans-thai": "5.3.0"
+  },
+  "overrides": {
+    "vite": "6.4.6",
+    "katex": "0.18.2",
+    "dompurify": "3.4.17"
+  }
+}

@@ -1,0 +1,66 @@
+# Copy to .github/workflows/deploy-api.yml only in the learner repository on Day 4.
+# Reuse the assigned resource group, pipeline identity and pull identity.
+# Preview then Prepare deployment access before private-image deployment; check Day 4 resources after.
+# Trust the exact GitHub-confirmed main-branch subject; new repos include immutable owner/repo IDs.
+# Never guess a legacy name-only subject or change GitHub OIDC settings to bypass a mismatch.
+# Requires an existing Container App/ACR and the assigned pipeline/pull identities.
+name: Deploy training API
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: training-api-deploy
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      ACR_NAME: ${{ vars.ACR_NAME }}
+      RESOURCE_GROUP: ${{ vars.RESOURCE_GROUP }}
+      CONTAINER_APP_NAME: ${{ vars.CONTAINER_APP_NAME }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test API without Azure database access
+        run: |
+          python -m pip install -r api/requirements.lock.txt
+          python -m pytest api/tests -q
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Build immutable image and update existing app
+        shell: bash
+        run: |
+          set -euo pipefail
+          az extension add --name containerapp --upgrade
+          registry=$(az acr show --name "$ACR_NAME" --query loginServer -o tsv)
+          image="$registry/service-desk-api:${GITHUB_SHA}"
+          az acr build --registry "$ACR_NAME" --image "service-desk-api:${GITHUB_SHA}" --file api/Dockerfile .
+          az containerapp update --name "$CONTAINER_APP_NAME" --resource-group "$RESOURCE_GROUP" --image "$image" --cpu 0.25 --memory 0.5Gi --min-replicas 0 --max-replicas 1 --set-env-vars APP_VERSION="${GITHUB_SHA}" --output none
+          fqdn=$(az containerapp show --name "$CONTAINER_APP_NAME" --resource-group "$RESOURCE_GROUP" --query properties.configuration.ingress.fqdn -o tsv)
+          export SDL_API_ORIGIN="https://$fqdn"
+          python - <<'PYTHON'
+          import json, os, time
+          from urllib.error import HTTPError, URLError
+          from urllib.request import urlopen
+          expected = os.environ["GITHUB_SHA"]
+          for attempt in range(18):
+              try:
+                  with urlopen(os.environ["SDL_API_ORIGIN"] + "/health", timeout=15) as response:
+                      health = json.load(response)
+                      if response.status == 200 and health.get("status") == "ok" and health.get("version") == expected:
+                          print("PASS: deployed API health matches the workflow commit.")
+                          break
+              except (HTTPError, URLError, TimeoutError, ValueError):
+                  pass
+              if attempt == 17:
+                  raise SystemExit("FAIL: expected API version was not ready; inspect revision/image/config without exposing secrets.")
+              time.sleep(5)
+          PYTHON
