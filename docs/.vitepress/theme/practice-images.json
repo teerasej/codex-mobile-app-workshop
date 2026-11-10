@@ -1,0 +1,699 @@
+{
+  "d01-e01-p01": {
+    "alt": "แว่นขยายตรวจเอกสารในแฟ้มโปรเจค",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d01-e01-p01-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d01-e01-p01-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d01-e01-p02": {
+    "alt": "แฟ้มเอกสารถูกเก็บเป็นสำเนาในกล่องที่มีเครื่องหมายตรวจแล้ว",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d01-e01-p02-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d01-e01-p02-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d01-e02-p01": {
+    "alt": "สะพานเชื่อมแฟ้มในเครื่องกับตู้เก็บงานปลายทาง",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d01-e02-p01-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d01-e02-p01-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d01-e02-p02": {
+    "alt": "ดินสอแก้เอกสารหนึ่งแผ่นบนถาดงานที่แยกออกมา",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d01-e02-p02-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d01-e02-p02-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d01-e02-p03": {
+    "alt": "ตรวจเอกสารก่อนรวมเข้ากับแฟ้มหลัก",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d01-e02-p03-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d01-e02-p03-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d01-e03-p01": {
+    "alt": "ดินสอสองแท่งแก้เอกสารตรงจุดเดียวกัน",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d01-e03-p01-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d01-e03-p01-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d01-e03-p02": {
+    "alt": "เลือกส่วนที่เข้ากันได้จากเอกสารสองทางมารวมเป็นฉบับเดียว",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d01-e03-p02-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d01-e03-p02-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d01-e04-p01": {
+    "alt": "กรอบขอบเขตและรายการตรวจวางคู่กับแฟ้มโปรเจค",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d01-e04-p01-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d01-e04-p01-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d01-e04-p02": {
+    "alt": "บัตรงานเรียงเป็นขั้นจากแฟ้มโปรเจคไปยังเคาน์เตอร์บริการ",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d01-e04-p02-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d01-e04-p02-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d02-e01-p01": {
+    "alt": "จัดชิ้นข้อมูลให้เป็นกล่องที่มีช่องเป็นระเบียบ",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d02-e01-p01-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d02-e01-p01-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d02-e01-p02": {
+    "alt": "ซองคำขอและซองตอบกลับที่ช่องบริการ",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d02-e01-p02-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d02-e01-p02-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d02-e02-p01": {
+    "alt": "เคาน์เตอร์รับใบงานใหม่และค้นหาใบงานที่เก็บไว้",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d02-e02-p01-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d02-e02-p01-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d02-e02-p02": {
+    "alt": "ช่องตรวจรับชิ้นข้อมูลที่เข้ารูปและกันชิ้นที่ไม่ตรงเกณฑ์ไว้",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d02-e02-p02-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d02-e02-p02-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d02-e03-p01": {
+    "alt": "ใส่ข้อมูลตัวอย่างในที่เก็บสำหรับฝึกแยกจากแฟ้มเดิม",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d02-e03-p01-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d02-e03-p01-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d02-e03-p02": {
+    "alt": "ใบงานยังอยู่ในตู้เก็บแม้โคมของเคาน์เตอร์บริการเปิดใหม่",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d02-e03-p02-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d02-e03-p02-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d02-e04-p01": {
+    "alt": "กุญแจประจำตัวเปิดได้เฉพาะลิ้นชักใบงานของเจ้าของ",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d02-e04-p01-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d02-e04-p01-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d02-e04-p02": {
+    "alt": "แท่นทดสอบแยกชิ้นส่วนที่มีรอยผิดปกติออกจากชิ้นที่ผ่าน",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d02-e04-p02-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d02-e04-p02-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d03-e01-p01": {
+    "alt": "บัตรข้อมูลถูกจัดเป็นกล่องวัตถุที่มีช่องว่างรองรับข้อมูลที่ไม่มี",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d03-e01-p01-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d03-e01-p01-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d03-e01-p02": {
+    "alt": "ประกอบบล็อกใบงานเป็นรายการภายในกรอบโทรศัพท์",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d03-e01-p02-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d03-e01-p02-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d03-e02-p01": {
+    "alt": "เปิดดูใบงานหนึ่งใบจากรายการพร้อมเส้นทางกลับ",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d03-e02-p01-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d03-e02-p01-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d03-e02-p02": {
+    "alt": "ตัวเลือกกรองบัตรที่แสดงโดยเก็บชุดข้อมูลเต็มไว้",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d03-e02-p02-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d03-e02-p02-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d03-e03-p01": {
+    "alt": "กุญแจประจำตัวเปิดรายการใบงานของตนข้างโทรศัพท์",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d03-e03-p01-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d03-e03-p01-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d03-e03-p02": {
+    "alt": "ส่งใบงานจากโทรศัพท์และรับใบงานที่อัปเดตความคืบหน้ากลับมา",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d03-e03-p02-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d03-e03-p02-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d03-e03-p03": {
+    "alt": "นาฬิกาทราย ถาดว่าง และปลั๊กหลุดแสดงสถานะที่ต่างกัน",
+    "width": 1672,
+    "height": 941,
+    "sources": [
+      {
+        "url": "/images/practices/d03-e03-p03-768.webp",
+        "width": 768,
+        "height": 432
+      },
+      {
+        "url": "/images/practices/d03-e03-p03-1536.webp",
+        "width": 1536,
+        "height": 864
+      }
+    ]
+  },
+  "d03-e04-p01": {
+    "alt": "อะแดปเตอร์เชื่อมโทรศัพท์กับหนังสือคู่มือที่เปิดอยู่",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d03-e04-p01-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d03-e04-p01-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d03-e04-p02": {
+    "alt": "นำชุดแอปที่ประกอบแล้วใส่โทรศัพท์บนแท่นทดสอบ",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d03-e04-p02-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d03-e04-p02-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d04-e01-p01": {
+    "alt": "ตรวจใบประกอบงานก่อนบรรจุชิ้นส่วนลงกล่อง",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d04-e01-p01-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d04-e01-p01-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d04-e01-p02": {
+    "alt": "กล่องแอปวางทำงานบนแท่นในเครื่อง",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d04-e01-p02-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d04-e01-p02-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d04-e02-p01": {
+    "alt": "ส่งกล่องแอปจากโต๊ะเตรียมงานไปยังชั้นเก็บปลายทาง",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d04-e02-p01-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d04-e02-p01-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d04-e02-p02": {
+    "alt": "แท่น cloud ใช้กุญแจสิทธิ์หยิบกล่องแอปจากชั้นเก็บ",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d04-e02-p02-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d04-e02-p02-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d04-e02-p03": {
+    "alt": "ตู้ลับเชื่อมบริการ cloud ที่เปิดช่องให้เรียกใช้งาน",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d04-e02-p03-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d04-e02-p03-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d04-e03-p01": {
+    "alt": "บัตรผ่านชั่วคราวเชื่อมสายงานอัตโนมัติกับประตู cloud",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d04-e03-p01-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d04-e03-p01-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d04-e03-p02": {
+    "alt": "งานที่ตรวจแล้วผ่านสายส่งเป็นกล่องแอปบน cloud",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d04-e03-p02-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d04-e03-p02-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d04-e04-p01": {
+    "alt": "โทรศัพท์เชื่อมใบงานกับ cloud ผ่านเส้นทางที่มีกุญแจป้องกัน",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d04-e04-p01-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d04-e04-p01-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d04-e04-p02": {
+    "alt": "ตรวจม้วนบันทึกเหตุการณ์ข้างกล่องแอปสองรุ่น",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d04-e04-p02-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d04-e04-p02-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d04-e04-p03": {
+    "alt": "ส่งแฟ้มหลักฐานพร้อมปิดอุปกรณ์ฝึกที่ไม่ใช้งาน",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d04-e04-p03-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d04-e04-p03-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d03-e04-p03": {
+    "alt": "จอคอมพิวเตอร์แสดงโทรศัพท์จำลองที่ใช้ใบงานจากโปรเจคเดิม",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d03-e04-p03-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d03-e04-p03-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d01-e01-markdown": {
+    "alt": "สมุดสูตรอาหารต้นฉบับและบัตรสูตรที่จัดหัวข้อกับรายการให้อ่านง่าย เปรียบเทียบกับ Markdown และ Preview",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d01-e01-markdown-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d01-e01-markdown-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d01-e01-readme-commit": {
+    "alt": "ผู้เรียนตรวจเอกสารที่แก้ไขก่อนเก็บฉบับใหม่ลงกล่อง",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d01-e01-readme-commit-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d01-e01-readme-commit-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d01-e01-git-history": {
+    "alt": "ผู้เรียนเปรียบเทียบเอกสารสามฉบับตามลำดับพร้อมป้ายผู้บันทึก",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d01-e01-git-history-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d01-e01-git-history-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  },
+  "d01-e02-push-verify": {
+    "alt": "ส่งสำเนาเอกสารจากแฟ้มบนโต๊ะไปตู้ปลายทางแล้วตรวจว่าเหมือนกัน",
+    "width": 1536,
+    "height": 1024,
+    "sources": [
+      {
+        "url": "/images/practices/d01-e02-push-verify-768.webp",
+        "width": 768,
+        "height": 512
+      },
+      {
+        "url": "/images/practices/d01-e02-push-verify-1536.webp",
+        "width": 1536,
+        "height": 1024
+      }
+    ]
+  }
+}

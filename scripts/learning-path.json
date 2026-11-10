@@ -1,0 +1,98 @@
+[
+  {
+    "day": 1,
+    "slug": "day-01-git",
+    "name": "Git",
+    "title": "Day 1 — วางInstructionก่อนสร้าง: ทำงานกับ AI อย่างตรวจสอบได้",
+    "exercises": [
+      {
+        "text": "1. เปิดโปรเจคและเก็บภาพแรก",
+        "link": "/exercises/day-01-git/exercise-01"
+      },
+      {
+        "text": "2. เปลี่ยนข้อความผ่าน branch และ PR",
+        "link": "/exercises/day-01-git/exercise-02"
+      },
+      {
+        "text": "3. รวมงานที่แก้บรรทัดเดียวกัน",
+        "link": "/exercises/day-01-git/exercise-03"
+      },
+      {
+        "text": "4. กำหนดวิธีร่วมงานกับ Codex",
+        "link": "/exercises/day-01-git/exercise-04"
+      }
+    ]
+  },
+  {
+    "day": 2,
+    "slug": "day-02-api",
+    "name": "Python API",
+    "title": "Day 2 — เปลี่ยนแบบฟอร์มให้เป็นบริการข้อมูล",
+    "exercises": [
+      {
+        "text": "1. Python bridge และ API แรก",
+        "link": "/exercises/day-02-api/exercise-01"
+      },
+      {
+        "text": "2. Route, model และ validation",
+        "link": "/exercises/day-02-api/exercise-02"
+      },
+      {
+        "text": "3. เก็บข้อมูลลง PostgreSQL",
+        "link": "/exercises/day-02-api/exercise-03"
+      },
+      {
+        "text": "4. Login, ownership และ tests",
+        "link": "/exercises/day-02-api/exercise-04"
+      }
+    ]
+  },
+  {
+    "day": 3,
+    "slug": "day-03-flutter",
+    "name": "Flutter",
+    "title": "Day 3 — นำบริการมาอยู่ในมือผู้ใช้",
+    "exercises": [
+      {
+        "text": "1. Dart และหน้าจอแรก",
+        "link": "/exercises/day-03-flutter/exercise-01"
+      },
+      {
+        "text": "2. Navigation และ State",
+        "link": "/exercises/day-03-flutter/exercise-02"
+      },
+      {
+        "text": "3. เชื่อม API กับงานของผู้ใช้",
+        "link": "/exercises/day-03-flutter/exercise-03"
+      },
+      {
+        "text": "4. Native plugin และ mobile build",
+        "link": "/exercises/day-03-flutter/exercise-04"
+      }
+    ]
+  },
+  {
+    "day": 4,
+    "slug": "day-04-azure",
+    "name": "Azure",
+    "title": "Day 4 — ย้ายเคาน์เตอร์ไปเปิดบน Cloud",
+    "exercises": [
+      {
+        "text": "1. แพ็กและทดสอบ container",
+        "link": "/exercises/day-04-azure/exercise-01"
+      },
+      {
+        "text": "2. เปิด API บน Azure",
+        "link": "/exercises/day-04-azure/exercise-02"
+      },
+      {
+        "text": "3. Deploy จาก GitHub",
+        "link": "/exercises/day-04-azure/exercise-03"
+      },
+      {
+        "text": "4. เชื่อม Android และดูแลรุ่นที่ใช้งาน",
+        "link": "/exercises/day-04-azure/exercise-04"
+      }
+    ]
+  }
+]
