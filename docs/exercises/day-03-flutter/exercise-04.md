@@ -67,7 +67,7 @@ next: {"text": "สรุปท้ายวัน", "link": "/exercises/day-03-f
    ~~~
 
    adb reverse ส่ง port ของ Android กลับมาที่ laptop จึงไม่ต้องใช้ IP Wi-Fi ของคนอื่น. ต้องรันใหม่ถ้าการเชื่อมต่อถูก reset
-4. Login จาก Android, สร้างคำขอชื่อ **ทดสอบจาก Android** และตรวจใน /docs. กดปุ่มคู่มือด้วย
+4. Login จาก Android, สร้าง Request ชื่อ **ทดสอบจาก Android** และตรวจใน /docs. กดปุ่มคู่มือด้วย
 5. หยุด flutter run แล้วรัน:
 
    ~~~shell
@@ -116,7 +116,7 @@ next: {"text": "สรุปท้ายวัน", "link": "/exercises/day-03-f
    ~~~
 
    iOS Simulator ติดต่อ API บน Mac เครื่องนี้ผ่าน loopback ได้ จึงไม่ใช้ `adb reverse` ของ Android
-4. Sign in ด้วยบัญชีทดลองเดิม สร้างคำขอโดยกรอก **Title** ดังนี้ พร้อมรายละเอียดอย่างน้อย 10 ตัวอักษร:
+4. Sign in ด้วยบัญชีทดลองเดิม สร้าง Request โดยกรอก **Title** ดังนี้ พร้อมรายละเอียดอย่างน้อย 10 ตัวอักษร:
 
    ~~~text
    ทดสอบจาก iPhone Simulator

@@ -152,6 +152,23 @@
       }
     ]
   },
+  "d02-e01-postgres-check": {
+    "alt": "แว่นขยายตรวจเส้นเชื่อมระหว่างแล็ปท็อปกับฐานข้อมูล",
+    "width": 1752,
+    "height": 897,
+    "sources": [
+      {
+        "url": "/images/practices/d02-e01-postgres-check-768.webp",
+        "width": 768,
+        "height": 393
+      },
+      {
+        "url": "/images/practices/d02-e01-postgres-check-1536.webp",
+        "width": 1536,
+        "height": 786
+      }
+    ]
+  },
   "d02-e01-p01": {
     "alt": "จัดชิ้นข้อมูลให้เป็นกล่องที่มีช่องเป็นระเบียบ",
     "width": 1536,
@@ -170,7 +187,7 @@
     ]
   },
   "d02-e01-p02": {
-    "alt": "ซองคำขอและซองตอบกลับที่ช่องบริการ",
+    "alt": "ซอง Request และซองตอบกลับที่ช่องบริการ",
     "width": 1536,
     "height": 1024,
     "sources": [
@@ -215,23 +232,6 @@
       },
       {
         "url": "/images/practices/d02-e02-p02-1536.webp",
-        "width": 1536,
-        "height": 1024
-      }
-    ]
-  },
-  "d02-e03-p01": {
-    "alt": "ใส่ข้อมูลตัวอย่างในที่เก็บสำหรับฝึกแยกจากแฟ้มเดิม",
-    "width": 1536,
-    "height": 1024,
-    "sources": [
-      {
-        "url": "/images/practices/d02-e03-p01-768.webp",
-        "width": 768,
-        "height": 512
-      },
-      {
-        "url": "/images/practices/d02-e03-p01-1536.webp",
         "width": 1536,
         "height": 1024
       }

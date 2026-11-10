@@ -26,7 +26,7 @@ next: {"text": "ไป Day 4", "link": "/exercises/day-04-azure/"}
 
 ช่องที่ยังไม่ผ่านให้บันทึกตามจริง พร้อมสาเหตุและสิ่งที่ต้องทำต่อ ไม่เปลี่ยนเป็น “ผ่าน” เพียงเพราะ Codex รายงานว่างานเสร็จ
 
-**หลักฐานเสริม iOS (Optional):** ถ้าได้ทำ ให้เก็บผล Sign in/สร้างคำขอ/ปุ่มคู่มือบน iPhone Simulator, UUID ที่ตรวจเทียบกับ API และ `.app` path. ถ้าข้ามหรือเครื่องไม่พร้อม ให้บันทึก optional pending โดยไม่กระทบ checkpoint หลักและไม่ใช้แทน Android
+**หลักฐานเสริม iOS (Optional):** ถ้าได้ทำ ให้เก็บผล Sign in/สร้าง Request /ปุ่มคู่มือบน iPhone Simulator, UUID ที่ตรวจเทียบกับ API และ `.app` path. ถ้าข้ามหรือเครื่องไม่พร้อม ให้บันทึก optional pending โดยไม่กระทบ checkpoint หลักและไม่ใช้แทน Android
 
 ## สิ่งที่เก็บไว้ใช้ต่อ
 

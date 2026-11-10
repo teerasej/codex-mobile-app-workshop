@@ -20,7 +20,7 @@ API เปิดแล้ว เราต้องพิสูจน์จาก
 
 <PracticeIllustration asset="d04-e04-p01" eager />
 
-**Primary target:** ส่งคำขอจาก Android ไปถึง API บน Azure ได้
+**Primary target:** ส่ง Request จาก Android ไปถึง API บน Azure ได้
 
 ### Steps
 
@@ -30,7 +30,7 @@ API เปิดแล้ว เราต้องพิสูจน์จาก
    ~~~shell
    flutter run -d chrome --web-hostname localhost --web-port 3000 --dart-define=API_BASE_URL=https://<APP_FQDN>
    ~~~
-3. Login และสร้างคำขอหนึ่งรายการ. ถ้า browser CORS ล้ม ตรวจ origin localhost:3000 กับค่าใน Container App; อย่าใส่ API URL เป็น allowed frontend origin
+3. Login และสร้าง Request หนึ่งรายการ. ถ้า browser CORS ล้ม ตรวจ origin localhost:3000 กับค่าใน Container App; อย่าใส่ API URL เป็น allowed frontend origin
 4. หยุด browser previewแล้วรัน Android และ build APK ใหม่:
 
    ~~~shell
@@ -39,10 +39,10 @@ API เปิดแล้ว เราต้องพิสูจน์จาก
    ~~~
 
    ให้จบ flutter run ก่อนสั่ง build. Android HTTPS path นี้ไม่ต้องใช้ adb reverse
-5. ใส่รหัสผ่านเอง สร้าง **คำขอจาก Android บน Cloud** และตรวจ UUID/status ใน /docs. Logout/login ใหม่ต้องพบรายการเดิม
+5. ใส่รหัสผ่านเอง สร้าง **Request จาก Android บน Cloud** และตรวจ UUID/status ใน /docs. Logout/login ใหม่ต้องพบรายการเดิม
 6. บันทึก APK path และ API host ที่ build ใช้. APK debug นี้สำหรับฝึก ไม่ใช่ signed release หรือ store publication
 
-**Checkpoint:** local API ปิดอยู่ แต่ Android ยังสร้าง/อ่านคำขอได้ผ่าน HTTPS
+**Checkpoint:** local API ปิดอยู่ แต่ Android ยังสร้าง/อ่าน Request ได้ผ่าน HTTPS
 
 ## Practice 2 — อ่าน Log และ Revision เพื่อตรวจปัญหา
 

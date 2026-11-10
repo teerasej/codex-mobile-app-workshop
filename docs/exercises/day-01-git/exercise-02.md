@@ -122,7 +122,7 @@ next: {"text": "Exercise 3", "link": "/exercises/day-01-git/exercise-03"}
    ```text
    สร้าง branch `feature/receipt-message` ใหม่ก่อนแก้ไข
    แก้เฉพาะบรรทัดข้อความยืนยันใน docs/project-brief.md
-   จาก “ข้อความยืนยัน: รับคำขอแล้ว” เป็น “ข้อความยืนยัน: รับคำขอแล้ว ขอบคุณครับ”
+   จาก “ข้อความยืนยัน: รับ Request แล้ว” เป็น “ข้อความยืนยัน: รับ Request แล้ว ขอบคุณครับ”
    ```
 2. เปิด diff และตรวจว่ามีการแก้ไขหนึ่งบรรทัดตามที่ขอ
 3. ให้ commit ด้วย
@@ -141,8 +141,8 @@ next: {"text": "Exercise 3", "link": "/exercises/day-01-git/exercise-03"}
 
 
 6. ตรวจผลที่ Codex แสดง:
-   - บน `main` ต้องเป็น “ข้อความยืนยัน: รับคำขอแล้ว”
-   - บน `feature/receipt-message` ต้องเป็น “ข้อความยืนยัน: รับคำขอแล้ว ขอบคุณครับ”
+   - บน `main` ต้องเป็น “ข้อความยืนยัน: รับ Request แล้ว”
+   - บน `feature/receipt-message` ต้องเป็น “ข้อความยืนยัน: รับ Request แล้ว ขอบคุณครับ”
 7. (ไม่บังคับ) เปิดไฟล์ `docs/project-brief.md` ในโปรแกรมแก้ไขของตน สลับ branch ผ่าน Codex อีกครั้ง แล้วสังเกตว่าเนื้อหาไฟล์เปลี่ยนตาม branch
 
 **Checkpoint:** main ยังไม่เปลี่ยน และ branch มี diff เฉพาะเรื่องที่ตั้งใจ

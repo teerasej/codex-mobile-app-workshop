@@ -6,7 +6,6 @@ next: {"text": "ไป Day 2", "link": "/exercises/day-02-api/"}
 
 # สรุป Day 1 — Git
 
-> ใช้ช่วงสรุปในเวลา 14:45–16:00 ของวันนี้ ไม่เพิ่มเวลาเรียนหรือการบ้านบังคับ
 
 ## ใจความสำคัญ
 
@@ -17,7 +16,7 @@ next: {"text": "ไป Day 2", "link": "/exercises/day-02-api/"}
 - Merge conflict ต้องตัดสินใจจากความหมายของงาน ไม่ใช่ลบข้อความเพื่อให้ error หาย
 - AGENTS.md และ prompt ที่มีขอบเขตช่วยให้ Codex ทำทีละส่วน; ผู้เรียนยังเป็นคนตรวจและตัดสินใจ
 
-## ก่อนจบวัน ตรวจหลักฐาน
+## ก่อนจบวัน
 
 - ☐ มี Workshop notes ใน README ที่แก้เอง แสดงผลและเปิดลิงก์ Project brief บน GitHub ได้ พร้อมอธิบาย syntax หนึ่งอย่าง
 
@@ -36,7 +35,7 @@ next: {"text": "ไป Day 2", "link": "/exercises/day-02-api/"}
 
 เก็บ password/token/connection string ในช่องทางส่วนตัว ไม่ใส่ใน review log หรือ repository
 
-## Day 2 — เปลี่ยนInstructionเป็นบริการข้อมูล
+## Day 2 — เปลี่ยน Instruction เป็นบริการข้อมูล
 
 เหมือนจัดแฟ้มและInstructionที่เคาน์เตอร์พร้อมแล้ว พรุ่งนี้เราจะเพิ่มพนักงานรับเรื่อง: FastAPI ใช้ API contract เดิม ตรวจข้อมูล และเก็บลง PostgreSQL
 

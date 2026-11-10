@@ -16,7 +16,7 @@ next: {"text": "Exercise 4", "link": "/exercises/day-03-flutter/exercise-04"}
 
 ตอนนี้แบบฟอร์มต้องคุยกับทะเบียนงานจริง เราจะเอาข้อมูลตัวอย่างออกจากเส้นทางใช้งานหลัก และใช้ login ที่ทำเมื่อวาน
 
-## Practice 1 — Sign in แล้วโหลดคำขอของตน
+## Practice 1 — Sign in แล้วโหลด Request ของตน
 
 <PracticeIllustration asset="d03-e03-p01" eager />
 
@@ -46,15 +46,15 @@ next: {"text": "Exercise 4", "link": "/exercises/day-03-flutter/exercise-04"}
    flutter run -d chrome --web-hostname localhost --web-port 3000 --dart-define=API_BASE_URL=http://127.0.0.1:8000
    ~~~
 5. ผู้เรียนใส่รหัสผ่านเองใน UI. Login learner01 แล้วเทียบรายการกับ /docs
-6. Logout แล้ว login learner02. ต้องไม่เห็นคำขอที่ learner01 เพิ่งสร้าง
+6. Logout แล้ว login learner02. ต้องไม่เห็น Request ที่ learner01 เพิ่งสร้าง
 
 **Checkpoint:** ป้ายข้อมูลตัวอย่างหายจาก runtime, ใช้ข้อมูลจริงจาก API, เปลี่ยนผู้ใช้แล้วรายการเปลี่ยนตามเจ้าของ
 
-## Practice 2 — ส่งคำขอและติดตามสถานะจากหน้าจอ
+## Practice 2 — ส่ง Request และติดตามสถานะจากหน้าจอ
 
 <PracticeIllustration asset="d03-e03-p02" />
 
-**Primary target:** ทำวงจรสร้างคำขอถึงอัปเดตสถานะผ่าน API ได้
+**Primary target:** ทำวงจรสร้าง Request ถึงอัปเดตสถานะผ่าน API ได้
 
 ### Steps
 
@@ -69,7 +69,7 @@ next: {"text": "Exercise 4", "link": "/exercises/day-03-flutter/exercise-04"}
    หลัง PATCH refresh ข้อมูลที่ API ยืนยัน ไม่แสดงสำเร็จก่อน response
    ใช้ ApiService เดิม ไม่เปลี่ยน field/route
    ~~~
-2. สร้างคำขอชื่อ **ทดสอบส่งจาก Flutter** พร้อมรายละเอียดอย่างน้อย 10 ตัวอักษร
+2. สร้าง Request ชื่อ **ทดสอบส่งจาก Flutter** พร้อมรายละเอียดอย่างน้อย 10 ตัวอักษร
 3. ไป list → detail จด UUID แล้วเปิด /docs ตรวจ UUID เดียวกันด้วยผู้ใช้คนเดียวกัน
 4. เปลี่ยน status เป็น in_progress และ done. Refresh browser, login ใหม่ถ้าจำเป็น, ตรวจว่ายังเป็น done
 5. ลอง title ว่าง ต้องเห็นข้อความใกล้ช่องกรอกและไม่สร้างรายการใหม่

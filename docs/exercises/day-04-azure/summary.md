@@ -20,7 +20,7 @@ next: {"text": "โจทย์ต่อยอด", "link": "/resources/change-r
 
 - ☐ HTTPS API เชื่อม PostgreSQL ได้ พร้อม read/create ที่ authenticated
 - ☐ ชี้ commit SHA, ACR tag, version และ ready revision ที่สัมพันธ์กัน
-- ☐ ปิด local API แล้ว Android ยังอ่าน/สร้างคำขอผ่าน HTTPS ได้
+- ☐ ปิด local API แล้ว Android ยังอ่าน/สร้าง Request ผ่าน HTTPS ได้
 - ☐ ชี้ 404 log และข้อมูลที่ยังอยู่หลัง restart
 - ☐ มี review log, งานค้าง และเจ้าของค่าใช้จ่าย/แผน cleanup ของ lab
 
@@ -44,6 +44,6 @@ next: {"text": "โจทย์ต่อยอด", "link": "/resources/change-r
 
 อธิบายหนึ่งสิ่งที่ Codex ช่วย และหนึ่งจุดที่คุณตรวจด้วยตนเอง ชี้หลักฐานจากผลงานวันนี้ประกอบคำอธิบาย
 
-จากแฟ้มคำขอในวันแรก เรามาถึงแอป Android ที่เรียกบริการบน Azure และมีประวัติการเปลี่ยนแปลงให้ตรวจย้อนกลับได้. ขั้นต่อไปสำหรับบริษัทคือเลือก use case จริง แล้วให้ทีมที่เกี่ยวข้องตรวจ identity, authorization, data protection, operational ownership และ release process ก่อนนำไปใช้งาน
+จากแฟ้ม Request ในวันแรก เรามาถึงแอป Android ที่เรียกบริการบน Azure และมีประวัติการเปลี่ยนแปลงให้ตรวจย้อนกลับได้. ขั้นต่อไปสำหรับบริษัทคือเลือก use case จริง แล้วให้ทีมที่เกี่ยวข้องตรวจ identity, authorization, data protection, operational ownership และ release process ก่อนนำไปใช้งาน
 
 อ่านเพิ่ม: [Image pull with managed identity](https://learn.microsoft.com/en-us/azure/container-apps/managed-identity-image-pull), [GitHub OIDC](https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure-openid-connect), [Ingress](https://learn.microsoft.com/en-us/azure/container-apps/ingress-how-to), [Revision](https://learn.microsoft.com/en-us/azure/container-apps/revisions-manage), [Scaling](https://learn.microsoft.com/en-us/azure/container-apps/scale-app)
