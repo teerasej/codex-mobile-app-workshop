@@ -20,7 +20,7 @@ next: {"text": "Exercise 2", "link": "/exercises/day-03-flutter/exercise-02"}
 
 <PracticeIllustration asset="d03-e01-p01" eager />
 
-**Primary target:** ใช้ Dart class และ null safety อ่านคำขอหนึ่งรายการได้
+**Primary target:** ใช้ Dart class และ null safety อ่าน Request หนึ่งรายการได้
 
 ### Steps
 

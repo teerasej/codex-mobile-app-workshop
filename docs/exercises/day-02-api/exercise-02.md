@@ -11,37 +11,32 @@ next: {"text": "Exercise 3", "link": "/exercises/day-02-api/exercise-03"}
 >
 > อ่าน [ภาพรวมและเงื่อนไขของวันนี้](/exercises/day-02-api/) ก่อนเริ่ม ใช้โฟลเดอร์ `service-desk-lite` เดิม และทำทีละ Practice
 
-::: tip วิธีทำงานวันนี้
-ก่อนเริ่ม Exercise 1 ให้ Codex สร้าง branch **feature/request-api** จาก main ที่ไม่มีงานค้างเพียงครั้งเดียว. ถ้าอยู่ branch นี้จาก Practice ก่อนแล้วให้ใช้ต่อ ไม่สร้างซ้ำและไม่กลับไปเริ่มจาก main ใหม่. ทุก Practice เริ่มด้วยตรวจ plan และจบด้วย checkpoint → commit เฉพาะไฟล์ที่ตรวจแล้ว. ยังไม่ merge จนจบวัน
 
-คำสั่ง **python** ต่อจากสร้าง environment หมายถึง Python ใน **.venv** ของโปรเจคเท่านั้น. หาก Codex เปิด terminal ใหม่ ให้ยืนยัน interpreter นี้ก่อนรัน. ผู้เรียนไม่จำเป็นต้องจำคำสั่ง แต่ต้องรู้ว่าเป็นการติดตั้ง รัน server หรือรัน test
-:::
-
-
-## Scenario
-
-คนกรอกแบบฟอร์มอาจลืมใส่รายละเอียด เราต้องให้ API บอกว่าอะไรไม่ถูก ก่อนเก็บลงทะเบียนงาน
-
-## Practice 1 — สร้างและอ่านคำขอผ่าน routes
+## Practice 1 — สร้างและอ่าน Request ผ่าน routes
 
 <PracticeIllustration asset="d02-e02-p01" eager />
 
-**Primary target:** ส่ง JSON สร้างคำขอและอ่านรายการที่เพิ่งสร้างได้
+**Primary target:** ส่ง JSON สร้าง Request และอ่านรายการที่เพิ่งสร้างได้
 
 ### Steps
 
-1. เปิด docs/api-contract.md และอ่านเฉพาะ data model กับ endpoints
-2. ส่ง prompt:
+1. **อ่าน API contract**
 
    ~~~text
-   สร้าง routes GET /requests, GET /requests/{id}, POST /requests
-   และ PATCH /requests/{id}/status ตาม contract
-   ใน Practice นี้ใช้ in-memory repository ชั่วคราวและ owner learner01 เท่านั้น
-   ใส่ comment ว่า development-only และต้องแทนด้วย DB/auth วันนี้
-   เก็บชื่อ route/field/status ให้ตรง contract; UUID กับ created_at ให้ server สร้าง
-   ใช้ Pydantic request/response models. ยังไม่สร้าง UI หรือ Azure resources
+   อ่าน data model กับ endpoints ใน docs/api-contract.md แล้วสรุปเราจะสร้าง route API สำหรับการทำงานกับข้อมูล Request ยังไงบ้าง แสดง route ที่จำเป็น และ field ใน request และส่ง response อะไรบ้าง
    ~~~
-3. ใน /docs ขยาย **POST /requests** แล้วเลือก **Try it out**. คลิกช่อง **Request body** แล้วเลือกข้อความทั้งหมดด้วย **Ctrl+A** บน Windows หรือ **Cmd+A** บน macOS ก่อนวาง JSON ด้านล่างเพื่อแทนตัวอย่างเดิมทั้งหมด จากนั้นเลือก **Execute**. อย่าวางต่อท้าย JSON เดิม:
+
+2. **ทำ routes สำหรับสร้างและอ่าน**
+
+   ~~~text
+   สร้าง route ตามที่ออกแบบ
+   เก็บข้อมูลตอนนี้ใน memory ชั่วคราว ใส่ comment ว่าเป็น development-only
+   ~~~
+
+3. **สร้าง Request ใน Swagger UI**
+
+   เปิด swagger UI
+   แล้วเลือก **POST /requests → Try it out**. แทนที่ JSON ใน **Request body** ทั้งหมดด้วยตัวอย่างนี้ แล้วกด **Execute**. จด UUID จาก response 201
 
    ~~~json
    {
@@ -50,8 +45,22 @@ next: {"text": "Exercise 3", "link": "/exercises/day-02-api/exercise-03"}
      "category": "equipment"
    }
    ~~~
-4. จด id ที่ server ตอบ. เรียก GET /requests/{id} ด้วย id นั้น แล้วดูชื่อ/สถานะ new
-5. ทดลอง PATCH status เป็น in_progress แล้ว GET อีกครั้ง
+
+4. **อ่าน Request เดิม**
+
+   เรียก `GET /requests/{id}` ด้วย UUID ที่จดไว้ เช็กชื่อและสถานะ `new`
+
+5. **เปลี่ยนสถานะ**
+
+   เรียก `PATCH /requests/{id}/status` ด้วย UUID เดิม
+
+   ~~~json
+   {"status": "in_progress"}
+   ~~~
+
+6. **เช็กสถานะใหม่**
+
+   เรียก `GET /requests/{id}` อีกครั้ง เช็กว่า UUID เดิมมีสถานะ `in_progress`
 
 **Checkpoint:** POST ได้ 201, GET/PATCH ได้ 200 และแสดง id เดียวกัน. ขณะนี้ข้อมูลยังหายเมื่อ restart ได้ จึงยังไม่ผ่าน persistence
 
@@ -63,19 +72,79 @@ next: {"text": "Exercise 3", "link": "/exercises/day-02-api/exercise-03"}
 
 ### Steps
 
-1. ส่ง:
+1. **หากฎที่ขาด**
 
    ~~~text
-   ตรวจและเติม validation ของ models ให้ตรง docs/api-contract.md
-   trim ก่อนตรวจความยาว; reject unknown fields
-   ทดสอบ title ว่าง/สั้น, category ผิด, status ผิด และ client-supplied owner_username
-   แสดงกรณีที่พบว่าขาดก่อนแก้ และห้ามลด validation เพื่อให้ test ผ่าน
+   เทียบ Pydantic models ที่มี กับ docs/api-contract.md สรุปว่ากฎเรื่อง trim, ความยาว, category, status และ field ที่ client ส่งได้ยังขาดตรงไหน
    ~~~
-2. ลอง POST ที่ title เป็นช่องว่าง และรายละเอียดถูกต้อง ต้องได้ 422
-3. ลอง POST ที่เพิ่ม "owner_username": "learner02" ต้องได้ 422
-4. ลอง PATCH status เป็น closed ต้องได้ 422; ใช้ done จึงผ่าน
-5. เปิด /openapi.json และค้น CreateRequest หรือชื่อ schema ที่ Codexใช้. ชี้ว่า /docs อ่านรูปแบบ API จาก schema นี้
+
+2. **เติม validation**
+
+   ~~~text
+   เติม validation rule ที่ขาดตาม contract ที่กำหนดไว้
+   ~~~
+
+3. **ลองส่ง title ว่าง**
+
+   ใช้ JSON จาก Practice 1 แล้วแก้เฉพาะ `title` ให้เป็นช่องว่าง ส่ง POST และหา `title` ในรายละเอียดของ 422
+
+   ~~~json
+   {
+     "title": "   ",
+     "description": "ขอจอภาพหนึ่งเครื่องสำหรับใช้ฝึกในห้องตัวอย่าง",
+     "category": "equipment"
+   }
+   ~~~
+
+4. **ลองส่ง owner เอง**
+
+   ใช้ JSON เดิมที่ถูกต้อง แล้วเพิ่ม field `owner_username` ส่ง POST และหา `owner_username` ในรายละเอียดของ 422
+
+   ~~~json
+   {
+     "title": "ขอจอภาพสำหรับห้องอบรม",
+     "description": "ขอจอภาพหนึ่งเครื่องสำหรับใช้ฝึกในห้องตัวอย่าง",
+     "category": "equipment",
+     "owner_username": "learner02"
+   }
+   ~~~
+
+5. **สร้าง Request สำหรับทดสอบ**
+
+   ส่ง POST ด้วย JSON ที่ถูกต้องจาก Practice 1 เช็ก 201 และจด UUID ใหม่
+
+   ~~~json
+   {
+     "title": "ขอจอภาพสำหรับห้องอบรม",
+     "description": "ขอจอภาพหนึ่งเครื่องสำหรับใช้ฝึกในห้องตัวอย่าง",
+     "category": "equipment"
+   }
+   ~~~
+
+6. **ลองส่งสถานะผิด**
+
+   ใช้ UUID ใหม่ส่ง PATCH แล้วหา `status` ในรายละเอียดของ 422
+
+   ~~~json
+   {"status": "closed"}
+   ~~~
+
+7. **ลองส่งสถานะที่ถูกต้อง**
+
+   ใช้ UUID เดิมส่ง PATCH แล้วเช็ก 200
+
+   ~~~json
+   {"status": "done"}
+   ~~~
+
+8. **ดู schema ใน OpenAPI**
+
+   เปิด `/openapi.json` ค้น `CreateRequest` หรือชื่อ model ที่ Codex ใช้ แล้วเทียบ field กับ **Request body** ใน `/docs`
 
 **Checkpoint:** valid input ผ่าน แต่สามกรณีผิดถูกปฏิเสธพร้อมตำแหน่ง field. ไม่แก้ field ใน Flutter ในอนาคตเพื่อหลบ contract ที่ไม่ตรง
 
-**ถ้าติดขัด:** ถ้า response ไม่มี 422 ให้ตรวจ Pydantic model และ route annotation กับ Codex. ส่งเฉพาะ request ตัวอย่างและ error ที่ไม่มี secret
+**ถ้าติดขัด:** ถ้าไม่ได้ 422 ให้ส่งเฉพาะ JSON ตัวอย่างและ HTTP status ที่เห็น แล้วถาม Codex
+
+~~~text
+กรณีนี้ควรได้ 422 ช่วยตามให้ดูว่า route นี้ใช้ Pydantic model ไหน และกฎที่ขาดอยู่ตรงไหน ยังไม่ต้องแก้ไฟล์
+~~~

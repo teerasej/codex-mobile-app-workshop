@@ -35,7 +35,7 @@ requirements.txt เป็นรายการ dependencies เริ่มต�
 
 ## ข้อมูลสมมติ
 
-มีคำขอ 4 รายการ: learner01 จำนวน 3 รายการ และ learner02 จำนวน 1 รายการ. Password ไม่รวมใน public starter. ถ้าใช้ database ที่ผู้สอนเตรียม ข้อมูลชุดนี้มีอยู่แล้วพร้อม app passwords ใน **Student ZIP ส่วนตัว**; คง passwords/hash เดิมเมื่อ seed ซ้ำ. ถ้าใช้ database ใหม่ของตน seed จะรับ password ผ่าน getpass เฉพาะ user ที่ยังไม่มีและเก็บเฉพาะ hash. ใช้ database แยกกันเพื่อไม่ให้ข้อมูลคนอื่นรบกวนผลตรวจ
+มี Request 4 รายการ: learner01 จำนวน 3 รายการ และ learner02 จำนวน 1 รายการ. Password ไม่รวมใน public starter. ถ้าใช้ database ที่ผู้สอนเตรียม ข้อมูลชุดนี้มีอยู่แล้วพร้อม app passwords ใน **Student ZIP ส่วนตัว**; คง passwords/hash เดิมเมื่อ seed ซ้ำ. ถ้าใช้ database ใหม่ของตน seed จะรับ password ผ่าน getpass เฉพาะ user ที่ยังไม่มีและเก็บเฉพาะ hash. ใช้ database แยกกันเพื่อไม่ให้ข้อมูลคนอื่นรบกวนผลตรวจ
 
 Student ZIP เป็นคนละไฟล์กับ public starter: คัดลอกเฉพาะ `api/.env` ของตนเมื่อยังไม่มีไฟล์ และใช้ค่าที่ไม่เป็นความลับใน `deployment.txt` สำหรับ Day 4. อย่าแตกทับทั้งโปรเจคหรือแทน `.gitignore` ของ starter ด้วยไฟล์จาก Student ZIP; อย่าวาง private ZIP/README, `.env`, XLSX หรือ passwords ใน Git/chat
 
@@ -43,7 +43,7 @@ Student ZIP เป็นคนละไฟล์กับ public starter: คั
 
 ## API check script
 
-รันด้วย Python standard library ไม่ต้องลง package เพิ่ม. Script เรียก API จริง ตรวจ auth/validation/ownership และสร้างคำขอสมมติ 1 รายการต่อรอบเพื่อใช้ตรวจ persistence ต่อ. ไม่ลบข้อมูลหลังตรวจและไม่ทดแทน unit tests, expired-token test หรือ mobile/cloud rehearsal. ใส่ password เฉพาะ interactive terminal ของตนเอง
+รันด้วย Python standard library ไม่ต้องลง package เพิ่ม. Script เรียก API จริง ตรวจ auth/validation/ownership และสร้าง Request สมมติ 1 รายการต่อรอบเพื่อใช้ตรวจ persistence ต่อ. ไม่ลบข้อมูลหลังตรวจและไม่ทดแทน unit tests, expired-token test หรือ mobile/cloud rehearsal. ใส่ password เฉพาะ interactive terminal ของตนเอง
 
 ตัวอย่างจาก root โปรเจคผู้เรียน:
 

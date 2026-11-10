@@ -14,8 +14,8 @@ next: false
 | วัน | Overview theme | สิ่งที่เราจะเพิ่มในโปรเจค | ผลลัพธ์ |
 | --- | --- | --- | --- |
 | [Day 1 — Git](/exercises/day-01-git/) | วางInstructionก่อนสร้าง: ทำงานกับ AI อย่างตรวจสอบได้ | Project brief, AGENTS.md, branch, commit, PR และ merge conflict | อธิบาย diff และชี้ merged PR ของตนได้ |
-| [Day 2 — Python API](/exercises/day-02-api/) | เปลี่ยนแบบฟอร์มให้เป็นบริการข้อมูล | FastAPI, validation, Azure PostgreSQL, login/token และ test | สร้างคำขอจริง; คนอื่นเปิดคำขอนี้ไม่ได้ |
-| [Day 3 — Flutter](/exercises/day-03-flutter/) | นำบริการมาอยู่ในมือผู้ใช้ | Sign in, list/detail, create/update, UI states และ Android | ส่งคำขอจากหน้าจอแล้วพบใน API |
+| [Day 2 — Python API](/exercises/day-02-api/) | เปลี่ยนแบบฟอร์มให้เป็นบริการข้อมูล | FastAPI, validation, Azure PostgreSQL, login/token และ test | สร้าง Request จริง; คนอื่นเปิด Request นี้ไม่ได้ |
+| [Day 3 — Flutter](/exercises/day-03-flutter/) | นำบริการมาอยู่ในมือผู้ใช้ | Sign in, list/detail, create/update, UI states และ Android | ส่ง Request จากหน้าจอแล้วพบใน API |
 | [Day 4 — Azure](/exercises/day-04-azure/) | ย้ายเคาน์เตอร์ไปเปิดบน Cloud | Docker, ACR, Container Apps, GitHub deployment, revision/log | Android เรียก HTTPS API; ตามรอยถึง commit ได้ |
 
 จบหลักสูตรเป็น **ต้นแบบสำหรับเรียนรู้และต่อยอด** ยังไม่ใช่ระบบบริษัทที่ผ่านการรับรองใช้งานจริง เราไม่สร้าง chatbot หรือเพิ่ม OpenAI API เข้าไปในแอป; Codex ช่วยเราพัฒนาและตรวจงาน
@@ -39,7 +39,7 @@ next: false
 - เมื่อ prompt ขอ “เสนอแผนก่อนแก้” ให้ตรวจแผนแล้วตอบ `ทำตามแผนเฉพาะ Practice นี้ แล้วแสดง diff และผลตรวจจริง` ก่อนให้เริ่มแก้ไฟล์
 - คำสั่งในกรอบ `powershell`/`bash`/`shell` รันใน Terminal ของโปรเจคตาม OS หรือส่งให้ Codex รัน **ทีละกรอบ** หลังตรวจว่าอยู่ในโฟลเดอร์ถูกต้อง อ่านว่าคำสั่งทำอะไรด้วย
 - ขั้นตอนรับ password, token หรือ connection string ให้ผู้เรียนทำในช่อง private/Terminal ด้วยตนเอง ไม่วาง secret ใน chat
-- เปิด diff ที่ ChatGPT desktop แสดง แล้วอธิบายอย่างน้อยหนึ่งจุดด้วยคำของตัวเองก่อน commit
+- เปิด diff ที่ ChatGPT desktop แสดง แล้วอธิบายอย่างน้อยหนึ่งจุดด้วย คำพูดของตัวเองก่อน commit
 - บันทึกหลักฐานลง `docs/review-log.md`; แยก “ผ่านจริง” กับ “ทำด้วย fallback” ให้เห็น
 
 *บนมือถือ เลื่อนแผนภาพในแนวนอน เพื่ออ่านทุกขั้นตอน*
@@ -60,7 +60,7 @@ flowchart TB
 
 - [Project brief](/resources/project-brief) — เรื่องราวและขอบเขตแอป
 - [API contract](/resources/api-contract) — ชื่อ field, route และผลที่ต้องตรงกันทั้ง API/Flutter
-- [Sample data](/files/service-requests.json) — คำขอสมมติ 4 รายการ
+- [Sample data](/files/service-requests.json) — Request สมมติ 4 รายการ
 - [รายการไฟล์และตำแหน่งหลังแตก ZIP](/resources/downloads)
 - [บันทึกผล](/resources/review-log) และ [โจทย์ต่อยอด](/resources/change-request)
 - [แหล่งอ้างอิงทางเทคนิค](/resources/sources)

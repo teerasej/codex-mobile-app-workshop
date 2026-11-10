@@ -65,7 +65,7 @@ Windows ใช้ PowerShell native; macOS ใช้ Terminal. ไม่เป�
 
 > **ใช้ PostgreSQL ของตนเอง:** ให้เจ้าของอนุมัติ database ใหม่ที่แยกจากงานจริงและเตรียม setup/runtime logins. Setup สร้าง schema/seed ได้; runtime ได้เฉพาะ CONNECT/USAGE กับ SELECT/INSERT/UPDATE ที่จำเป็นและ sequence privileges ไม่ได้ CREATE/DDL. ผู้ดูแลต้องกำหนด schema permissions ตาม Azure ก่อนใช้ setup login. ให้ IT เตรียม network ที่อนุญาต หรือ VPN/VNet สำหรับ private endpoint. ถ้ายังไม่มี `.env` จึงเริ่มจาก `.env.example` โดยใส่ runtime connection และสร้าง JWT_SECRET แบบสุ่มในเครื่อง ไม่ใช้ admin เป็น runtime
 
-**Checkpoint ก่อน Day 2:** database ของตนเข้าถึงผ่าน TLS ได้, `.env` ใช้ runtime login และ seed `--check` แสดง baseline โดยไม่แก้ข้อมูล. ถ้ายังไม่พร้อม ส่วน memory/test ทำต่อได้ แต่ PostgreSQL checkpoint ต้องระบุว่ายังไม่ผ่าน
+**Checkpoint ก่อน Day 2:** database ของตนเข้าถึงผ่าน TLS ได้, `.env` ใช้ runtime login และผู้สอนยืนยันว่ามีข้อมูลตัวอย่างพร้อมใช้. ถ้ายังไม่พร้อม ส่วน memory/test ทำต่อได้ แต่ PostgreSQL checkpoint ต้องระบุว่ายังไม่ผ่าน
 
 ## 4. Azure subscription — เตรียมสิทธิ์ก่อน Day 4
 

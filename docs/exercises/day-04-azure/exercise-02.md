@@ -101,7 +101,7 @@ next: {"text": "Exercise 3", "link": "/exercises/day-04-azure/exercise-03"}
    az containerapp ingress enable --name <APP_NAME> --resource-group <LAB_RG> --type external --target-port 8000 --transport auto
    ~~~
 4. ตรวจ Ingress ใช้ port **8000** และ **Allow insecure connections ปิด**. รอ revision พร้อม; ระหว่างเปลี่ยนจาก port 80 อาจยังเข้าไม่ได้ ให้ตรวจเมื่อ update ทั้งสองส่วนเสร็จ
-5. เปิด `https://<APP_FQDN>/health` แล้ว /docs. Login และ GET UUID เดิม; สร้างคำขอใหม่ชื่อ **ทดสอบจาก Azure** ผ่าน /docs
+5. เปิด `https://<APP_FQDN>/health` แล้ว /docs. Login และ GET UUID เดิม; สร้าง Request ใหม่ชื่อ **ทดสอบจาก Azure** ผ่าน /docs
 6. ถ้า /health ผ่านแต่ DB ล้ม ให้ตรวจ runtime login, database, TLS และ network จาก environment. ให้ผู้สอนตรวจ network access ของ shared server ผ่านช่องทางส่วนตัว. คง TLS และตรวจเฉพาะชื่อ/reference ของตัวแปร environment
 7. เมื่อ API ใช้งานจริงแล้ว ให้ผู้สอนกด **Check Day 4 resources** สำหรับผู้เรียนเดิม เพื่อยืนยัน app/registry/identity/HTTPS health และบันทึก API URL. ปุ่มนี้เป็นการตรวจภายหลัง ไม่ใช่ปุ่มเตรียมสิทธิ์ และ `/health` ไม่แทน login/create/read ของขั้นก่อน
 8. บันทึก image tag, revision, API URL และ UUID ที่ query ได้จริง

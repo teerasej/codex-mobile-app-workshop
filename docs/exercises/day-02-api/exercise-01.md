@@ -11,85 +11,160 @@ next: {"text": "Exercise 2", "link": "/exercises/day-02-api/exercise-02"}
 >
 > อ่าน [ภาพรวมและเงื่อนไขของวันนี้](/exercises/day-02-api/) ก่อนเริ่ม ใช้โฟลเดอร์ `service-desk-lite` เดิม และทำทีละ Practice
 
-::: tip วิธีทำงานวันนี้
-ก่อนเริ่ม Exercise 1 ให้ Codex สร้าง branch **feature/request-api** จาก main ที่ไม่มีงานค้างเพียงครั้งเดียว. ถ้าอยู่ branch นี้จาก Practice ก่อนแล้วให้ใช้ต่อ ไม่สร้างซ้ำและไม่กลับไปเริ่มจาก main ใหม่. ทุก Practice เริ่มด้วยตรวจ plan และจบด้วย checkpoint → commit เฉพาะไฟล์ที่ตรวจแล้ว. ยังไม่ merge จนจบวัน
-
-คำสั่ง **python** ต่อจากสร้าง environment หมายถึง Python ใน **.venv** ของโปรเจคเท่านั้น. หาก Codex เปิด terminal ใหม่ ให้ยืนยัน interpreter นี้ก่อนรัน. ผู้เรียนไม่จำเป็นต้องจำคำสั่ง แต่ต้องรู้ว่าเป็นการติดตั้ง รัน server หรือรัน test
-:::
-
-
 ## Scenario
 
-ก่อนต่อฐานข้อมูล เราจะอ่านคำขอสมมติและแยกหน้าที่ของ Python เพื่อให้คุยกับ Codex รู้เรื่อง
+เริ่มจากเช็กว่าเครื่องเราเข้าถึงฐานข้อมูลฝึกได้ เหมือนลองกุญแจก่อนเปิดร้าน จากนั้นใช้ JSON ตัวอย่างเพื่อฝึก Python แล้วเปิด API แรกบนเครื่องของเรา
 
-## Practice 1 — อ่านข้อมูลด้วย function, class และ module
 
-<PracticeIllustration asset="d02-e01-p01" eager />
+## เตรียม Python · 10 นาที
+
+เปิดโฟลเดอร์ `service-desk-lite` ใน Codex แบบ local แล้วส่งทีละ prompt รอให้แต่ละขั้นเสร็จก่อนส่งขั้นถัดไป
+
+1. **สร้าง `.venv`**
+
+   ~~~text
+   ช่วยสร้าง .venv ที่ root ด้วย Python 3.12 ถ้ามี .venv รุ่นนี้แล้วให้ใช้ต่อ ถ้าไม่พบ 3.12 หรือ .venv เดิมใช้คนละรุ่น ให้บอกรุ่นที่พบแล้วหยุด
+   ~~~
+
+   ถ้าไม่มี Python 3.12 ให้ส่งข้อความนี้โดยใส่รุ่นที่ผู้สอนอนุมัติ แล้วทำต่อเมื่อขั้นติดตั้งและ import ผ่าน
+
+   ~~~text
+   ผู้สอนอนุมัติ Python รุ่น [รุ่นที่อนุมัติ] ช่วยใช้รุ่นนี้กับ .venv ถ้าต้องแทน .venv เดิม ให้บอกแผนก่อน
+   ~~~
+
+2. **เปิดใช้ `.venv`**
+
+   ~~~text
+   เปิดใช้ .venv ตามระบบของเครื่อง แล้วเช็กว่า sys.executable ชี้เข้า .venv ถ้าเปิดใช้ไม่ได้ ให้บอกวิธีเรียก Python ใน .venv โดยตรง
+   ~~~
+
+   ถ้า PowerShell บล็อกการเปิดใช้ ให้เรียก `.\.venv\Scripts\python.exe` โดยตรงโดยไม่แก้ policy ส่วน macOS ใช้ `.venv/bin/python`
+
+3. **ติดตั้งแพ็กเกจ**
+
+   ~~~text
+   ใช้ Python ใน .venv ติดตั้งจาก api/requirements.txt แล้วเช็กว่า import fastapi, uvicorn, psycopg และ dotenv ได้
+   ~~~
+
+## Practice 1 — ตรวจการเชื่อมต่อ PostgreSQL {#postgres-connection}
+
+<PracticeIllustration asset="d02-e01-postgres-check" eager />
+
+**Primary target:** ยืนยันว่าเครื่องของเราใช้ runtime login ที่ได้รับเชื่อม PostgreSQL ฝึกผ่าน TLS และรันคำสั่งอ่านอย่างง่ายได้
+
+### Steps
+
+1. **เตรียม `.env`**
+
+   แตก Student ZIP ไว้นอก Git repository แล้วลากโฟลเดอร์ที่แตกไว้ มาใส่ลงกับ prompt นี้
+
+   ~~~text
+   copy api/.env จากโฟลเดอร์ไปที่ api/.env ของโปรเจคนี้
+   ~~~
+
+2. **ตั้ง Git ให้ข้าม `.env`**
+
+   เปิดไฟล์ `.gitignore` เพื่อตรวจสอบว่ามี `api/.env` หรือไม่
+
+   ~~~text
+   เพิ่มไฟล์นี้เข้า .gitignore
+   ~~~
+
+
+3. **ดูแผนเชื่อมต่อ**
+
+   ~~~text
+   ช่วยวางแผนเช็ก PostgreSQL ด้วย psycopg รันแค่ SELECT 1 แล้วปิด connection
+   ~~~
+
+4. **ทดสอบการเชื่อมต่อ**
+
+   ~~~text
+   รันตามแผนที่ตรวจแล้ว ถ้าผ่านให้ตอบ 1 ถ้าไม่ผ่านให้บอกเฉพาะหมวดปัญหาที่ระบุได้
+   ~~~
+
+**Checkpoint:** ได้ `1` จึงผ่าน ถ้าติดขัดให้บันทึกว่า PostgreSQL ยังไม่ผ่าน แจ้งผู้สอนเป็นการส่วนตัว แล้วทำ Practices 2–3 ต่อได้ ขั้นนี้ไม่มีไฟล์ให้ commit
+
+## Practice 2 — อ่านข้อมูลด้วย function, class และ module {#practice-1-—-อ่านข้อมูลด้วย-function-class-และ-module}
+
+<PracticeIllustration asset="d02-e01-p01" />
 
 **Primary target:** ตามรอยจาก JSON หนึ่งรายการไปเป็น Python object และข้อความผลลัพธ์ได้
 
 ### Steps
 
-1. เปิด Terminal ของ local project. ให้ Codex ตรวจ Python 3.12 และสร้าง environment ด้วยคำสั่งตาม OS:
-
-   Windows PowerShell:
-
-   ~~~powershell
-   py -3.12 -m venv .venv
-   .\.venv\Scripts\Activate.ps1
-   python -m pip install -r api/requirements.txt
-   ~~~
-
-   macOS:
-
-   ~~~bash
-   python3.12 -m venv .venv
-   source .venv/bin/activate
-   python -m pip install -r api/requirements.txt
-   ~~~
-
-   หาก Windows ไม่อนุญาต activate ใช้ **.\.venv\Scripts\python.exe** แทน python ในคำสั่งถัดไป ไม่แก้ system policy
-2. ส่ง prompt แล้วตรวจแผนก่อนให้ทำ:
+1. **สร้าง Python bridge**
 
    ~~~text
-   สร้างเฉพาะ Python bridge สำหรับอ่าน data/service-requests.json
-   ทำ api/bridge/request_model.py มี dataclass RequestSummary และ function format_summary
-   ทำ api/bridge/demo.py import ทั้งสองอย่างแล้วอ่าน JSON ด้วย UTF-8
-   แสดงจำนวนรายการทั้งหมด และ title/status ของรายการแรก
-   ใช้ pathlib หาไฟล์จากตำแหน่ง script ไม่ผูกกับ path เครื่อง
-   อธิบาย function, class, module เทียบกับสูตรย่อย แบบฟอร์ม และแฟ้มเอกสาร
-   ไม่สร้าง FastAPI หรือ database ใน Practice นี้
+   อ่านตัวอย่าง Request จาก data/service-requests.json
+   สร้างไฟล์ที่จำเป็นให้น้อยที่สุดใน api/bridge
+   แสดงจำนวนรายการกับ title และ status
    ~~~
-3. ให้รัน **python api/bridge/demo.py**. ตรวจว่าได้ 4 รายการและ title แรกตรงไฟล์ JSON
-4. ขอ Codex ชี้บรรทัดที่อ่าน JSON, สร้าง object และเรียก function. เปลี่ยน format ของข้อความหนึ่งจุดแล้วรันอีกครั้ง โดยไม่แก้ข้อมูลต้นฉบับ
 
-**Checkpoint:** จำนวน 4 ตรง sample และอธิบายได้ว่าข้อมูลกับวิธีแสดงผลอยู่คนละส่วน
+2. **รันตัวอย่าง**
 
-## Practice 2 — เปิด API ที่ตอบได้
+   รันจาก root แล้วเทียบ title แรกกับข้อมูลใน JSON
+
+   ~~~shell
+   ทดสอบการทำงานของไฟล์ แสดงผลลัพธ์ที่ได้
+   ~~~
+
+3. **ปรับข้อความ**
+
+   ~~~text
+   ชี้จุดที่อ่าน JSON สร้าง object และเรียก function ให้ดูหน่อย
+   ~~~
+
+**Checkpoint:** เห็น 4 รายการข้อมูลและ title แรกตรงกับ JSON
+
+## Practice 3 — เปิด API ที่ตอบได้ {#practice-2-—-เปิด-api-ที่ตอบได้}
 
 <PracticeIllustration asset="d02-e01-p02" />
 
-**Primary target:** เรียก endpoint แรกแล้วแยก HTTP response ออกจาก Python source ได้
+**Primary target:** เรียก endpoint แรกและอ่าน HTTP status กับ response body ได้
 
 ### Steps
 
-1. ส่ง:
+1. **สร้าง FastAPI app**
 
    ~~~text
-   สร้าง api/app/__init__.py และ api/app/main.py สำหรับ FastAPI
-   เพิ่มเฉพาะ GET /health ตาม docs/api-contract.md
-   อ่าน APP_VERSION จาก environment โดย default v1
-   ยังไม่เชื่อม DB, ไม่เพิ่ม auth และไม่สร้างตารางตอน start
-   แสดงวิธีรันจาก root และ URL /health กับ /docs
+   อยากเปิด FastAPI app บนเครื่องนี้
    ~~~
-2. ให้รัน server จาก root ใน terminal ที่เปิดค้างได้:
 
-   ~~~shell
-   python -m uvicorn app.main:app --app-dir api --reload --host 127.0.0.1 --port 8000
+2. **เพิ่ม `/health`**
+
+   ~~~text
+   อยากเช็กว่า API สามารถทำงานได้ ช่วยเพิ่ม GET /health ตาม docs/api-contract.md
    ~~~
-3. เปิด browser ที่ **http://127.0.0.1:8000/health** แล้ว **http://127.0.0.1:8000/docs**
-4. ใน /docs ขยาย GET /health เลือก **Try it out → Execute** และดู HTTP status กับ response body
 
-**Checkpoint:** เห็น 200 และ status=ok, version=v1. รู้ว่า terminal ที่รัน server ต้องเปิดอยู่
+3. **รัน API**
 
-**ถ้าติดขัด:** ModuleNotFoundError ให้ตรวจ interpreter/.venv และ working folder ก่อนลง package ซ้ำ. Port in use ให้หยุดเฉพาะ server ฝึกเดิมด้วย Ctrl+C แล้วเริ่มใหม่
+   ถ้า server ยังไม่พร้อมใช้งานให้ ใช้คำสั่งด้านล่างรันเพื่อเริ่ม server ใหม่
+
+   ~~~text
+   ใช้ uvicorn ทดสอบการทำงานของ API โดยเปิด server ค้างไว้
+   ~~~
+
+4. **เปิด `/health`**
+
+   เปิด URL นี้แล้วดู response body
+
+   ~~~text
+   http://127.0.0.1:8000/health
+   ~~~
+
+5. **ตรวจผลใน Swagger UI**
+
+   เปิด URL นี้ ขยาย **GET /health** แล้วเลือก **Try it out → Execute** ดู HTTP status และ response body
+
+   ~~~text
+   http://127.0.0.1:8000/docs
+   ~~~
+
+**Checkpoint:** เห็น HTTP 200 และ response ตรงกับตัวอย่างเมื่อใช้ version เริ่มต้น
+
+~~~json
+{"status":"ok","version":"v1"}
+~~~
+
+ถ้าเจอ `ModuleNotFoundError` ให้ตรวจ interpreter และ working folder ถ้า port ถูกใช้โดย server ฝึกเดิม ให้หยุด server เดิมด้วย Ctrl+C แล้วเริ่มใหม่
