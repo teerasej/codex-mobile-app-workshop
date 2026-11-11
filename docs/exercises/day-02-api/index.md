@@ -4,7 +4,22 @@ prev: {"text": "สรุป Day 1", "link": "/exercises/day-01-git/summary"}
 next: {"text": "Exercise 1", "link": "/exercises/day-02-api/exercise-01"}
 ---
 
+<script setup>
+import { withBase } from 'vitepress'
+
+const studentPackages = ['student-01.zip', 'student-02.zip', 'student-03.zip']
+</script>
+
 # Day 2 — บริการข้อมูลแอพผ่าน internet
+
+<section class="day-two-downloads" aria-label="ดาวน์โหลดไฟล์สำหรับ Day 2">
+  <p class="day-two-downloads-title">ดาวน์โหลดไฟล์สำหรับ Day 2</p>
+  <div class="day-two-download-buttons">
+    <a v-for="file in studentPackages" :key="file" :href="withBase('/files/' + file)" :download="file">
+      ดาวน์โหลด {{ file }}
+    </a>
+  </div>
+</section>
 
 [กลับสารบัญ](/) · [วันก่อนหน้า](/exercises/day-01-git/) · [วันถัดไป](/exercises/day-03-flutter/)
 
@@ -44,3 +59,56 @@ next: {"text": "Exercise 1", "link": "/exercises/day-02-api/exercise-01"}
 - [14:45–16:00 · 4. Login, ownership และ tests](/exercises/day-02-api/exercise-04)
 
 เมื่อจบ Exercise 4 ไปที่ [สรุปท้ายวัน](/exercises/day-02-api/summary) เพื่อเช็กหลักฐานและเตรียมงานต่อ
+
+<style scoped>
+.day-two-downloads {
+  margin: 24px 0;
+  padding: 20px;
+  border: 1px solid var(--vp-c-brand-1);
+  border-radius: 12px;
+  background: var(--vp-c-brand-soft);
+}
+
+.day-two-downloads-title {
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+.day-two-download-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.day-two-download-buttons a {
+  display: flex;
+  flex: 1 1 210px;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--vp-button-brand-bg);
+  color: var(--vp-button-brand-text);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+
+.day-two-download-buttons a:hover {
+  background: var(--vp-button-brand-hover-bg);
+  color: var(--vp-button-brand-hover-text);
+}
+
+.day-two-download-buttons a:focus-visible {
+  outline: 3px solid var(--vp-c-brand-1);
+  outline-offset: 4px;
+}
+
+@media (max-width: 639px) {
+  .day-two-download-buttons a {
+    flex-basis: 100%;
+  }
+}
+</style>
