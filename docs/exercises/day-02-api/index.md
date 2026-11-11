@@ -7,10 +7,17 @@ next: {"text": "Exercise 1", "link": "/exercises/day-02-api/exercise-01"}
 <script setup>
 import { withBase } from 'vitepress'
 
+const slidesFilename = 'Service-Desk-Lite-Day-02-English-v5.pdf'
 const studentPackages = ['student-01.zip', 'student-02.zip', 'student-03.zip']
 </script>
 
 # Day 2 — บริการข้อมูลแอพผ่าน internet
+
+<p class="day-two-slides">
+  <a class="day-two-slides-download" :href="withBase('/files/' + slidesFilename)" :download="slidesFilename">
+    Download Day 2 slides (PDF)
+  </a>
+</p>
 
 <section class="day-two-downloads" aria-label="ดาวน์โหลดไฟล์สำหรับ Day 2">
   <p class="day-two-downloads-title">ดาวน์โหลดไฟล์สำหรับ Day 2</p>
@@ -61,6 +68,30 @@ const studentPackages = ['student-01.zip', 'student-02.zip', 'student-03.zip']
 เมื่อจบ Exercise 4 ไปที่ [สรุปท้ายวัน](/exercises/day-02-api/summary) เพื่อเช็กหลักฐานและเตรียมงานต่อ
 
 <style scoped>
+.day-two-slides-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: var(--vp-button-brand-bg);
+  color: var(--vp-button-brand-text);
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+
+.day-two-slides-download:hover {
+  background: var(--vp-button-brand-hover-bg);
+  color: var(--vp-button-brand-hover-text);
+}
+
+.day-two-slides-download:focus-visible {
+  outline: 3px solid var(--vp-c-brand-1);
+  outline-offset: 4px;
+}
+
 .day-two-downloads {
   margin: 24px 0;
   padding: 20px;
