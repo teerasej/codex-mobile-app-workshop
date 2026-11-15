@@ -8,7 +8,6 @@ next: {"text": "Exercise 1", "link": "/exercises/day-02-api/exercise-01"}
 import { withBase } from 'vitepress'
 
 const slidesFilename = 'Service-Desk-Lite-Day-02-English-v5.pdf'
-const studentPackages = ['student-01.zip', 'student-02.zip', 'student-03.zip']
 </script>
 
 # Day 2 — บริการข้อมูลแอพผ่าน internet
@@ -18,15 +17,6 @@ const studentPackages = ['student-01.zip', 'student-02.zip', 'student-03.zip']
     Download Day 2 slides (PDF)
   </a>
 </p>
-
-<section class="day-two-downloads" aria-label="ดาวน์โหลดไฟล์สำหรับ Day 2">
-  <p class="day-two-downloads-title">ดาวน์โหลดไฟล์สำหรับ Day 2</p>
-  <div class="day-two-download-buttons">
-    <a v-for="file in studentPackages" :key="file" :href="withBase('/files/' + file)" :download="file">
-      ดาวน์โหลด {{ file }}
-    </a>
-  </div>
-</section>
 
 [กลับสารบัญ](/) · [วันก่อนหน้า](/exercises/day-01-git/) · [วันถัดไป](/exercises/day-03-flutter/)
 
