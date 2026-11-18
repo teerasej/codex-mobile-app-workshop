@@ -44,7 +44,7 @@ next: {"text": "สรุปท้ายวัน", "link": "/exercises/day-02-a
 
 5. **เข้าเป็น learner01**
 
-   กด **Authorize** แล้วกรอกบัญชี `learner01` กับรหัสผ่านที่ได้รับ (อยู่ใน Student ZIP ไฟล์ README.md)
+   กด **Authorize** แล้วกรอกบัญชี `learner01` กับรหัสผ่านที่ได้รับ (อยู่ใน `README.md` ของชุดข้อมูลส่วนตัวที่ผู้สอนส่งให้)
 
 6. **สร้าง Request**
 

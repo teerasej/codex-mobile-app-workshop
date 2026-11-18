@@ -8,6 +8,7 @@ next: {"text": "Exercise 1", "link": "/exercises/day-02-api/exercise-01"}
 import { withBase } from 'vitepress'
 
 const slidesFilename = 'Service-Desk-Lite-Day-02-English-v5.pdf'
+const studentPackages = ['student-01.zip', 'student-02.zip', 'student-03.zip']
 </script>
 
 # Day 2 — บริการข้อมูลแอพผ่าน internet
@@ -17,6 +18,16 @@ const slidesFilename = 'Service-Desk-Lite-Day-02-English-v5.pdf'
     Download Day 2 slides (PDF)
   </a>
 </p>
+
+<section class="day-two-downloads" aria-label="ดาวน์โหลดชุดตั้งค่าสำหรับ Day 2">
+  <p class="day-two-downloads-title">ดาวน์โหลดชุดตั้งค่าสำหรับ Day 2</p>
+  <p>เลือกหมายเลขที่ผู้สอนแจ้ง แล้วแตก ZIP และเปิด README.md เพื่อดูขั้นตอนตั้งค่า รับไฟล์ .env และข้อมูลบัญชีจริงจากผู้สอนผ่านช่องทางส่วนตัว</p>
+  <div class="day-two-download-buttons">
+    <a v-for="file in studentPackages" :key="file" :href="withBase('/files/' + file) + '?v=20261118'" :download="file">
+      ดาวน์โหลด {{ file }}
+    </a>
+  </div>
+</section>
 
 [กลับสารบัญ](/) · [วันก่อนหน้า](/exercises/day-01-git/) · [วันถัดไป](/exercises/day-03-flutter/)
 
@@ -45,7 +56,7 @@ const slidesFilename = 'Service-Desk-Lite-Day-02-English-v5.pdf'
 
 - ก่อน Exercise 1 ให้สร้าง `feature/request-api` จาก `main` ที่ไม่มีงานค้าง ถ้าอยู่ branch นี้แล้วให้ใช้ต่อ
 - ใช้ Python ใน `.venv` ทุกครั้ง ตรวจ interpreter เมื่อเปิด terminal ใหม่
-- เก็บ Student ZIP, `.env`, passwords และ tokens ไว้ส่วนตัว ส่งเฉพาะผลทดสอบที่ไม่มีค่าลับ
+- เก็บชุดข้อมูลส่วนตัวจากผู้สอน, `.env`, passwords และ tokens ไว้ส่วนตัว ส่งเฉพาะผลทดสอบที่ไม่มีค่าลับ
 - Commit เฉพาะไฟล์ที่ตรวจแล้ว ถ้าไม่มีไฟล์เปลี่ยนให้ข้าม commit และค่อย merge ตอนจบวัน
 
 ## เปิดแบบฝึกหัด
