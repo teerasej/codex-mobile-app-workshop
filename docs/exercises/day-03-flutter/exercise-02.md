@@ -14,7 +14,7 @@ next: {"text": "Exercise 3", "link": "/exercises/day-03-flutter/exercise-03"}
 
 ## Scenario
 
-คนใช้ต้องแตะใบงานเพื่อดูรายละเอียด แล้วกลับมารายการเดิมโดยไม่หลงทาง
+คนใช้ต้องกดดูใบงานเพื่อดูรายละเอียด แล้วกลับมาหน้ารายการเดิมได้
 
 ## Practice 1 — เปิดรายละเอียดใบงานที่เลือก
 
@@ -24,18 +24,22 @@ next: {"text": "Exercise 3", "link": "/exercises/day-03-flutter/exercise-03"}
 
 ### Steps
 
-1. ส่ง:
+1. ใช้หน้ารายการที่เปิดได้จาก Exercise 1 ส่ง prompt นี้
 
    ~~~text
-   เพิ่ม RequestDetailScreen และ navigation จาก My requests
-   ใช้ Navigator push/pop แบบง่าย ส่ง ServiceRequest ของรายการที่แตะ
-   Detail แสดง id/title/description/category/status
-   ยังใช้ fixture และยังไม่เชื่อม API
-   เพิ่ม widget test แตะรายการที่สองแล้วเห็น description ของรายการที่สอง
+   ทำให้แตะใบงานใน My requests แล้วเปิดหน้ารายละเอียดของใบงานนั้นได้ (id, title, description, category, status) และกด Back กลับมาได้
+   ใช้ข้อมูลตัวอย่างและหน้ารายการเดิม ยังไม่ต้องต่อ API
+   เขียน test แตะรายการที่สองแล้วต้องเห็น description ของรายการที่สอง
+   รัน test แล้วสรุปผล
    ~~~
 2. เปิด preview แตะรายการที่สอง. เทียบ description/id กับ sample
 3. กด Back แล้วเปิดรายการแรก. ตรวจว่าไม่ค้างข้อมูลรายการก่อนหน้า
-4. ให้ Codex อธิบาย master-detail เทียบกับสารบัญและหน้ารายละเอียดในแฟ้มใบงาน
+4. ส่ง prompt เพื่ออธิบายสิ่งที่เพิ่งลอง
+
+   ~~~text
+   อธิบายสั้น ๆ ว่าหน้ารายการกับหน้ารายละเอียด (master-detail) ทำงานยังไง เปรียบเทียบกับสารบัญและหน้าเนื้อหาในแฟ้มใบงาน
+   แล้วชี้ให้ดูว่าในแอปเรา ใบงานที่เลือกถูกส่งไปหน้ารายละเอียดตรงไหน
+   ~~~
 
 **Checkpoint:** แตะรายการไหนได้รายละเอียดของรายการนั้น และ Back ทำงาน
 
@@ -47,17 +51,22 @@ next: {"text": "Exercise 3", "link": "/exercises/day-03-flutter/exercise-03"}
 
 ### Steps
 
-1. ส่ง:
+1. ส่ง prompt นี้เพื่อให้ตัวกรองเปลี่ยนเฉพาะสิ่งที่เห็น คล้ายเลือกมุมมองใน Microsoft Power Apps
 
    ~~~text
-   เพิ่ม filter บน My requests: ทั้งหมด/new/in_progress/done
-   เก็บ selectedStatus ใน State และคำนวณรายการจากข้อมูลเดิม
-   อย่า mutate fixture; แสดงจำนวนรายการหลังกรอง
-   เพิ่ม empty widget เมื่อไม่มีผล และ reset filter กลับทั้งหมดได้
-   แยก loading/empty/error/data เป็น state ที่ API service จะใช้ใน Exercise 3
+   เพิ่มตัวกรองใน My requests: ทั้งหมด / new / in_progress / done
+   กรองแค่การแสดงผล ห้ามแก้ status ของข้อมูลจริง
+   โชว์จำนวนรายการหลังกรอง ถ้าไม่มีรายการให้มีคำแนะนำและปุ่ม reset กลับไปดูทั้งหมด
+   ทำแบบเรียบง่าย ไม่ต้องเพิ่ม package จัดการ state
    ~~~
-2. เลือกแต่ละสถานะ; sample ของ learner01 ควรได้สถานะละ 1 รายการ
-3. เลือกทั้งหมดแล้วกลับเป็น 3 รายการ. อย่าใช้ expected counts นี้หลังเริ่มเพิ่มข้อมูลจริง
-4. ให้ Codex รัน widget test สำหรับ filter และ empty list โดยส่ง list ว่างผ่าน test fixture
+2. เลือกแต่ละสถานะ ใน fixture ของ `learner01` ต้องได้ **1 รายการต่อสถานะ** จด title/status ที่เห็นหนึ่งรายการ
+3. เลือก **ทั้งหมด** หรือ reset ต้องกลับเป็น **3 รายการ** เปิดรายละเอียดเพื่อตรวจว่า status ไม่เปลี่ยน
+4. ส่ง prompt ทดสอบกรณีว่างโดยไม่แก้ข้อมูลจริง
+
+   ~~~text
+   เขียน test ให้ตัวกรองและปุ่ม reset โดยใช้ข้อมูลตัวอย่าง learner01 เดิม
+   ส่วนกรณีรายการว่าง ให้ส่งรายการว่างเฉพาะใน test ห้ามลบข้อมูลจริง
+   รัน test แล้วบอกผลทีละกรณี
+   ~~~
 
 **Checkpoint:** filter เปลี่ยนเฉพาะสิ่งที่แสดง ไม่เปลี่ยน status ของข้อมูล และ empty list ไม่ทำให้หน้าจอว่างแบบไม่มีคำอธิบาย

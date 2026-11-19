@@ -24,27 +24,35 @@ next: {"text": "Exercise 2", "link": "/exercises/day-03-flutter/exercise-02"}
 
 ### Steps
 
-1. จาก root ให้ Codex ตรวจว่าไม่มี client เดิม แล้วรัน:
-
-   ~~~shell
-   flutter create --platforms=web,android --project-name service_desk_lite client
-   ~~~
-
-   ถ้ามี client อยู่แล้ว ให้ตรวจและใช้ต่อ ไม่สร้างทับ
-2. ส่ง:
+1. หลังผ่านจุดเริ่มในภาพรวม Day 3 ส่งให้ Codex สร้างส่วนหน้าจอในโปรเจกต์เดิม
 
    ~~~text
-   อ่าน docs/api-contract.md และ data/service-requests.json จาก root
-   สร้าง client/lib/models/service_request.dart มี class ServiceRequest
-   สร้าง fromJson ให้ใช้ชนิดข้อมูล/null safety ตรง contract
-   required fields ห้ามกลบข้อมูลที่ขาดด้วย empty string หรือค่าปลอม
-   เพิ่ม Dart unit test อ่าน sample ที่ถูกต้องและ reject JSON ที่ไม่มี id
-   ยังไม่เชื่อม API และยังไม่ทำ UI
+   เช็คก่อนว่ามีโฟลเดอร์ client อยู่แล้วหรือยัง
+   ถ้ายังไม่มี ให้สร้างแอป Flutter ชื่อ service_desk_lite ใน client ให้รองรับ web กับ Android
+   ถ้ามีแล้ว อย่าสร้างทับ บอกฉันว่าใช้ต่อได้ไหม
+   เสร็จแล้วสรุปสิ่งที่ทำและแสดง diff
    ~~~
-3. ให้ Codex ชี้ความต่างระหว่าง String กับ String? และอธิบายว่า data ที่จำเป็นหายควรแสดง error แทนแต่งค่าเอง
-4. ให้รัน test ของ model จาก client. ตรวจหนึ่งชื่อ/สถานะกับ JSON จริง
+2. สร้าง model ให้ข้อมูลมีช่องตรงกับ API เหมือนใช้แบบฟอร์มเดียวกันทั้งหน้าร้านและเคาน์เตอร์
 
-**Checkpoint:** sample ที่ถูกแปลงได้ ส่วน required id ที่หายทำให้ test ตรวจพบ
+   ~~~text
+   ดู docs/api-contract.md กับ data/service-requests.json แล้วสร้าง ServiceRequest model ให้อ่านข้อมูลใบงานได้
+   ถ้ามี model เดิมอยู่แล้วให้ใช้ต่อ ถ้าข้อมูลที่จำเป็นหายหรือผิดชนิด ให้ error อย่าแต่งค่าขึ้นมาเอง
+   ~~~
+3. ขอคำอธิบายสั้น ๆ จากไฟล์ที่เพิ่งได้
+
+   ~~~text
+   อธิบายสั้น ๆ ว่า String กับ String? ใน Dart ต่างกันยังไง โดยยกตัวอย่างจาก model ที่เพิ่งสร้าง
+   ~~~
+4. ส่ง prompt ให้สร้างและรันการตรวจข้อมูล
+
+   ~~~text
+   เขียน test ให้ ServiceRequest model 2 กรณี
+   1) อ่านใบงานหนึ่งรายการจาก data/service-requests.json แล้ว title กับ status ต้องตรงกับไฟล์
+   2) ข้อมูลที่ไม่มี id ต้อง error ห้ามสร้างค่าสมมติ
+   รัน test แล้วสรุปว่าผ่านกี่อัน พร้อมบอก title/status ที่ตรวจจริง
+   ~~~
+
+**Checkpoint:** JSON ตัวอย่างแปลงเป็น Dart ได้โดย title/status ตรงกับไฟล์ และ test ที่ขาด `id` ตรวจพบ error
 
 ## Practice 2 — ประกอบ My requests ด้วย Widgets
 
@@ -54,22 +62,33 @@ next: {"text": "Exercise 2", "link": "/exercises/day-03-flutter/exercise-02"}
 
 ### Steps
 
-1. ส่ง:
+1. ส่ง prompt นี้ให้ประกอบหน้ารายการ โดยยังใช้ข้อมูลตัวอย่าง
 
    ~~~text
-   สร้างหน้าจอ My requests สำหรับ Service Desk Lite ด้วย Material widgets
-   ใช้ sample เฉพาะ owner learner01 จาก data/service-requests.json
-   คัดลอก fixture ไป client/assets และประกาศ asset ใน pubspec.yaml
-   ใช้ ServiceRequest model ที่มีอยู่ แสดง title/category/status
-   ข้อความ UI ภาษาไทย; ใส่ป้าย “ข้อมูลตัวอย่าง” ให้ชัด
-   แยก widget สำหรับหนึ่งรายการ; ไม่เรียก API และไม่ hardcode secret
+   สร้างหน้า My requests ของ Service Desk Lite แสดงใบงาน 3 รายการของ learner01 จาก data/service-requests.json
    ~~~
-2. ให้รัน:
+   ~~~text
+   โชว์ title, category และ status ในแต่ละการ์ด ข้อความเป็นภาษาไทย และมีป้าย “ข้อมูลตัวอย่าง” ให้เห็นชัด
+   ~~~
+   ~~~text
+   ใช้ model เดิม แยกการ์ดหนึ่งใบเป็น widget ของมันเอง
+   ยังไม่ต้องเรียก API (ข้อมูลตัวอย่างต้องอยู่ในโฟลเดอร์ client เพื่อให้ web อ่านได้)
+   แก้ test เดิมของแอปตัวอย่างให้เช็คหน้านี้แทน แล้วรัน test สรุปผลให้ดู
+   ~~~
+2. ส่ง prompt ให้เปิด preview แล้วเก็บหน้าต่างรันนี้ไว้ เรายังไม่ต้องใช้ API ใน Practice นี้
 
-   ~~~shell
-   flutter run -d chrome --web-hostname localhost --web-port 3000
+   ~~~text
+   รันแอปบน web ที่ localhost:3000 ให้ฉันเปิดดูใน Edge
+   ถ้ารันบน Mac ให้บอก URL ที่ต้องเปิดเอง
+   ถ้าพอร์ตถูกใช้อยู่ ให้หยุดเฉพาะแอปของเราที่รันค้างไว้ ห้ามปิดอย่างอื่นหรือเปลี่ยนพอร์ตเอง ถ้าไม่แน่ใจให้ถามก่อน
+   เสร็จแล้วบอก URL และวิธีหยุดแอปนี้
    ~~~
-3. ตรวจว่ามี 3 รายการ และชื่อแรกตรง sample. ปรับขนาด browser ให้แคบใกล้มือถือ
-4. ถ้าเกิด overflow ส่งภาพเฉพาะหน้าจอทดลองให้ Codex แก้ layout จุดนั้น. อย่าให้เขียนแอปใหม่ทั้งหมด
+3. เปิด URL ใน Edge ตรวจว่ามี **3 รายการของ learner01** ชื่อแรกตรงกับไฟล์ตัวอย่าง แล้วลดความกว้าง browser ใกล้หน้าจอมือถือ
+4. ถ้าข้อความล้น ส่งภาพเฉพาะหน้าจอทดลองพร้อม prompt นี้
+
+   ~~~text
+   ในภาพมีข้อความล้นจอ ช่วยแก้ให้ title, category และ status อ่านได้แม้หน้าจอแคบ
+   แก้เฉพาะส่วนที่เกี่ยวข้อง ไม่ต้องแตะข้อมูลเดิม แล้วแสดง diff
+   ~~~
 
 **Checkpoint:** เห็น title/category/status ครบโดยไม่ล้นหน้าจอ และรู้ว่ายังเป็นข้อมูลตัวอย่าง

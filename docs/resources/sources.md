@@ -19,8 +19,15 @@ next: false
 | Pull requests | [Creating a PR](https://docs.github.com/en/pull-requests/how-tos/create-pull-requests/creating-a-pull-request) | Day 1 |
 | FastAPI/password hashing/JWT | [OAuth2 and JWT tutorial](https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/) | Day 2 |
 | Browser origin | [CORS](https://fastapi.tiangolo.com/tutorial/cors/) | Day 3 |
+| Python 3.12 environment และการเรียก interpreter โดยตรง | [venv](https://docs.python.org/3.12/library/venv.html), [pip freeze](https://pip.pypa.io/en/stable/cli/pip_freeze/) | Day 3 startup, Day 4 dependency snapshot |
+| Flutter บน Edge และ web-server | [Web setup](https://docs.flutter.dev/platform-integration/web/setup), [Web development](https://docs.flutter.dev/platform-integration/web/building) | Day 3–4; Windows และ macOS ใช้ target ต่างกัน |
 | PostgreSQL connection encryption | [Azure PostgreSQL TLS](https://learn.microsoft.com/en-us/azure/postgresql/security/security-tls) | readiness, Day 2 |
-| Flutter networking | [Fetch data](https://docs.flutter.dev/cookbook/networking/fetch-data) | Day 3 |
+| Flutter networking และ UI states | [Fetch data](https://docs.flutter.dev/cookbook/networking/fetch-data) | Day 3; ใช้อ้างอิงหลักการ ตัวอย่างต้นฉบับใช้ package http |
+| Dio: JSON, form-urlencoded, errors และ platform adapters | [เอกสารผู้ดูแล package](https://pub.dev/packages/dio), [API reference](https://pub.dev/documentation/dio/latest/dio/Dio-class.html) | Day 3 · Exercise 3–4 |
+| Timeout และการทดสอบ Dio | [receiveTimeout](https://pub.dev/documentation/dio/latest/dio/Options/receiveTimeout.html), [HttpClientAdapter](https://pub.dev/documentation/dio/latest/dio/HttpClientAdapter-class.html) | Day 3 · Exercise 3 |
+| Dart compile-time configuration | [String.fromEnvironment](https://api.dart.dev/dart-core/String/String.fromEnvironment.html) | Day 3–4 · API_BASE_URL |
+| Flutter async UI และ dependencies จำลอง | [mounted](https://api.flutter.dev/flutter/widgets/State/mounted.html), [Mock dependencies](https://docs.flutter.dev/cookbook/testing/unit/mocking) | Day 3 · UI states/tests |
+| Package dependencies และ restart | [Using packages](https://docs.flutter.dev/packages-and-plugins/using-packages), [Hot reload](https://docs.flutter.dev/tools/hot-reload) | Day 3 · Exercise 3–4 |
 | Android build | [Build and release](https://docs.flutter.dev/deployment/android) | Day 3 |
 | iOS Simulator setup (Optional · macOS) | [Set up iOS development](https://docs.flutter.dev/platform-integration/ios/setup) | readiness, Day 3 |
 | Simulator .app build | [Flutter iOS build command](https://github.com/flutter/flutter/blob/stable/packages/flutter_tools/lib/src/commands/build_ios.dart) | Day 3 · Exercise 4 · Practice เสริม |
@@ -28,6 +35,7 @@ next: false
 | Container runtime entitlement | [Docker Desktop license](https://docs.docker.com/subscription-billing/desktop-license/) | readiness |
 | Azure CLI app commands | [az containerapp](https://learn.microsoft.com/en-us/cli/azure/containerapp) | Day 4 |
 | ACR build | [az acr](https://learn.microsoft.com/en-us/cli/azure/acr) | Day 4 |
+| Environment และ image architecture | [Environment types](https://learn.microsoft.com/en-us/azure/container-apps/environment), [Containers](https://learn.microsoft.com/en-us/azure/container-apps/containers) | Day 4; คง configuration ของ lab และ build linux/amd64 |
 | Private image access | [Managed identity image pull](https://learn.microsoft.com/en-us/azure/container-apps/managed-identity-image-pull) | Day 4 |
 | Ingress | [Configure ingress](https://learn.microsoft.com/en-us/azure/container-apps/ingress-how-to) | Day 4 |
 | GitHub deployment | [Container Apps GitHub Actions](https://learn.microsoft.com/en-us/azure/container-apps/github-actions) | Day 4 |
@@ -45,3 +53,7 @@ next: false
 ตรวจ VitePress รุ่น stable และเอกสาร ChatGPT local project/quickstart อีกครั้งเมื่อ 2026-10-09 การจัดหน้าเว็บไม่ใช่ผลซ้อม Windows/Android/Azure หรือการยืนยันสิทธิ์บัญชีผู้เรียน
 
 ตรวจ Flutter iOS setup, คำสั่ง build สำหรับ Simulator และการรองรับ iOS ของ `url_launcher` เมื่อ 2026-10-24 เพื่อเพิ่ม Practice เสริมใน Day 3 การตรวจเอกสารและเว็บไซต์ยังไม่ใช่ผลทดลอง build iOS จริง
+
+ตรวจเอกสารผู้ดูแล Dio บน pub.dev และเอกสาร Dart/Flutter อีกครั้งเมื่อ 2026-11-15 สำหรับ Day 3 ตั้งแต่ Exercise 3 ใช้ Dio เป็น package ที่เลือกสำหรับ workshop; ตัวอย่าง networking และ mocking ของ Flutter ใช้ package http จึงอ้างอิงหลักการ ไม่คัดลอก syntax ของ client คนละตัว การตรวจเอกสารแยกจากผลรันแอปบนอุปกรณ์จริง
+
+ตรวจรอบ 2026-11-16 เพื่อปรับ Day 3–4 เป็น prompt ภาษาธรรมชาติ: Python 3.12/venv, Flutter Edge/web-server, Dio และ url_launcher จาก pub.dev, ACR managed-identity/ARM audience, environment types, Secrets, revisions และ log streaming จาก Microsoft Learn. คง API contract เดิม ผลตรวจเอกสารแยกจากผลซ้อมแอป; การอ่าน Azure Portal อย่างเดียวไม่ยืนยัน deployment, OIDC หรือ cloud persistence

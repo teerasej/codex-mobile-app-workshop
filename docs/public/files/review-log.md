@@ -22,11 +22,11 @@
 - PostgreSQL TLS / runtime connection: Not run
 - Seed --check / rerun preservation: Not run
 - API unit / live contract / expired-token checks: Not run
-- Flutter browser: Not run
+- Flutter browser / Edge profile used: Not run
 - Android device / debug APK: Not run
-- Exact GitHub OIDC subject / verified owner-repository IDs / Preview: Not run
-- Prepare deployment access / OIDC / private image pull: Not run
-- Check Day 4 resources / HTTPS API data operations: Not run
+- Exact GitHub OIDC subject / verified owner-repository IDs: Not run
+- Instructor-confirmed deployment access / OIDC / private image pull: Not run
+- Day 4 resource verification / HTTPS API data operations: Not run
 - Restart persistence / commit-image-version-revision match: Not run
 
 กรอกผลจริงทีละรายการ; การมี Entra account หรือ /health ผ่านไม่ยืนยัน Codex, Android, database หรือการทำ Exercise สำเร็จ

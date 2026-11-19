@@ -31,6 +31,10 @@ next: {"text": "ไป Day 3", "link": "/exercises/day-03-flutter/"}
 
 เก็บ password/token/connection string ในช่องทางส่วนตัว ไม่ใส่ใน review log หรือ repository
 
+## โจทย์เสริม Day 2
+
+ถ้าทำแบบฝึกหลักครบแล้ว ลองใช้ Codex สร้าง API จากไฟล์ JSON และรัน test ให้ผ่านทุกกรณี ใช้เวลาประมาณ 30–45 นาที [เปิด Day 2 Challenge](/exercises/day-02-api/challenge)
+
 ## Day 3 — นำ API มาอยู่ในมือผู้ใช้
 
 วันนี้เคาน์เตอร์รับเรื่องทำงานแล้ว พรุ่งนี้ Flutter จะเป็นแบบฟอร์มที่ผู้ใช้ถืออยู่ ทุก field และ route จึงต้องตรง API contract เดิม

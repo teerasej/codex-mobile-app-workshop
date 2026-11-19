@@ -6,15 +6,13 @@ next: {"text": "Exercise 2", "link": "/exercises/day-04-azure/exercise-02"}
 
 # Exercise 1 — แพ็กและทดสอบ container
 
-
 > **Day 4 · Azure · 09:30–10:30**
 >
 > อ่าน [ภาพรวมและเงื่อนไขของวันนี้](/exercises/day-04-azure/) ก่อนเริ่ม ใช้โฟลเดอร์ `service-desk-lite` เดิม และทำทีละ Practice
 
-
 ## Scenario
 
-API ทำงานบน laptop แล้ว เราต้องพิสูจน์ว่าเครื่องอื่นที่มี container runtime ก็รันได้จากกล่องเดียวกัน
+API ทำงานบน laptop แล้ว เราจะใส่ code และ dependencies ไว้ใน image เหมือนจัดกล่องสูตรอาหารให้เครื่องอื่นเปิดใช้ได้ โดยเก็บรหัสผ่านไว้นอกกล่อง
 
 ## Practice 1 — อ่าน Dockerfile ก่อน build
 
@@ -24,20 +22,24 @@ API ทำงานบน laptop แล้ว เราต้องพิสู�
 
 ### Steps
 
-1. ตรวจ api/Dockerfile และ .dockerignore จาก starter. Dockerfile ใช้ Python 3.12, ติดตั้ง lockfile, copy เฉพาะ app และรันด้วย non-root user
-2. ส่ง prompt:
+1. เปิด `api/Dockerfile` และ `.dockerignore` ในโปรเจค แล้วส่ง prompt นี้ให้ Codex ตรวจความพร้อม
 
    ~~~text
-   ตรวจ api/Dockerfile, .dockerignore และ app/config.py
-   ยืนยันว่า build context คือ root, runtime port 8000, host 0.0.0.0
-   ไม่มี .env/password/token ใน COPY, image layers หรือ startup output
-   ตรวจ requirements.lock.txt จาก Day 2 ว่าเป็น UTF-8 และไม่มี local absolute paths
-   ยังไม่ build หรือ deploy; อธิบาย 4 บรรทัดสำคัญของ Dockerfile
+   ตรวจ API จาก Day 2–3 โดยไม่อ่าน .env หรือแก้ไฟล์
+   ชี้ว่า protected routes ใช้ auth, repository ใช้ PostgreSQL และข้อมูลคงอยู่หลัง restart
+   ตรวจว่า /health อ่าน version จาก APP_VERSION ได้ และมี tests ที่ไม่ใช้ Azure DB
+   ตรวจ api/Dockerfile, .dockerignore และ api/app/config.py
+   อธิบาย 4 ส่วนสั้น ๆ: Python 3.12, ติดตั้ง lockfile, COPY app และรันด้วย non-root user
+   ยืนยัน build context ที่ root, host 0.0.0.0 และ port 8000
+   ตรวจว่าไม่มี secret ใน COPY หรือ startup output และทุกไฟล์ที่ COPY มีจริง
+   ถ้าเป็น API แบบ memory หรือปิด auth ให้หยุดและบอกสิ่งที่ต้องแก้ก่อน build
    ~~~
-3. ถ้า lockfile ใช้ไม่ได้บน Linux ให้ Codex แยกเฉพาะ dependency ที่เป็น platform-specific อย่างมีเหตุผล แล้วบันทึกไฟล์ Linux lock ที่ซ้อมได้. อย่าลบแพ็กเกจที่ application ต้องใช้เพื่อให้ build ผ่าน
-4. ตรวจว่าการ start API ไม่ต้องมี schema.sql/sample JSON ใน image เพราะ seed ทำไปแล้วบน database ฝึก
 
-**Checkpoint:** ชี้ได้ว่า secret เข้า runtime ภายหลัง ไม่ถูก pack ไปกับ code และทุกไฟล์ COPY มีอยู่จริง
+2. อ่านผลตรวจพร้อมผู้สอน. `api/requirements.lock.txt` ต้องเป็น UTF-8 และไม่มี path เฉพาะเครื่อง; Docker และ workflow ต้องใช้ lockfile ชุดเดียวกันที่ตรวจบน Linux แล้ว หากติด dependency ต่าง platform ให้แก้กับผู้สอนก่อน build ไม่ลบแพ็กเกจเพียงเพื่อให้ผ่าน
+3. ชี้บรรทัด `COPY` ว่านำเข้าเฉพาะ application. Schema/seed/sample JSON ใช้เตรียม database ก่อนหน้านี้ จึงไม่ต้องรัน seed หรืออ่านไฟล์ตัวอย่างขณะเริ่ม API ใน container
+4. ตรวจผล auth/persistence ที่บันทึกจาก Day 3. หากยังไม่มีหลักฐาน ให้กลับไปตรวจ API กับผู้สอนก่อน; อย่าถือว่าการตรวจ code อย่างเดียวพิสูจน์ว่า database ใช้งานได้
+
+**Checkpoint:** อธิบายได้ว่า image มีอะไร, secret เข้าตอนรันอย่างไร และ API/lockfile พร้อมสำหรับ container
 
 ## Practice 2 — รันกล่องเดียวกันในเครื่อง
 
@@ -47,22 +49,74 @@ API ทำงานบน laptop แล้ว เราต้องพิสู�
 
 ### Steps
 
-1. หยุด uvicorn เดิมเพื่อคืน port 8000. จาก root ให้ Codex build:
+1. ให้ Codex หยุดเฉพาะ API เดิมและ build image จาก root โปรเจค
+
+   ~~~text
+   ตรวจว่า Docker engine พร้อม แล้วหยุดเฉพาะ uvicorn ของโปรเจคนี้เพื่อคืน port 8000
+   ถ้าไม่แน่ใจว่า process ไหนเป็นของโปรเจค ให้ถามฉันก่อน ไม่หยุด process อื่น
+   build จาก root ด้วย api/Dockerfile ตั้งชื่อ image service-desk-api:day4-v1
+   ไม่เปิด .env และยังไม่ส่ง image ขึ้น Azure
+   สรุปว่า build ผ่านหรือไม่ พร้อมจุดที่ต้องแก้ถ้ามี
+   ~~~
+
+   คำสั่งอ้างอิงสำหรับตรวจผลที่ Codex ใช้:
 
    ~~~shell
    docker build -f api/Dockerfile -t service-desk-api:day4-v1 .
    ~~~
-2. ผู้เรียนรัน container เองโดยไม่แสดงเนื้อหา .env:
+
+2. ขอให้ Codex เริ่ม container โดยส่ง env file ให้ Docker อ่านโดยตรง
+
+   ~~~text
+   จาก root ของโปรเจค รัน image service-desk-api:day4-v1 เป็น container service-desk-api-local
+   ใช้ --rm และ bind เฉพาะ 127.0.0.1:8000 ไปยัง port 8000 ของ container
+   ให้ Docker อ่าน api/.env ด้วย --env-file โดยไม่ cat, เปิด หรือพิมพ์ค่าในไฟล์
+   ไม่ตรวจ environment แบบแสดงค่าทั้งหมด และไม่ deploy
+   เปิดค้างไว้ระหว่างทดสอบ แล้วบอกฉันเมื่อ API พร้อม
+   ~~~
 
    ~~~shell
    docker run --rm --name service-desk-api-local -p 127.0.0.1:8000:8000 --env-file api/.env service-desk-api:day4-v1
    ~~~
 
-   Docker อ่าน env file โดยตรง; ให้ค่าทั้งสามใน .env ไม่มี quote ครอบที่กลายเป็นส่วนหนึ่งของค่า
-3. เปิด /health และ /docs ผ่าน port เดิม. Login และค้น UUID ที่สร้างเมื่อวาน
-4. รัน API check script จาก terminal อีกหน้าต่างด้วยรหัสผ่านทดลองของตน
-5. ดู container log ว่ามี request/status แต่ไม่มี token/password. จบแล้ว Ctrl+C หรือ **docker stop service-desk-api-local**
+   หากค่าใน env file มี quote ครอบ ให้ผู้เรียนตรวจและแก้เองตามรูปแบบ `--env-file`; Docker อาจรับ quote เป็นส่วนหนึ่งของค่า ไม่ส่งไฟล์กลับ chat
 
-**Checkpoint:** /health และ authenticated DB operations ผ่านใน container ไม่ใช่เผลอเรียก uvicorn ตัวเก่า
+3. ใน Edge เปิด health endpoint แล้วตรวจ `status` เป็น `ok`
 
-**ถ้าติดขัด:** Connection refused ให้ตรวจ bind host/port. Docker build บน Apple Silicon ใช้ทดสอบ local ได้; image สำหรับ Azure จะ build บน ACR ใน Exercise 2 จึงไม่เอา image arm64 ในเครื่องไปใช้โดยไม่ตรวจ architecture
+   ~~~text
+   http://127.0.0.1:8000/health
+   ~~~
+
+4. เปิด API docs อีกแท็บ แล้วใช้ app user เดิมของ Day 2 ลงชื่อเข้าใช้ด้วยปุ่ม `Authorize`. ค้น UUID ที่บันทึกไว้จาก Day 3
+
+   ~~~text
+   http://127.0.0.1:8000/docs
+   ~~~
+
+5. ให้ Codex เตรียม API checker สำหรับ Terminal อีกหน้าต่าง แล้วผู้เรียนกรอกรหัสผ่านเองใน Terminal นั้น
+
+   ~~~text
+   เตรียมการรัน scripts/check_api.py จาก root ด้วย Python ของโปรเจค
+   ใช้ base URL http://127.0.0.1:8000 เปิดใน Terminal ที่ฉันกรอก password แบบไม่แสดงตัวอักษรได้
+   ถ้าเปิด Terminal แบบนั้นไม่ได้ ให้บอกคำสั่งที่ตรงกับ OS และ Python ของฉันเพื่อรันเอง
+   ห้ามส่ง password/token ผ่าน arguments หรือ chat
+   อธิบายว่า checker จะเพิ่มข้อมูลสมมติหนึ่งรายการ และให้ฉันเก็บ UUID เพื่อตรวจ persistence
+   ~~~
+
+   คำสั่งอ้างอิง; Codex ต้องเลือก Python ของโปรเจคให้ตรงเครื่อง:
+
+   ~~~shell
+   python scripts/check_api.py --base-url http://127.0.0.1:8000
+   ~~~
+
+6. ตรวจว่าเห็น request/status ใน container log และไม่มี password/token แล้วสั่งหยุดเฉพาะ container นี้
+
+   ~~~text
+   ตรวจเฉพาะ log ของ container service-desk-api-local ที่ใช้ทดสอบเมื่อครู่
+   สรุป route/status โดยไม่คัดลอกข้อมูลลับ แล้วหยุด container นี้
+   ยืนยันว่า port 8000 ไม่ได้มี API เก่าของโปรเจคทำงานแทน
+   ~~~
+
+**Checkpoint:** health, login และ authenticated read/create ผ่านจาก container และพบ UUID เดิมใน PostgreSQL
+
+**ถ้าติดขัด:** Connection refused ให้ตรวจ bind host/port. ถ้า health ผ่านแต่ข้อมูลล้ม ให้ตรวจ database/config กับผู้สอน. Apple Silicon build สำหรับ local ได้; image ของ Azure จะ build บน ACR เป็น `linux/amd64` ใน Exercise 2
