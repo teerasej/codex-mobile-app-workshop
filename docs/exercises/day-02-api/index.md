@@ -8,26 +8,23 @@ next: {"text": "Exercise 1", "link": "/exercises/day-02-api/exercise-01"}
 import { withBase } from 'vitepress'
 
 const slidesFilename = 'Service-Desk-Lite-Day-02-English-v5.pdf'
-const studentPackages = ['student-01.zip', 'student-02.zip', 'student-03.zip']
 </script>
 
 # Day 2 — บริการข้อมูลแอพผ่าน internet
 
-<p class="day-two-slides">
-  <a class="day-two-slides-download" :href="withBase('/files/' + slidesFilename)" :download="slidesFilename">
-    Download Day 2 slides (PDF)
+<p>
+  <a class="day-two-download-button" href="https://nextflowth-my.sharepoint.com/:f:/g/personal/teerasej_nextflowth_onmicrosoft_com/IgCcEtvLcft1T5eNI0M7qN22ARsOcDqAkcK_Ft5X8RoGgvs?e=WtP3ti">
+    ดาวน์โหลด Student ZIP จาก SharePoint
   </a>
 </p>
 
-<section class="day-two-downloads" aria-label="ดาวน์โหลดชุดตั้งค่าสำหรับ Day 2">
-  <p class="day-two-downloads-title">ดาวน์โหลดชุดตั้งค่าสำหรับ Day 2</p>
-  <p>เลือกหมายเลขที่ผู้สอนแจ้ง แล้วแตก ZIP และเปิด README.md เพื่อดูขั้นตอนตั้งค่า รับไฟล์ .env และข้อมูลบัญชีจริงจากผู้สอนผ่านช่องทางส่วนตัว</p>
-  <div class="day-two-download-buttons">
-    <a v-for="file in studentPackages" :key="file" :href="withBase('/files/' + file) + '?v=20261118'" :download="file">
-      ดาวน์โหลด {{ file }}
-    </a>
-  </div>
-</section>
+<p>ลงชื่อเข้าใช้ SharePoint แล้วเลือก ZIP ตามหมายเลขที่ผู้สอนแจ้ง</p>
+
+<p class="day-two-slides">
+  <a class="day-two-download-button" :href="withBase('/files/' + slidesFilename)" :download="slidesFilename">
+    Download Day 2 slides (PDF)
+  </a>
+</p>
 
 [กลับสารบัญ](/) · [วันก่อนหน้า](/exercises/day-01-git/) · [วันถัดไป](/exercises/day-03-flutter/)
 
@@ -69,7 +66,7 @@ const studentPackages = ['student-01.zip', 'student-02.zip', 'student-03.zip']
 เมื่อจบ Exercise 4 ไปที่ [สรุปท้ายวัน](/exercises/day-02-api/summary) เพื่อเช็กหลักฐานและเตรียมงานต่อ
 
 <style scoped>
-.day-two-slides-download {
+.day-two-download-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -83,64 +80,14 @@ const studentPackages = ['student-01.zip', 'student-02.zip', 'student-03.zip']
   text-decoration: none;
 }
 
-.day-two-slides-download:hover {
+.day-two-download-button:hover {
   background: var(--vp-button-brand-hover-bg);
   color: var(--vp-button-brand-hover-text);
 }
 
-.day-two-slides-download:focus-visible {
+.day-two-download-button:focus-visible {
   outline: 3px solid var(--vp-c-brand-1);
   outline-offset: 4px;
 }
 
-.day-two-downloads {
-  margin: 24px 0;
-  padding: 20px;
-  border: 1px solid var(--vp-c-brand-1);
-  border-radius: 12px;
-  background: var(--vp-c-brand-soft);
-}
-
-.day-two-downloads-title {
-  margin: 0 0 12px;
-  font-weight: 600;
-}
-
-.day-two-download-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.day-two-download-buttons a {
-  display: flex;
-  flex: 1 1 210px;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: 10px 16px;
-  border-radius: 999px;
-  background: var(--vp-button-brand-bg);
-  color: var(--vp-button-brand-text);
-  font-size: 14px;
-  font-weight: 600;
-  text-align: center;
-  text-decoration: none;
-}
-
-.day-two-download-buttons a:hover {
-  background: var(--vp-button-brand-hover-bg);
-  color: var(--vp-button-brand-hover-text);
-}
-
-.day-two-download-buttons a:focus-visible {
-  outline: 3px solid var(--vp-c-brand-1);
-  outline-offset: 4px;
-}
-
-@media (max-width: 639px) {
-  .day-two-download-buttons a {
-    flex-basis: 100%;
-  }
-}
 </style>
