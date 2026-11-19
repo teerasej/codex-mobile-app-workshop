@@ -14,9 +14,11 @@ next: {"text": "Exercise 1", "link": "/exercises/day-04-azure/exercise-01"}
 
 **ผลท้ายวัน:** API ที่มี auth/persistence เปิดผ่าน HTTPS, deploy จาก GitHub ได้, Android เชื่อม API นี้ และตามรอย commit → image → revision ได้
 
-**Prerequisites:** main จาก Day 3, API unit tests/requirements.lock.txt, Docker engine, Azure CLI และ [Azure readiness](/resources/readiness) ผ่าน. ใช้ subscription, student resource group และ PostgreSQL ที่ได้รับมอบหมาย; ทางเลือกใช้ทรัพยากรของตนต้องได้รับอนุมัติจากเจ้าของ. ใช้ pull/pipeline identities ที่เตรียมไว้. OIDC/role/network ต้องพร้อมก่อนช่วงที่ใช้งาน
+**ก่อนเริ่ม:** ใช้โปรเจคเดิมจาก Day 3 บน branch main พร้อม API tests และ requirements.lock.txt. API ต้อง login ได้ ใช้ PostgreSQL จริง ข้อมูลอยู่หลัง restart และอ่าน version จาก APP_VERSION ได้. ถ้ายังเป็น API แบบเก็บข้อมูลใน memory หรือปิด auth ให้แจ้งผู้สอนก่อนแพ็ก container
 
-> **License / ค่าใช้จ่าย:** Azure Container Apps, ACR, database และ build อาจมีค่าใช้จ่าย. แผน lab ใช้ app ละ 0.25 vCPU/0.5Gi, min=0/max=1 บน Consumption-only; ไม่สร้าง Log Analytics. ใช้เฉพาะ lab ที่เจ้าของอนุมัติงบแล้ว. Docker Desktop และ GitHub Actions ต้องอยู่ในสิทธิ์ที่องค์กรอนุญาต; ไม่ถือว่าทั้งวันไม่มีค่าใช้จ่าย
+Docker engine, Azure CLI และ [Azure readiness](/resources/readiness) ต้องพร้อมแล้ว. ใช้ subscription, student resource group, PostgreSQL และ pull/pipeline identities ที่ได้รับมอบหมาย; ทางเลือกใช้ทรัพยากรของตนต้องให้เจ้าของอนุมัติ. ผู้สอนเตรียมสิทธิ์และเครือข่ายก่อนช่วงที่ใช้งาน
+
+> **License / ค่าใช้จ่าย:** Azure Container Apps, ACR, database และ build อาจมีค่าใช้จ่าย. แผน lab ใช้ app ละ 0.25 vCPU/0.5Gi, min=0/max=1 บน Consumption-only และไม่สร้าง Log Analytics. Consumption-only เป็น environment แบบ legacy ที่ lab นี้เลือกไว้; หน้า Create ของ Azure อาจเลือก Workload profiles เป็นค่าเริ่มต้น จึงต้องตรวจแผนก่อนสร้าง. Docker Desktop และ GitHub Actions ต้องอยู่ในสิทธิ์ที่องค์กรอนุญาต
 
 | เวลา | Exercise | อธิบาย / ลงมือ / ตรวจและแก้ |
 | --- | --- | --- |
@@ -27,11 +29,21 @@ next: {"text": "Exercise 1", "link": "/exercises/day-04-azure/exercise-01"}
 
 พัก 10:30–10:45 และ 14:30–14:45; กลางวัน 12:00–13:00. การรอ provision ใช้เวลาช่วงตรวจ/ทบทวน; ถ้ารอนานให้เรียนอ่าน config/log จากผู้สอน แล้วกลับมาตรวจของตน ไม่ข้าม checkpoint เงียบ ๆ
 
-## Instructionของวันนี้
+## วิธีทำงานวันนี้
 
-ทำ code บน branch **chore/container-deployment**. คำสั่ง Azure ที่มี <...> ต้องให้ Codex เติม **ค่าที่ผู้เรียนยืนยัน** ก่อนรัน; ห้ามคัดลอกทั้ง placeholder. Azure CLI ตัวอย่างเป็นบรรทัดเดียว ใช้ได้ทั้ง PowerShell และ macOS โดยไม่เปลี่ยน line-continuation
+1. เปิด local project เดิมใน Codex แล้วส่ง prompt นี้
 
-ทุก prompt ที่สร้าง/แก้ cloud resources ต้องแสดง subscription, resource group, รายการ resources และผลต่อค่าใช้จ่ายก่อน แล้วผู้เรียนจึงให้ทำเฉพาะขั้นนั้น. ไม่ให้ Codex อ่านไฟล์ .env หรือรัน seed ใน cloud. ไม่แก้หรือลบ shared PostgreSQL/control resources. หลังสร้าง ACR ให้ผู้สอนตรวจ exact GitHub OIDC subject แล้วกด **Preview deployment access → Prepare deployment access** ก่อน deploy private image; เมื่อ API ทำงานแล้วจึงกด **Check Day 4 resources**
+   ~~~text
+   ตรวจ branch และไฟล์ที่ยังไม่ได้บันทึกใน Git ของโปรเจคนี้ก่อน
+   ถ้า main มีงาน Day 3 ครบแล้ว ให้สร้างหรือสลับไป chore/container-deployment
+   เก็บงานเดิมไว้ ถ้ามีงานค้างหรือ branch ชื่อนี้มีอยู่แล้วให้อธิบายก่อนทำต่อ
+   ยังไม่ push, merge หรือเปลี่ยน Azure
+   ~~~
+
+2. ใช้ Microsoft Edge อ่านบทเรียน เปิด GitHub, API docs และ Azure portal ด้วยบัญชีของตน. ให้ Codex ช่วยรันงานในเครื่องจาก prompt ทีละขั้น; คำสั่งที่แสดงเป็นตัวอย่างสำหรับอ่านตรวจ ไม่ต้องจำหรือคัดลอก placeholder ไปใช้
+3. ก่อนสร้างหรือแก้ Azure ให้ตรวจ subscription, resource group, resource ที่จะเปลี่ยน และค่าใช้จ่าย แล้วจึงยืนยันเฉพาะขั้นนั้น. ถ้าบัญชีนี้ได้รับอนุญาตให้อ่านอย่างเดียว ให้ดูค่าตามบทเรียนและบันทึก deployment ว่า **ยังไม่ได้ทดลอง**
+4. Secret กรอกเองในช่องส่วนตัว. ให้ Docker อ่าน env file โดยตรงได้ แต่ไม่ให้ Codex เปิดหรือพิมพ์ค่าใน `.env`. ไม่รัน seed บน Cloud และไม่แก้ shared PostgreSQL หรือ resources ส่วนกลาง
+5. หลัง ACR พร้อม แจ้งผู้สอนเพื่อตรวจสิทธิ์ดึง image และ GitHub OIDC ของ repository/main จริง. รอคำยืนยันก่อน deploy private image; หลัง deploy จึงส่ง API URL และผลทดสอบที่ไม่มี secret ให้ผู้สอนตรวจ
 
 ## เปิดแบบฝึกหัด
 

@@ -39,13 +39,24 @@ requirements.txt เป็นรายการ dependencies เริ่มต�
 
 Student ZIP เป็นคนละไฟล์กับ public starter: คัดลอกเฉพาะ `api/.env` ของตนเมื่อยังไม่มีไฟล์ และใช้ค่าที่ไม่เป็นความลับใน `deployment.txt` สำหรับ Day 4. อย่าแตกทับทั้งโปรเจคหรือแทน `.gitignore` ของ starter ด้วยไฟล์จาก Student ZIP; อย่าวาง private ZIP/README, `.env`, XLSX หรือ passwords ใน Git/chat
 
-ก่อน Day 4 ให้ผู้สอนตรวจ **GitHub OIDC subject ของ repository/main จริง** รวม immutable owner/repository IDs แล้ว Preview/Prepare deployment access. Template ไม่คำนวณ subject จากชื่อ และไม่เปลี่ยน GitHub settings เพื่อให้ trust แบบเก่าผ่าน. อ่าน [Azure readiness](/resources/readiness) ก่อนคัดลอก workflow
+ก่อน Day 4 แจ้งผู้สอนตรวจ **GitHub OIDC subject ของ repository/main จริง** รวม immutable owner/repository IDs และรอยืนยัน deployment access. Template ไม่คำนวณ subject จากชื่อ และไม่เปลี่ยน GitHub settings เพื่อให้ trust แบบเก่าผ่าน. อ่าน [Azure readiness](/resources/readiness) ก่อนคัดลอก workflow
 
 ## API check script
 
 รันด้วย Python standard library ไม่ต้องลง package เพิ่ม. Script เรียก API จริง ตรวจ auth/validation/ownership และสร้าง Request สมมติ 1 รายการต่อรอบเพื่อใช้ตรวจ persistence ต่อ. ไม่ลบข้อมูลหลังตรวจและไม่ทดแทน unit tests, expired-token test หรือ mobile/cloud rehearsal. ใส่ password เฉพาะ interactive terminal ของตนเอง
 
-ตัวอย่างจาก root โปรเจคผู้เรียน:
+ส่ง prompt จากโปรเจคเดิมเพื่อเตรียมการตรวจ:
+
+~~~text
+จาก root ของ service-desk-lite ตรวจว่ามี scripts/check_api.py และ API ที่ http://127.0.0.1:8000 เปิดอยู่
+เตรียมรัน API checker ด้วย Python ของ .venv และ --base-url นี้
+script จะสร้าง Request สมมติหนึ่งรายการและเก็บไว้ตรวจ persistence ไม่ลบข้อมูล
+ให้ฉันกรอกรหัสผ่านสองบัญชีเองใน interactive terminal ที่ไม่ echo
+ถ้า session นี้รับค่าแบบ private ไม่ได้ ให้บอกคำสั่งกับตำแหน่งเพื่อให้ฉันเปิด Terminal เอง
+ห้ามอ่านหรือแสดงรหัสผ่าน/token ใน chat แล้วสรุปเฉพาะผลตรวจและ UUID ที่เก็บไว้
+~~~
+
+คำสั่งอ้างอิงจาก root (ใช้ Python ของ `.venv` ตาม OS):
 
 ~~~shell
 python scripts/check_api.py --base-url http://127.0.0.1:8000

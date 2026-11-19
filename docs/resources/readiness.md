@@ -8,7 +8,7 @@ next: false
 
 [กลับสารบัญ](/)
 
-เราใช้ Windows เป็นหลักและมีทางเลือก macOS. ผู้เรียนใช้ ChatGPT desktop app โดยเลือก Codex และ local project; browser ใช้กับ GitHub, API docs และ Azure portal. ไม่ต้องติดตั้ง VS Code
+เราใช้ Windows เป็นหลักและมีทางเลือก macOS. ผู้เรียนใช้ ChatGPT desktop app โดยเลือก Codex และ local project; ใช้ Microsoft Edge ในโปรไฟล์ของตนกับคู่มือ, Flutter preview, GitHub, API docs และ Azure portal. ตรวจบัญชี/tenant ในแต่ละเว็บให้ตรงพื้นที่ฝึกด้วย ไม่ต้องติดตั้ง VS Code
 
 ## 1. ตรวจ ChatGPT desktop และ GitHub
 
@@ -22,7 +22,7 @@ next: false
 
 ## 2. ติดตั้งเครื่องมือก่อนอบรม
 
-ติดตั้ง Git, Python 3.12, Flutter stable พร้อม Dart, Chrome, Android Studio/SDK/Platform Tools และ Android emulator หรือ Android device สำหรับทดสอบ, Azure CLI และ container engine ที่องค์กรอนุญาต. Python 3.12 เป็น baseline ของแบบฝึกหัด ไม่ได้หมายถึงรุ่นใหม่สุด
+ติดตั้ง Git, Python 3.12, Flutter stable พร้อม Dart, Microsoft Edge, Android Studio/SDK/Platform Tools และ Android emulator หรือ Android device สำหรับทดสอบ, Azure CLI และ container engine ที่องค์กรอนุญาต. Python 3.12 เป็น baseline ของแบบฝึกหัด รุ่นใหม่กว่าในตระกูล 3.12+ ต้องตรวจ dependencies/tests ก่อนเปลี่ยน ไม่อัปเกรดระหว่าง Practice โดยอัตโนมัติ
 
 ให้ Codex **ตรวจแบบ read-only** ด้วย prompt นี้:
 
@@ -34,7 +34,8 @@ flutter devices, adb devices, docker version, az version
 Windows ใช้ PowerShell native; macOS ใช้ Terminal. ไม่เปลี่ยนไป WSL เอง
 ```
 
-- Windows: คำสั่งสร้าง virtual environment ใช้ `py -3.12 -m venv .venv`. macOS: `python3.12 -m venv .venv`
+- Windows: Codex สร้าง virtual environment ด้วย `py -3.12 -m venv .venv`. macOS: `python3.12 -m venv .venv` เฉพาะเมื่อยังไม่มี `.venv`; ตรวจ Python ของ environment เดิมก่อนใช้ต่อ
+- Flutter preview: Windows ใช้ target `edge`; macOS ใช้ `web-server` แล้วเปิด URL ใน Edge โปรไฟล์ของตน วิธีหลังมี debugging จำกัด ใช้ hostname `localhost` และ port `3000` ตลอด Day 3–4 ให้ตรง CORS ไม่ใช้ API URL เป็น frontend origin
 - `flutter doctor -v` ต้องไม่มี blocker ใน Android toolchain และอุปกรณ์ที่เลือก. คำเตือน iOS/Xcode บนเครื่องที่ไม่ทำ iOS ไม่ใช่ blocker
 - Android: เปิด emulator และรันแอป Flutter ตัวอย่างให้ได้ก่อนเรียน. ถ้าใช้เครื่องจริง ต้องอนุญาต USB debugging และยืนยันเครื่องบนหน้าจอ; ตรวจ `adb devices` ว่าไม่เป็น unauthorized
 - `docker version` ต้องเห็นทั้ง Client และ Server. ตรวจ virtualization กับ IT ถ้าเครื่อง Windows เริ่ม container engine ไม่ได้
@@ -72,12 +73,13 @@ Windows ใช้ PowerShell native; macOS ใช้ Terminal. ไม่เป�
 Day 4 ผู้เรียนสร้างและ deploy แอปเอง; การเตรียม account/database/identities ไม่ได้หมายความว่ามีแอปพร้อมแล้ว
 
 - ใช้ subscription/region/student resource group และ pipeline/pull identities จาก `deployment.txt` ของ Student ZIP. ผู้เรียนมี Contributor เฉพาะกลุ่มของตน ไม่ต้องมีสิทธิ์สร้าง resource group ใหม่หรือแตะ shared infrastructure
-- ตรวจ quota สำหรับ Container Apps และ ACR Basic/Tasks. Registered providers หลัก: Microsoft.App, Microsoft.ContainerRegistry, Microsoft.ManagedIdentity; ให้ผู้ดูแลจัดการที่ subscription scope. แผนนี้ใช้ Consumption-only, app ละ 0.25 vCPU/0.5Gi, min=0/max=1 และ logs destination=none ไม่สร้าง Log Analytics/dedicated profiles/private endpoints
+- ตรวจ quota สำหรับ Container Apps และ ACR Basic/Tasks. Registered providers หลัก: Microsoft.App, Microsoft.ContainerRegistry, Microsoft.ManagedIdentity; ให้ผู้ดูแลจัดการที่ subscription scope. แผน lab นี้ใช้ Consumption-only (ชนิด legacy ที่ยังรองรับ), app ละ 0.25 vCPU/0.5Gi, min=0/max=1 และ logs destination=none ไม่สร้าง Log Analytics/dedicated profiles/private endpoints ไม่เลือกค่าเริ่มต้นของ Portal แทนแผนโดยไม่ตรวจ
 - สร้างเฉพาะ ACR และ Container Apps environment/app ที่ได้รับอนุมัติใน student group เดิม. ใช้ pull identity ที่ได้รับ ไม่สร้าง identity ซ้ำ. ถ้ามี resource อยู่แล้วให้ตรวจเจ้าของก่อนใช้
 - **ก่อน deploy private image:** หลังสร้าง ACR ให้ผู้สอนตรวจ **GitHub OIDC subject** ของ repository และ branch `main` จาก GitHub จริง แล้วเตรียมสิทธิ์ OIDC และ AcrPull ของ pull identity. รอผู้สอนยืนยันว่า access พร้อมก่อนเริ่ม image pull. ขั้นนี้ยังไม่ต้องมี app หรือ API URL
-- OIDC ใช้ issuer `https://token.actions.githubusercontent.com` และ audience `api://AzureADTokenExchange`. **อย่าเดา subject จากชื่อ repository:** repository ใหม่หลัง 15 กรกฎาคม 2026 ใช้รูปแบบ `repo:OWNER@OWNER_ID/REPOSITORY@REPOSITORY_ID:ref:refs/heads/main`. Repository เก่าอาจใช้รูปแบบเดิมได้เฉพาะเมื่อ GitHub ยืนยัน. ผู้สอนตรวจ `sub_claim_prefix` กับ owner/repository IDs จาก GitHub OIDC settings/API แบบอ่านอย่างเดียว แล้วกรอก **full subject ของ main** และยืนยัน checkbox ว่าได้ตรวจรูปแบบและ IDs แล้ว. ID เหมือนเลขประจำพัสดุที่ช่วยแยกเจ้าของ แม้ชื่อหน้ากล่องจะเปลี่ยน. ดู [GitHub immutable subject claims](https://docs.github.com/en/actions/reference/security/oidc#immutable-subject-claims)
+- ผู้สอนตรวจ exact OIDC subject ของ repository/main ตาม [GitHub immutable subject claims](https://docs.github.com/en/actions/reference/security/oidc#immutable-subject-claims) รวม owner/repository IDs เมื่อใช้รูปแบบ immutable. ผู้เรียนแจ้ง repository/main และรอการยืนยันสิทธิ์ ไม่ต้องคำนวณ subject หรือจัดการ federation เอง
 - Pipeline AZURE_CLIENT_ID ต้องตรง identity ที่ได้รับ ไม่ใช่ pull identity. หากเปลี่ยน repository/owner หรือรูปแบบ subject ให้ทบทวน access ใหม่ก่อนรัน Actions; ไม่เปลี่ยน GitHub OIDC settings กลับเป็นรูปแบบเก่าหรือขยาย trust เพื่อข้าม error
-- **หลัง deploy API:** ให้ผู้สอนกด **Check Day 4 resources** เพื่อตรวจ app/registry/identity/HTTPS health และบันทึก API URL. ต้อง login/create/read และตรวจ persistence แยกจาก health; การตรวจนี้ไม่สร้างหรือแก้สิทธิ์แทนขั้นเตรียม
+- **หลัง deploy API:** แจ้งผู้สอนตรวจ app/registry/identity/HTTPS health และบันทึก API URL. ต้อง login/create/read และตรวจ persistence แยกจาก health; การตรวจนี้ไม่สร้างหรือแก้สิทธิ์แทนขั้นเตรียม
+- ACR ต้องอนุญาต ARM audience tokens สำหรับ managed-identity image pull ให้ Codex ตรวจแบบอ่านอย่างเดียว; หากยังไม่ enabled ให้ผู้ดูแล registry จัดการตามแผนสิทธิ์ก่อนเรียน ผู้เรียนไม่เปลี่ยน authentication settings เพื่อข้ามปัญหา
 - Contributor ไม่ได้รวมสิทธิ์ role assignment. ให้ผู้สอน/ผู้ดูแลเตรียม AcrPull ที่ ACR ของ lab; registry แบบ ABAC ต้องใช้ role ตาม policy ไม่เปลี่ยน mode เพื่อข้ามปัญหา
 - ตรวจ Container Apps → PostgreSQL ผ่าน TLS จริง แม้ laptop จะเชื่อมได้แล้ว. Shared public server ใช้ firewall ตามแผนชั้นเรียน; private network ใช้ environment/VNet ที่ IT เตรียม ไม่แก้ shared firewall หรือลด TLS จากบัญชีผู้เรียน
 - GitHub Actions runner ต้องเข้าถึง ACR/Azure management และใช้ ACR Tasks ได้. หากองค์กรปิด ACR Tasks ให้ผู้จัดเตรียม runner ที่อนุญาตก่อนเรียน
@@ -87,7 +89,7 @@ Day 4 ผู้เรียนสร้างและ deploy แอปเอง
 
 สิ่งที่ใส่ใน private GitHub repository ภายหลัง: Secrets `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID`; Variables `ACR_NAME`, `RESOURCE_GROUP`, `CONTAINER_APP_NAME`. ใช้ pipeline client ID เดิม ไม่สร้าง Azure client secret สำหรับ OIDC และไม่ใส่ DATABASE_URL/JWT_SECRET ใน workflow
 
-**Checkpoint ก่อน Day 4:** target/owner/budget/network/permissions พร้อม และมีผู้รับผิดชอบตรวจ exact GitHub subject แล้ว Preview/Prepare deployment access หลัง ACR พร้อม. ถ้าไม่พร้อม ให้เรียนอ่าน log/revision จากผู้สอน แต่ไม่ทำเครื่องหมายว่าตน deploy สำเร็จ
+**Checkpoint ก่อน Day 4:** target/owner/budget/network/permissions พร้อม และมีผู้รับผิดชอบตรวจ exact GitHub subject กับสิทธิ์หลัง ACR พร้อม. ถ้าไม่พร้อมหรือได้รับสิทธิ์อ่านอย่างเดียว ให้เรียนอ่าน log/revision จากผู้สอนและบันทึก deployment ว่ายังไม่ได้ทดลอง
 
 ## 5. คำสั่งและข้อความลับ
 
