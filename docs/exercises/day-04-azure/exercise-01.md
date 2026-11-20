@@ -25,23 +25,21 @@ API ทำงานบน laptop แล้ว เราจะใส่ code แ�
 1. เปิด `api/Dockerfile` และ `.dockerignore` ในโปรเจค แล้วส่ง prompt นี้ให้ Codex ตรวจความพร้อม
 
    ~~~text
-   ตรวจ API จาก Day 2–3 โดยไม่อ่าน .env หรือแก้ไฟล์
-   ชี้ว่า protected routes ใช้ auth, repository ใช้ PostgreSQL และข้อมูลคงอยู่หลัง restart
-   ตรวจว่า /health อ่าน version จาก APP_VERSION ได้ และมี tests ที่ไม่ใช้ Azure DB
-   ตรวจ api/Dockerfile, .dockerignore และ api/app/config.py
-   อธิบาย 4 ส่วนสั้น ๆ: Python 3.12, ติดตั้ง lockfile, COPY app และรันด้วย non-root user
-   ยืนยัน build context ที่ root, host 0.0.0.0 และ port 8000
-   ตรวจว่าไม่มี secret ใน COPY หรือ startup output และทุกไฟล์ที่ COPY มีจริง
-   ถ้าเป็น API แบบ memory หรือปิด auth ให้หยุดและบอกสิ่งที่ต้องแก้ก่อน build
+   ก่อนแพ็ก API ช่วยดูว่าพร้อมเอาไปเปิดใน Docker หรือยัง
+   ชี้ให้ดูว่าส่วนที่ต้องล็อกอินมีการตรวจสิทธิ์ ข้อมูลเก็บใน PostgreSQL และมีหลักฐานว่าข้อมูลยังอยู่หลังเปิด API ใหม่
+   ขอเช็กด้วยว่า /health อ่าน APP_VERSION และรัน tests ได้โดยไม่ต่อ Azure DB
+
+   ดู api/Dockerfile, .dockerignore และ api/app/config.py
+   ช่วยเช็กว่า build จาก root ของโปรเจกต์ เปิดที่ 0.0.0.0:8000
+   ถ้ายังเก็บข้อมูลใน memory หรือยังขาดการล็อกอิน ให้บอกสิ่งที่ต้องแก้ก่อน build
    ~~~
 
-2. อ่านผลตรวจพร้อมผู้สอน. `api/requirements.lock.txt` ต้องเป็น UTF-8 และไม่มี path เฉพาะเครื่อง; Docker และ workflow ต้องใช้ lockfile ชุดเดียวกันที่ตรวจบน Linux แล้ว หากติด dependency ต่าง platform ให้แก้กับผู้สอนก่อน build ไม่ลบแพ็กเกจเพียงเพื่อให้ผ่าน
-3. ชี้บรรทัด `COPY` ว่านำเข้าเฉพาะ application. Schema/seed/sample JSON ใช้เตรียม database ก่อนหน้านี้ จึงไม่ต้องรัน seed หรืออ่านไฟล์ตัวอย่างขณะเริ่ม API ใน container
-4. ตรวจผล auth/persistence ที่บันทึกจาก Day 3. หากยังไม่มีหลักฐาน ให้กลับไปตรวจ API กับผู้สอนก่อน; อย่าถือว่าการตรวจ code อย่างเดียวพิสูจน์ว่า database ใช้งานได้
+2. อ่านผลตรวจพร้อมผู้สอน. Docker และ workflow ต้องใช้ lockfile ชุดเดียวกัน
+
 
 **Checkpoint:** อธิบายได้ว่า image มีอะไร, secret เข้าตอนรันอย่างไร และ API/lockfile พร้อมสำหรับ container
 
-## Practice 2 — รันกล่องเดียวกันในเครื่อง
+## Practice 2 — รัน Image
 
 <PracticeIllustration asset="d04-e01-p02" />
 
@@ -52,34 +50,27 @@ API ทำงานบน laptop แล้ว เราจะใส่ code แ�
 1. ให้ Codex หยุดเฉพาะ API เดิมและ build image จาก root โปรเจค
 
    ~~~text
-   ตรวจว่า Docker engine พร้อม แล้วหยุดเฉพาะ uvicorn ของโปรเจคนี้เพื่อคืน port 8000
-   ถ้าไม่แน่ใจว่า process ไหนเป็นของโปรเจค ให้ถามฉันก่อน ไม่หยุด process อื่น
-   build จาก root ด้วย api/Dockerfile ตั้งชื่อ image service-desk-api:day4-v1
-   ไม่เปิด .env และยังไม่ส่ง image ขึ้น Azure
-   สรุปว่า build ผ่านหรือไม่ พร้อมจุดที่ต้องแก้ถ้ามี
-   ~~~
+   ช่วยแพ็ก API เป็น image ชื่อ service-desk-api:day4-v1 จาก root ของโปรเจกต์
 
    คำสั่งอ้างอิงสำหรับตรวจผลที่ Codex ใช้:
 
-   ~~~shell
-   docker build -f api/Dockerfile -t service-desk-api:day4-v1 .
    ~~~
 
-2. ขอให้ Codex เริ่ม container โดยส่ง env file ให้ Docker อ่านโดยตรง
+2. ขอให้ Codex เริ่มการทำงานของ container โดยส่ง env file ให้ Docker อ่านโดยตรง
 
    ~~~text
-   จาก root ของโปรเจค รัน image service-desk-api:day4-v1 เป็น container service-desk-api-local
-   ใช้ --rm และ bind เฉพาะ 127.0.0.1:8000 ไปยัง port 8000 ของ container
-   ให้ Docker อ่าน api/.env ด้วย --env-file โดยไม่ cat, เปิด หรือพิมพ์ค่าในไฟล์
-   ไม่ตรวจ environment แบบแสดงค่าทั้งหมด และไม่ deploy
-   เปิดค้างไว้ระหว่างทดสอบ แล้วบอกฉันเมื่อ API พร้อม
+   ทำสอบ API ที่อยู่ใน Image ที่เพิ่ง build เสร็จ ช่วยเปิดเป็น container ชื่อ service-desk-api-local
+
+   ทำจาก root ตามตัวอย่าง เปิดพอร์ต 8000 ให้เข้าถึงได้จากเครื่องนี้ที่ 127.0.0.1 เท่านั้น
+   ให้ Docker รับ api/.env โดยตรงผ่าน --env-file
+   เปิดไว้ในเครื่องระหว่างที่ฉันทดสอบ แล้วบอกเมื่อ API พร้อม
    ~~~
 
    ~~~shell
    docker run --rm --name service-desk-api-local -p 127.0.0.1:8000:8000 --env-file api/.env service-desk-api:day4-v1
    ~~~
 
-   หากค่าใน env file มี quote ครอบ ให้ผู้เรียนตรวจและแก้เองตามรูปแบบ `--env-file`; Docker อาจรับ quote เป็นส่วนหนึ่งของค่า ไม่ส่งไฟล์กลับ chat
+   หากค่าใน env file มี quote ครอบ ให้ผู้เรียนตรวจและแก้เองตามรูปแบบ `--env-file`
 
 3. ใน Edge เปิด health endpoint แล้วตรวจ `status` เป็น `ok`
 
@@ -93,29 +84,7 @@ API ทำงานบน laptop แล้ว เราจะใส่ code แ�
    http://127.0.0.1:8000/docs
    ~~~
 
-5. ให้ Codex เตรียม API checker สำหรับ Terminal อีกหน้าต่าง แล้วผู้เรียนกรอกรหัสผ่านเองใน Terminal นั้น
 
-   ~~~text
-   เตรียมการรัน scripts/check_api.py จาก root ด้วย Python ของโปรเจค
-   ใช้ base URL http://127.0.0.1:8000 เปิดใน Terminal ที่ฉันกรอก password แบบไม่แสดงตัวอักษรได้
-   ถ้าเปิด Terminal แบบนั้นไม่ได้ ให้บอกคำสั่งที่ตรงกับ OS และ Python ของฉันเพื่อรันเอง
-   ห้ามส่ง password/token ผ่าน arguments หรือ chat
-   อธิบายว่า checker จะเพิ่มข้อมูลสมมติหนึ่งรายการ และให้ฉันเก็บ UUID เพื่อตรวจ persistence
-   ~~~
-
-   คำสั่งอ้างอิง; Codex ต้องเลือก Python ของโปรเจคให้ตรงเครื่อง:
-
-   ~~~shell
-   python scripts/check_api.py --base-url http://127.0.0.1:8000
-   ~~~
-
-6. ตรวจว่าเห็น request/status ใน container log และไม่มี password/token แล้วสั่งหยุดเฉพาะ container นี้
-
-   ~~~text
-   ตรวจเฉพาะ log ของ container service-desk-api-local ที่ใช้ทดสอบเมื่อครู่
-   สรุป route/status โดยไม่คัดลอกข้อมูลลับ แล้วหยุด container นี้
-   ยืนยันว่า port 8000 ไม่ได้มี API เก่าของโปรเจคทำงานแทน
-   ~~~
 
 **Checkpoint:** health, login และ authenticated read/create ผ่านจาก container และพบ UUID เดิมใน PostgreSQL
 

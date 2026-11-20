@@ -69,15 +69,14 @@ next: {"text": "Exercise 4", "link": "/exercises/day-04-azure/exercise-04"}
 5. ให้ Codex เตรียม workflow แล้วแสดง diff
 
    ~~~text
-   คัดลอก docs/deploy-api.yml.example เป็น .github/workflows/deploy-api.yml
-   ตรวจว่า test ใช้ doubles ไม่อ่าน .env และไม่ต่อ Azure DB
-   ใช้ root build context, api/Dockerfile และ requirements.lock.txt ชุดที่ตรวจบน Linux แล้ว
-   build ด้วย ACR Tasks เป็น linux/amd64 และใช้ full commit SHA เป็น image tag
-   ใช้ OIDC ของ pipeline identity และ update app เดิมเท่านั้น
-   workflow_dispatch รันเฉพาะ main ไม่สร้าง resources ใหม่หรือ seed DB
-   ตรวจ permissions contents:read และ id-token:write
-   แสดง diff และอธิบาย test → Azure login → build → update → ตรวจ health version
-   ยังไม่ push, merge หรือ run workflow
+   อยากกดปล่อย API รุ่นที่ตรวจแล้วจาก GitHub ได้ ช่วยใช้ docs/deploy-api.yml.example ทำไฟล์ .github/workflows/deploy-api.yml
+   ขอให้เริ่มจากใช้ requirements.lock.txt ที่ตรวจบน Linux แล้วรัน test โดยจำลองการคุยกับฐานข้อมูล ไม่อ่าน .env หรือต่อ Azure DB
+   จากนั้นให้ ACR Tasks build จาก root ด้วย api/Dockerfile สำหรับ linux/amd64 ติด tag เป็น full commit SHA
+   ใช้ OIDC ของ pipeline identity เดิมและปรับเฉพาะ app เดิม โดยไม่สร้าง resource หรือ seed ฐานข้อมูล
+
+   ช่วยเช็กว่า workflow_dispatch ต้องกดเองและทำงานเฉพาะ main โดยมีสิทธิ์ contents:read กับ id-token:write ตามตัวอย่าง
+   ขอดู diff และคำอธิบายสั้น ๆ ตั้งแต่ test, Azure login, build, update จนถึงรอ /health ตอบ version ตรงกับ commit ใหม่
+   รอบนี้แค่เตรียมไฟล์ให้ตรวจ ยังไม่ push, merge หรือรัน workflow
    ~~~
 
 6. อ่านผลตรวจ: workflow ต้องรอ health ที่มี **version ตรง SHA ใหม่**; การเห็น HTTP 200 ของ revision เก่ายังไม่ถือว่ารุ่นใหม่พร้อม
@@ -95,19 +94,18 @@ next: {"text": "Exercise 4", "link": "/exercises/day-04-azure/exercise-04"}
 1. ให้ Codex รัน tests และเตรียมรายการไฟล์สำหรับ commit ก่อน
 
    ~~~text
-   รัน API tests ในเครื่องด้วย Python ของโปรเจค โดยไม่ใช้ .env หรือ Azure DB
-   ตรวจ diff และรายการไฟล์ที่จะ commit ของ branch chore/container-deployment
-   ไม่รวม .env, .local, build output หรือ credentials
-   ถ้า tests ล้มให้รายงานสาเหตุ ไม่ลบหรือผ่อน test เพื่อให้ผ่าน
-   แสดงผล tests และสรุป diff ให้ฉันตรวจก่อน ยังไม่ส่งขึ้น GitHub
+   ก่อนส่งงาน ช่วยลองรัน API tests ด้วย Python ของโปรเจกต์ โดยไม่ใช้ .env หรือต่อ Azure DB
+   ถ้า test ไม่ผ่าน ขอให้บอกว่าติดอะไรและเก็บเงื่อนไขของ test ไว้ตามเดิม
+   ขอดูผลกับ diff ของ chore/container-deployment พร้อมรายชื่อไฟล์ที่จะ commit
+   กัน .env, .local, ไฟล์ build และ credentials ออกจากรายการ แล้วรอให้ฉันตรวจในเครื่องก่อน
    ~~~
 
 2. เมื่อตรวจผ่าน ให้สั่ง Codex ส่งงานตาม workflow Git ที่ฝึก Day 1
 
    ~~~text
-   commit เฉพาะไฟล์ที่ฉันตรวจแล้วบน branch chore/container-deployment
-   push branch นี้ไป private repository เดิม และเปิด PR เข้า main
-   ส่ง PR URL ให้ฉันตรวจ ยังไม่ merge และไม่ run deployment
+   ไฟล์ที่ฉันตรวจแล้วบน chore/container-deployment ส่งได้เลย
+   ช่วย commit เฉพาะไฟล์ชุดนั้น แล้ว push branch ไปยัง private repository เดิมและเปิด PR เข้า main
+   ส่งลิงก์ PR มาให้ฉันตรวจเอง หยุดก่อน merge หรือเริ่ม deploy
    ~~~
 
    เปิด PR ใน Edge ตรวจ `Files changed` และผล checks แล้วจึงกด `Merge pull request` → `Confirm merge` ตามสิทธิ์ของตน. ถ้าองค์กรบังคับ reviewer ให้รอ reviewer ก่อน
@@ -122,10 +120,10 @@ next: {"text": "Exercise 4", "link": "/exercises/day-04-azure/exercise-04"}
 5. เมื่อ run ผ่าน ให้ Codex ตรวจ release แบบอ่านอย่างเดียว
 
    ~~~text
-   ตรวจ release ของ workflow run นี้โดยไม่เปลี่ยน Azure
-   เทียบ full commit SHA ของ run กับ ACR image tag, image ของ revision ที่ให้บริการ และ /health.version
-   ระบุว่า revision พร้อมและได้รับ traffic หรือไม่ ไม่ถือว่า health ของรุ่นเก่าผ่านแทน
-   รายงานเฉพาะ SHA, image, revision และ HTTPS URL ไม่เปิด secrets
+   ช่วยดูว่าตอนนี้ Azure ให้บริการ API รุ่นที่ workflow เพิ่งปล่อยจริงไหม รอบนี้ขอตรวจอย่างเดียว
+   เทียบ full commit SHA ของรอบนี้กับ tag ใน ACR, image ของ revision ที่ให้บริการ และ version ที่ /health ตอบกลับ
+   ขอ SHA, image, revision และ HTTPS URL พร้อมบอกว่า revision พร้อมและรับ traffic อยู่ไหม
+   ใช้ผลจากรุ่นที่เพิ่งปล่อย และใส่เฉพาะข้อมูลที่แชร์ได้
    ~~~
 
 6. เปิด HTTPS API `/docs` ใน Edge, `Authorize` ใหม่ แล้วอ่าน UUID เดิมและสร้างข้อมูลสมมติหนึ่งรายการ. เก็บ UUID และส่งผลที่ไม่มี secret ให้ผู้สอนตรวจ. Health ใน workflow ไม่แทนการตรวจ DB/auth นี้

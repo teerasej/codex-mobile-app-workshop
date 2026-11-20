@@ -15,7 +15,9 @@ next: {"text": "Exercise 1", "link": "/exercises/day-03-flutter/exercise-01"}
 
 **ผลลัพธ์:** Flutter ใช้ Dio เชื่อม Sign in, list/detail, create/update และ UI states กับ API เดิม; มี browser preview และ Android debug app
 
-**ทางเลือกสำหรับ Mac ที่พร้อม:** หลังผ่านกิจกรรมหลักและยังมีเวลา ลองรันและ build แอปเดิมสำหรับ iPhone Simulator ใน Exercise 4 · Practice 3. ข้ามได้โดยไม่เสีย checkpoint หลัก
+**ไอคอน Android:** เริ่ม [Exercise 4 · Practice 1](/exercises/day-03-flutter/exercise-04#android-app-icon) ด้วยการสร้างภาพและตั้งค่าไอคอนแอป แล้วตรวจไอคอนเมื่อรันแอปบน Android
+
+**ทางเลือกสำหรับ Mac ที่พร้อม:** หลังผ่านกิจกรรมหลักและยังมีเวลา ลองรันและ build แอปเดิมสำหรับ iPhone Simulator ใน [Exercise 4 · Practice 4](/exercises/day-03-flutter/exercise-04#ios-simulator) ข้ามได้โดยไม่เสีย checkpoint หลัก
 
 **Prerequisites:** โฟลเดอร์ `service-desk-lite` เดิม, Flutter/Edge/Android toolchain ตาม [readiness](/resources/readiness), API ที่ผ่าน auth/ownership/PostgreSQL ใน Day 2 และรหัสผ่านทดลองสองบัญชี Flutter ไม่ต้องรู้ database password
 

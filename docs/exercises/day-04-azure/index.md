@@ -10,7 +10,7 @@ next: {"text": "Exercise 1", "link": "/exercises/day-04-azure/exercise-01"}
 
 ## Overview theme
 
-วันนี้เราแพ็ก API ใส่ Docker container แล้วเปิดบริการผ่าน Azure Container Apps. Image เหมือนกล่องสูตรพร้อมวัตถุดิบ, ACR คือชั้นเก็บกล่อง และ Revision คือป้ายรุ่นที่บอกว่าตอนนี้กำลังเสิร์ฟสูตรไหน
+วันนี้เราจะแพ็ก API ใส่ Docker container แล้วเปิดบริการผ่าน Azure Container Apps.
 
 **ผลท้ายวัน:** API ที่มี auth/persistence เปิดผ่าน HTTPS, deploy จาก GitHub ได้, Android เชื่อม API นี้ และตามรอย commit → image → revision ได้
 

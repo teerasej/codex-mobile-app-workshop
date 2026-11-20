@@ -407,6 +407,23 @@
       }
     ]
   },
+  "d03-e04-app-icon": {
+    "alt": "ภาพที่สร้างขึ้นถูกนำไปใช้เป็นไอคอนในรายการแอปบนโทรศัพท์",
+    "width": 1672,
+    "height": 941,
+    "sources": [
+      {
+        "url": "/images/practices/d03-e04-app-icon-768.webp",
+        "width": 768,
+        "height": 432
+      },
+      {
+        "url": "/images/practices/d03-e04-app-icon-1536.webp",
+        "width": 1536,
+        "height": 864
+      }
+    ]
+  },
   "d03-e04-p01": {
     "alt": "อะแดปเตอร์เชื่อมโทรศัพท์กับหนังสือคู่มือที่เปิดอยู่",
     "width": 1536,

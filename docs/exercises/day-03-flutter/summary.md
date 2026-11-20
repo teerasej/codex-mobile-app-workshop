@@ -16,6 +16,7 @@ next: {"text": "ไป Day 4", "link": "/exercises/day-04-azure/"}
 - Flutter ใช้ Dio ติดต่อ API ผ่าน HTTP/JSON; login ส่ง form-urlencoded ส่วน create/update ส่ง JSON โดย browser และ Android มีเงื่อนไขเครือข่ายต่างกัน
 - DioException ช่วยแยก HTTP error จาก connection/timeout ที่อาจไม่มี response; timeout ของแต่ละช่วงไม่ใช่เวลารวมของคำขอ
 - Plugin เพิ่มความสามารถของอุปกรณ์ และ debug APK เป็นหลักฐานการ build สำหรับฝึก
+- ภาพต้นฉบับหนึ่งไฟล์ใช้สร้างไอคอน Android ได้หลายขนาด ตรวจผลจริงจากรายการแอปบนเครื่องที่ติดตั้ง build ล่าสุด
 - หากทำ Practice เสริมบน Mac: Dart project เดิมรันบน iPhone Simulator ได้ โดย `.app` ที่ build ใช้สำหรับ Simulator ไม่ใช่ไฟล์ติดตั้งบน iPhone จริง
 
 ## ก่อนจบวัน ตรวจหลักฐาน
@@ -27,6 +28,7 @@ next: {"text": "ไป Day 4", "link": "/exercises/day-04-azure/"}
 - ☐ flutter analyze และ flutter test ผ่าน พร้อมบันทึกกรณีที่ใช้ fake adapter แยกจาก UI จริง
 - ☐ ทดลอง plugin และเปิด browser preview ใน Edge ได้
 - ☐ มี Android debug app/APK และตรวจ UUID จากหน้าจอเทียบกับ API
+- ☐ เห็นไอคอนใหม่ในรายการแอป Android และแตะเปิด Service Desk Lite ได้
 
 ช่องที่ยังไม่ผ่านให้บันทึกตามจริง พร้อมสาเหตุและสิ่งที่ต้องทำต่อ ไม่เปลี่ยนเป็น “ผ่าน” เพียงเพราะ Codex รายงานว่างานเสร็จ
 
@@ -34,7 +36,7 @@ next: {"text": "ไป Day 4", "link": "/exercises/day-04-azure/"}
 
 ~~~text
 ช่วยเติม docs/review-log.md จากผลที่เราตรวจใน Day 3
-แยก fixture, API จริง, tests, Edge, Android และ iOS optional
+แยก fixture, API จริง, tests, Edge, Android, ผลตรวจไอคอน Android และ iOS optional
 ระบุ passed/pending ตามหลักฐานจริง พร้อม UUID, test result และ build path ที่เกี่ยวข้อง
 อย่าใส่ password/token/connection string และอย่าระบุว่า Android ผ่านจากผล web อย่างเดียว
 ตรวจสถานะ PR/main ตาม workflow Day 1 ถ้ายังไม่ merge ให้บอกสิ่งที่ค้าง ไม่ merge เองจาก prompt นี้

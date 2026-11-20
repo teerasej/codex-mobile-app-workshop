@@ -7,7 +7,7 @@ Thai-first participant website for a connected four-day Codex mobile application
 - Website: https://teerasej.github.io/codex-mobile-app-workshop/
 - Canonical learner source: `docs/`; exercises, day overviews and daily summaries live under `docs/exercises/`.
 - Approved downloadable files: `docs/public/files/`. Keep downloadable templates aligned with the starter ZIP.
-- All 40 core Practices and the optional iOS Simulator Practice have a distinct illustration below their heading (41 illustrations). Reviewed WebP copies live in `docs/public/images/practices/`; the theme's `practice-images.json` contains only public URLs, dimensions and Thai alternative text.
+- All 41 core Practices and the optional iOS Simulator Practice have a distinct illustration below their heading (42 illustrations). Reviewed WebP copies live in `docs/public/images/practices/`; the theme's `practice-images.json` contains only public URLs, dimensions and Thai alternative text.
 - Use the shared `PracticeIllustration` component with a stable practice asset ID. Preserve the complete scene and aspect ratio when exporting replacement sizes. Keep original artwork, generation prompts and review records outside this repository.
 - This repository contains participant material only. Instructor notes, source PDFs, credentials and rehearsal records belong outside this repository.
 

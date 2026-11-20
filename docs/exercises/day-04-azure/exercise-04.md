@@ -25,12 +25,11 @@ API เปิดแล้ว เราจะลองจากมุมผู้
 1. ส่ง API URL จาก Exercise 3 ที่ไม่มี secret ให้ Codex แล้วขอเปิด browser preview ใหม่
 
    ~~~text
-   หยุดเฉพาะ local API/container และ Flutter preview เดิมของโปรเจคนี้
-   ตรวจว่า HTTPS API URL ที่ฉันยืนยันไม่ใช่ localhost หรือ 127.0.0.1
-   จาก client/ เปิด Flutter ด้วย API_BASE_URL เป็น HTTPS origin นี้ผ่าน dart-define
-   Windows ใช้ Edge device; macOS ใช้ web-server แล้วให้ฉันเปิด Microsoft Edge เอง
-   คง web-hostname localhost และ web-port 3000 บอก URL ที่ฉันต้องเปิด
-   ไม่แก้ Azure หรือเพิ่ม API URL เข้า CORS origins
+   อยากลองแอปกับ API บน Azure จาก browser ก่อน ช่วยปิดเฉพาะ API หรือ container ในเครื่องกับ Flutter preview เดิมของเรา
+   เช็กว่า URL ที่ฉันให้เป็น HTTPS ของ lab จริง และไม่ใช่ localhost หรือ 127.0.0.1
+   จาก client/ ส่ง URL นี้เป็น API_BASE_URL ผ่าน dart-define แล้วเปิด preview ที่ http://localhost:3000
+   บน Windows ใช้ Edge บน Mac ใช้ web-server แล้วส่งลิงก์ให้ฉันเปิดใน Edge
+   รอบนี้ปรับแค่การเปิดแอปในเครื่อง เก็บ Azure กับ CORS ไว้ตามเดิม
    ~~~
 
 2. ใน Edge เปิด preview ตาม URL ที่ Codex แจ้ง. Login ด้วย app user ของตนแล้วสร้าง Request สมมติหนึ่งรายการ. ถ้า CORS ล้ม ให้เทียบ **frontend origin** กับ CORS ของ API
@@ -44,11 +43,10 @@ API เปิดแล้ว เราจะลองจากมุมผู้
 3. ขอให้ Codex สลับไป Android ที่เตรียมไว้แล้ว โดยใช้ HTTPS origin เดิม
 
    ~~~text
-   หยุด Flutter browser preview ของโปรเจคนี้ แล้วตรวจ Android device ที่พร้อม
-   ถ้ามีหลายเครื่องให้แสดงชื่อ/device ID เพื่อให้ฉันเลือก ไม่เดาอุปกรณ์
-   จาก client/ รันแอปบน Android ด้วย API_BASE_URL เป็น HTTPS origin เดิมผ่าน dart-define
-   local API ต้องยังปิดอยู่ เส้นทาง HTTPS นี้ไม่ต้องใช้ adb reverse
-   ไม่ใส่ password/token ในคำสั่งหรือ log
+   ทีนี้อยากลองบน Android กับ API บน Azure ตัวเดิม ช่วยปิด browser preview ของเราแล้วดูว่ามีเครื่องไหนพร้อม
+   ถ้ามีหลายเครื่อง ขอชื่อกับ device ID ให้ฉันเลือกก่อน
+   รันจาก client/ แล้วส่ง HTTPS URL เดิมเป็น API_BASE_URL ผ่าน dart-define
+   ให้ API ในเครื่องปิดต่อ ใช้ HTTPS ตรงโดยไม่พึ่ง adb reverse และไม่ใส่ password หรือ token ในคำสั่งหรือ log
    ~~~
 
 4. ใน Android กรอก password เอง แล้วสร้าง Request นี้. จด UUID; ใน Edge เปิด HTTPS API `/docs` และ `Authorize` ด้วย user เดียวกัน เรียก GET UUID นี้ต้องพบ title/status ตรงกัน. Logout/login ใหม่ใน Android แล้วค้นรายการเดิม
@@ -74,10 +72,9 @@ API เปิดแล้ว เราจะลองจากมุมผู้
 5. เมื่อรันทดสอบเสร็จ ให้ Codex หยุด Flutter run แล้ว build debug APK ด้วยค่า API เดิม
 
    ~~~text
-   หยุด flutter run ของโปรเจคนี้ก่อน แล้ว build Android debug APK จาก client/
-   ใช้ API_BASE_URL เป็น HTTPS origin เดิมผ่าน dart-define
-   บอก APK path และ API host ที่ใช้ build พร้อมผลสำเร็จหรือ error
-   ไม่ทำ signed release หรือส่งขึ้น store
+   ขอไฟล์ติดตั้ง Android สำหรับทดสอบกับ API บน Azure ตัวที่เพิ่งลอง
+   ช่วยหยุด Flutter รอบนี้ แล้ว build debug APK จาก client/ โดยส่ง HTTPS URL เดิมเป็น API_BASE_URL ผ่าน dart-define
+   บอกผล build, ที่อยู่ไฟล์ APK และ API host ที่ใช้ รอบนี้ขอแค่ไฟล์ debug ในเครื่อง
    ~~~
 
    บันทึก APK path และ API host ใน review log. `dart-define` ต้องใส่ตอน build ใหม่ด้วย; APK เก่าจะไม่เปลี่ยน URL ตามการรันครั้งล่าสุดเอง
@@ -94,19 +91,22 @@ API เปิดแล้ว เราจะลองจากมุมผู้
 
 1. ใน Edge เปิด Container App ของตน → หน้ารายการ revision (`Revisions and replicas` หรือ `Revision management` ตามหน้าจอ) → เลือก revision ที่พร้อมและรับ traffic. ตรวจชื่อ revision กับ image แล้วขอ Codex ยืนยันแบบอ่านอย่างเดียว
 
+   ![หน้า Revision management ของ Container App แสดงรายการ revision สถานะ และสัดส่วน traffic](https://learn.microsoft.com/en-us/azure/container-apps/media/revisions/screen-shot-revision-mgmt-labels.png)
+
+   [ภาพจาก Microsoft Learn · Container Apps revisions](https://learn.microsoft.com/en-us/azure/container-apps/revisions#labels)
+
    ~~~text
-   ตรวจเฉพาะ Container App ของ lab นี้แบบอ่านอย่างเดียว
-   แสดง revision ที่พร้อมและกำลังรับ traffic พร้อมชื่อ image/full tag
-   แยก latest revision ออกจาก revision ที่ให้บริการจริงถ้าไม่ใช่ตัวเดียวกัน
-   ไม่ update, restart หรือเปลี่ยน traffic
+   ช่วยดูว่า Container App ของ lab นี้กำลังให้ผู้ใช้เจอ API รุ่นไหน
+   ขอดู revision ที่พร้อมและรับ traffic จริง พร้อมชื่อ image กับ tag เต็ม
+   ถ้า revision ล่าสุดเป็นคนละตัว ช่วยชี้ให้เห็นด้วย รอบนี้แค่ดูใน Azure
    ~~~
 
 2. เปิด `Monitoring` → `Log stream` ของ app → เลือก `Console` → เลือก revision/replica/container ที่กำลังใช้. เปิด stream ค้างไว้ แล้วเปิด `/docs` ใน Edge อีกแท็บ. หากใช้ Codex ดู log แทน ให้ส่ง prompt นี้
 
    ~~~text
-   เปิด console log stream ของ revision/replica/container ที่เราเพิ่งตรวจ
-   ใช้ follow และ tail ไม่เกิน 30 บรรทัด ไม่พิมพ์ environment หรือ secrets
-   เปิดค้างไว้ระหว่างที่ฉันทดสอบ request แล้วรอฉันบอกให้หยุด
+   ฉันกำลังจะลองเรียก API ช่วยเปิด Console log สดของ revision, replica และ container ที่เราเพิ่งตรวจ
+   เริ่มจากไม่เกิน 30 บรรทัดล่าสุด และอย่าแสดงค่า environment หรือ secrets
+   เปิดค้างไว้ให้ฉันเทียบกับผลที่เห็น แล้วรอฉันบอกให้หยุด
    ~~~
 
    คำสั่งอ้างอิง; ถ้ามีหลาย revision ให้ Codex ระบุ revision/replica/container ที่ตรงกันเพิ่ม:
@@ -115,6 +115,8 @@ API เปิดแล้ว เราจะลองจากมุมผู้
    az containerapp logs show --name <APP_NAME> --resource-group <LAB_RG> --type console --tail 30 --follow
    ~~~
 
+   [วิธีเปิด Log stream และเลือก Console ใน Azure portal · Microsoft Learn](https://learn.microsoft.com/en-us/azure/container-apps/log-streaming#view-log-streams-via-the-azure-portal)
+
 3. ใน `/docs` กด `Authorize` ด้วย user เดิม เลือก `GET /requests/{id}` → `Try it out`. ใช้ UUID ที่ไม่มีในข้อมูลของตน เช่นค่าด้านล่าง → `Execute`. ต้องได้ 404 แล้วกลับไป stream เทียบเวลา, path และ status โดยไม่คัดลอก token
 
    ~~~text
@@ -122,28 +124,35 @@ API เปิดแล้ว เราจะลองจากมุมผู้
    ~~~
 
 4. ตรวจ resource settings ว่า CPU=0.25 vCPU, memory=0.5Gi, min replicas=0/max=1 ตรงแผน. Environment ของ lab ใช้ Consumption-only และไม่เก็บ Log Analytics; จึงดู stream ระหว่างทดสอบและอาจเจอ cold start หลังไม่มีคนเรียก ไม่เพิ่มขนาดหรือทำ load test ในขั้นนี้
+
+   ภาพแสดงตำแหน่งของตัวเลือกจำนวน replicas ในแท็บ `Scale` ให้เทียบค่าของ lab กับตัวเลขในขั้นตอนนี้
+
+   ![แท็บ Scale ของ Container App แสดงตัวเลือกจำนวน replicas ขั้นต่ำและขั้นสูง](https://learn.microsoft.com/en-us/azure/container-apps/media/scale-app/azure-container-apps-scale-slide.png)
+
+   [ภาพจาก Microsoft Learn · Scaling](https://learn.microsoft.com/en-us/azure/container-apps/scale-app)
+
 5. หยุด stream เมื่อพบหลักฐานแล้ว. ถ้า Codex เปิดให้ ให้ส่งข้อความนี้
 
    ~~~text
-   หยุดเฉพาะการติดตาม log ที่เปิดไว้เมื่อครู่
-   เก็บสรุปเวลา/path/status ของ 404 และชื่อ revision โดยไม่คัดลอก token
+   ได้ผลที่ต้องการแล้ว ช่วยปิดเฉพาะหน้าติดตาม log ที่เปิดเมื่อกี้
+   ขอเวลา, เส้นทาง, status 404 และชื่อ revision สำหรับจดหลักฐาน โดยไม่คัดลอก token
    ~~~
 
 6. จด UUID ที่สร้างใน Practice 1 แล้วขอแผน restart **เฉพาะ revision ของ app ฝึก**. Restart เป็นการเปลี่ยน Cloud runtime ให้ทำเมื่อเจ้าของอนุมัติ; บัญชีอ่านอย่างเดียวให้บันทึกว่ายังไม่ได้ทดลอง
 
    ~~~text
-   แสดงแผน restart เฉพาะ active revision ที่เราเพิ่งตรวจของ app ฝึกนี้
-   ระบุ subscription/resource group/app/revision และผลกระทบชั่วคราว
-   ไม่เปลี่ยน image, traffic, secrets หรือ database รอฉันยืนยันก่อนทำ
+   อยากเช็กว่าข้อมูลยังอยู่ไหมหลังเปิด API ใหม่ ช่วยวางแผน restart เฉพาะ revision ของ app ฝึกที่กำลังให้บริการอยู่
+   บอก subscription, resource group, app, revision และสิ่งที่ผู้ใช้อาจเจอระหว่างรอ
+   ใช้ image, traffic, secrets และฐานข้อมูลชุดเดิม ขอให้ฉันยืนยันก่อนลงมือ
    ~~~
 
 7. เมื่อตรวจเป้าหมายและอนุมัติแล้ว ส่ง prompt ให้ทำและตรวจข้อมูลเดิม
 
    ~~~text
-   restart เฉพาะ revision ตามแผนที่ฉันเพิ่งอนุมัติ แล้วรอพร้อม
-   ตรวจ health โดยไม่เปิด secrets และให้ฉัน login ใหม่เพื่อค้น UUID เดิมด้วยตนเอง
-   ไม่ seed หรือสร้างข้อมูลชดเชยถ้าหารายการเดิมไม่พบ
-   อธิบายสั้น ๆ ว่า restart ต่างจาก rollback อย่างไร
+   เปิดใหม่เฉพาะ revision ตามแผนที่ฉันเพิ่งอนุมัติได้เลย
+   พอพร้อมและเช็ก /health แล้วบอกผลโดยไม่แสดง secrets ฉันจะล็อกอินไปค้น UUID เดิมเอง
+   ถ้าฉันหารายการไม่เจอ ให้จดผลตามจริงและเก็บฐานข้อมูลไว้ตามเดิม
+   ช่วยเล่าสั้น ๆ ด้วยว่าการเปิดรุ่นเดิมใหม่ต่างจาก rollback ยังไง
    ~~~
 
 8. Login ใหม่ใน Android หรือ `/docs` แล้วอ่าน UUID ที่จดไว้. อภิปรายกับผู้สอน: หากต้องกลับรุ่นเดิมต้องเลือก image tag ที่รู้ว่าทำงานได้, deploy revision และตรวจอีกครั้ง; secret ที่แก้ต้อง restart revision หรือสร้าง revision ใหม่จึงนำไปใช้ ไม่ทดลอง rollback/traffic switching ในขั้นนี้
@@ -162,19 +171,17 @@ API เปิดแล้ว เราจะลองจากมุมผู้
 2. ส่ง prompt ให้ Codex ช่วยสรุปจากหลักฐาน
 
    ~~~text
-   อ่านเฉพาะ docs/review-log.md และ docs/project-brief.md
-   สรุปสิ่งที่ทดสอบจริง สิ่งที่ยังไม่ทดสอบ และสิ่งที่ต้องทำก่อนใช้ในบริษัท
-   แยก classroom prototype ออกจาก production readiness
-   ไม่แต่งผล test และไม่เปิด secrets
+   ช่วยสรุปต้นแบบให้เพื่อนอ่านแล้วรู้ว่าเราลองอะไรแล้ว ผลเป็นยังไง อะไรยังไม่ได้ลอง และต้องทำอะไรเพิ่มก่อนใช้ในบริษัท
+   ใช้หลักฐานจาก docs/review-log.md และ docs/project-brief.md เท่านั้น ถ้าขาดหลักฐานให้บอกตามจริง
+   ระบุว่าเป็นสถานะต้นแบบในห้องเรียน และใส่เฉพาะข้อมูลที่แชร์ได้
    ~~~
 
 3. ให้ Codex อ่านรายการ resources เพื่อทำแผนค่าใช้จ่าย/cleanup แล้วบันทึกเจ้าของและวันที่ตั้งใจปิด lab
 
    ~~~text
-   แสดง resources เฉพาะ lab resource group ที่ฉันยืนยันแบบอ่านอย่างเดียว
-   สรุปรายการที่ยังอาจมีค่าใช้จ่าย เช่น ACR/database โดยไม่เดายอดเงินจริง
-   ระบุว่า min replicas 0 ไม่ทำให้ทุกบริการไม่มีค่าใช้จ่าย
-   เตรียมรายการให้เจ้าของทบทวน cleanup ยังไม่ลบหรือแก้ resource ใด
+   ก่อนจบ lab ช่วยดูว่ามีทรัพยากรอะไรบ้างใน resource group ที่ฉันยืนยัน ให้เจ้าของใช้ทบทวนก่อนปิด
+   ชี้ว่าตัวไหนยังอาจมีค่าใช้จ่าย เช่น ACR หรือ database แม้แอปตั้ง min replicas เป็น 0
+   ใช้ข้อมูลที่ตรวจได้โดยไม่เดายอด รอบนี้ขอแค่รายการสำหรับทบทวน
    ~~~
 
 4. ถ้าเจ้าของต้องการลบ ให้ตรวจรายการและยืนยันแยกครั้งนั้น. ไม่ลบ PostgreSQL/server/database เดิมหรือ resource group ที่มีงานจริง และไม่ใส่ cleanup อัตโนมัติใน workflow

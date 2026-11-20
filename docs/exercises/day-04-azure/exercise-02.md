@@ -12,7 +12,8 @@ next: {"text": "Exercise 3", "link": "/exercises/day-04-azure/exercise-03"}
 
 ## Scenario
 
-เราจะย้าย API ไปยังพื้นที่ lab ที่ได้รับมอบหมาย โดยใช้ database เดิม. ACR เป็นคลังเก็บ image และ pull identity เป็นกุญแจที่ Container App ใช้เข้าคลัง; ผู้สอนเตรียมสิทธิ์ให้ก่อนเราเปิด API
+เราจะย้าย API ไปยังพื้นที่ lab ที่ได้รับมอบหมาย โดยใช้ database เดิม
+ACR เป็นคลังที่เก็บ image และ pull identity เป็นกุญแจที่ Container App ใช้เข้าคลัง
 
 > ทำขั้นสร้าง/แก้ resource เฉพาะ lab ที่เจ้าของอนุมัติ. ถ้าได้รับสิทธิ์ให้อ่านอย่างเดียว ให้ตรวจหน้าจอและบันทึกขั้น deploy ว่ายังไม่ได้ทดลอง ไม่กดสร้างหรือแก้สิทธิ์เพื่อทำตามตัวอย่าง
 
@@ -26,12 +27,18 @@ next: {"text": "Exercise 3", "link": "/exercises/day-04-azure/exercise-03"}
 
 1. เปิด Edge แล้วเข้า Azure portal ด้วยบัญชีฝึกของตน ตรวจ Directory และ Subscription กับ `deployment.txt` ที่ได้รับ จากนั้นส่ง prompt นี้
 
+   ใช้อีเมลและ **Temporary Access Pass (TAP)** จากหัวข้อ **Microsoft Entra sign-in** ใน `README.md` ภายใน ZIP ส่วนตัวที่ผู้สอนส่งให้
+
+   ![หน้า Directories + subscriptions ใน Azure portal สำหรับตรวจ Directory และตัวกรอง Subscription](https://learn.microsoft.com/en-us/azure/azure-portal/media/set-preferences/settings-directories-subscriptions-default-filter.png)
+
+   [ภาพจาก Microsoft Learn · Azure portal settings](https://learn.microsoft.com/en-us/azure/azure-portal/set-preferences#directories--subscriptions)
+
    ~~~text
-   ช่วยเริ่มขั้นตอนลงชื่อเข้าใช้ Azure CLI แล้วรอฉันลงชื่อเข้าใช้ด้วยตนเองใน Edge
-   ตรวจเฉพาะ subscription/region/resource group และ pull identity ที่ฉันยืนยัน
-   อ่านได้เฉพาะข้อมูล deployment ที่ไม่เป็นความลับ ไม่เปิด private README หรือ .env
-   สรุปเป้าหมายให้ฉันเทียบกับ deployment.txt ยังไม่สร้างหรือแก้ resource
-   ถ้า tenant/subscription ไม่ตรง ให้หยุดและบอกฉัน
+   ช่วยเปิดขั้นตอน Sign in ของ Azure CLI ให้หน่อย
+   ~~~
+   หลังจาก login เข้า Azure CLI แล้ว
+   ~~~text
+   ขอดู subscription, region, resource group และ pull identity ที่ฉันยืนยันไว้ จะเอาไปเทียบกับ deployment.txt
    ~~~
 
 2. จดชื่อ resource ที่จะใช้ตลอดวันร่วมกับผู้สอน: resource group เดิม, ACR, environment และ app. ACR ใช้ตัวอักษร/ตัวเลขไม่ใส่ hyphen; ชื่อ ACR ต้องไม่ซ้ำทั้ง Azure. ใช้ pull/pipeline identities ที่ได้รับ ไม่สร้างซ้ำ
@@ -41,22 +48,20 @@ next: {"text": "Exercise 3", "link": "/exercises/day-04-azure/exercise-03"}
 3. ขอให้ Codex เสนอแผนสร้าง registry/environment ตาม lab โดยยังไม่ลงมือ
 
    ~~~text
-   เตรียมแผนจาก subscription, region และชื่อ resource ที่ฉันยืนยัน
-   ใช้ resource group และ pull/pipeline identities เดิม ไม่สร้างชุดใหม่
-   ใช้ ACR Basic, admin disabled และ Container Apps environment แบบ Consumption-only
-   ไม่สร้าง Log Analytics, dedicated profile หรือ private endpoint
-   ถ้ามี resource เดิมให้ตรวจเจ้าของก่อนใช้ ถ้า private network ให้ใช้ environment ที่ IT เตรียม
-   แสดงคำสั่ง เป้าหมาย และค่าใช้จ่ายที่อาจเกิด แล้วรอฉันยืนยันเฉพาะขั้นนี้
-   ไม่แก้ PostgreSQL หรือ resources ส่วนกลาง
+   ช่วยวางแผนเตรียมที่เก็บ image กับที่รันแอป โดยใช้ subscription, region และชื่อที่ฉันยืนยันไว้
+   ใช้ resource group กับ pull และ pipeline identities เดิม
+
+   ตามแผน lab ขอ ACR Basic ที่ปิด admin และ Container Apps แบบ Consumption-only
+   ใช้แบบไม่มี Log Analytics, dedicated profile หรือ private endpoint ถ้าใช้เครือข่ายส่วนตัว ให้ใช้ environment ที่ IT เตรียมไว้
+   ขอเห็นคำสั่ง เป้าหมาย และจุดที่อาจมีค่าใช้จ่ายก่อน แล้วรอฉันยืนยัน เก็บ PostgreSQL กับ resources ส่วนกลางไว้ตามเดิม
    ~~~
 
 4. ตรวจแผนกับผู้สอน เมื่อได้รับอนุมัติแล้วจึงส่ง prompt ให้สร้างทีละ resource
 
    ~~~text
-   ทำเฉพาะแผน registry/environment ที่ฉันเพิ่งอนุมัติทีละขั้น
-   ตรวจว่า Azure CLI มี containerapp extension ที่ใช้ได้ก่อน
-   ถ้าสิทธิ์, provider, quota หรือชื่อไม่พร้อม ให้หยุดพร้อมสาเหตุ ไม่เปลี่ยน subscription หรือสร้าง group ใหม่
-   หลังสร้าง ตรวจ Consumption-only และ logs destination none ให้ตรงแผน
+   ทำตามแผน ACR กับ environment ที่ฉันเพิ่งอนุมัติได้เลยทีละขั้น
+   เช็กว่า Azure CLI ใช้ containerapp extension ได้ก่อน ถ้าติดสิทธิ์, provider, quota หรือชื่อ ให้หยุดแล้วบอกว่าติดตรงไหน
+   ใช้ subscription และ resource group ที่ตกลงไว้ เสร็จแล้วช่วยยืนยันว่าเป็น Consumption-only และ logs destination เป็น none
    ~~~
 
    คำสั่งสร้าง environment อ้างอิงสำหรับแผนนี้; ให้ Codex เติมค่าจริงที่ยืนยันแล้ว:
@@ -70,11 +75,10 @@ next: {"text": "Exercise 3", "link": "/exercises/day-04-azure/exercise-03"}
 5. ให้ Codex build image บน ACR จาก root โปรเจค
 
    ~~~text
-   build API ด้วย ACR Tasks ใน registry ที่เราเพิ่งตรวจ
-   ใช้ root build context, api/Dockerfile และ platform linux/amd64
-   ตั้ง image เป็น service-desk-api:day4-v1 ไม่ส่ง .env หรือ secrets เข้า build context
-   แสดงผล build และ loginServer/tag ที่ใช้จริง ยังไม่สร้าง Container App
-   ถ้า Tasks ใช้ไม่ได้ ให้หยุดและแจ้งผู้สอน ไม่ใช้ admin password แทน
+   ช่วย build image service-desk-api:day4-v1 ด้วย ACR Tasks ใน registry ที่เราเพิ่งตรวจ
+   ทำจาก root ตามตัวอย่าง ใช้ api/Dockerfile กับ linux/amd64 และกัน .env กับ secrets ออกจากไฟล์ที่ส่งไป build
+   ขอผล build, loginServer และ tag ที่ได้จริง เดี๋ยวค่อยสร้าง Container App ในขั้นถัดไป
+   ถ้า Tasks ใช้ไม่ได้ ให้หยุดแล้วบอกสิ่งที่ต้องแจ้ง
    ~~~
 
    ~~~shell
@@ -93,6 +97,16 @@ next: {"text": "Exercise 3", "link": "/exercises/day-04-azure/exercise-03"}
 
    จด `Login server` จากหน้า Overview และ image tag ใน review log โดยไม่บันทึกรหัสผ่าน
 
+   ใช้ชื่อ registry ของตนเอง แล้วตรวจว่า `service-desk-api` มี tag `day4-v1` ชื่อและ tag ในภาพเป็นตัวอย่างของ Microsoft Learn
+
+   ![หน้า Repositories ของ Azure Container Registry แสดงรายการ repository และ tags](https://learn.microsoft.com/en-us/azure/container-registry/media/container-registry-repositories/container-registry-repositories.png)
+
+   [ภาพจาก Microsoft Learn · Repositories and tags](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-repositories)
+
+   ![หน้า Overview ของ Azure Container Registry แสดงค่า Login server](https://learn.microsoft.com/en-us/azure/container-registry/media/container-registry-get-started-portal/container-registry-overview.png)
+
+   [ภาพจาก Microsoft Learn · Container registry quickstart](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal#create-a-container-registry)
+
 **Checkpoint:** ACR build ผ่านและเห็น repository/tag ที่ตรงกันใน Portal
 
 ## Practice 2 — สร้าง Container App และสิทธิ์ดึง image
@@ -107,10 +121,9 @@ next: {"text": "Exercise 3", "link": "/exercises/day-04-azure/exercise-03"}
 2. ให้ Codex ตรวจ prerequisite ของ ACR แบบอ่านอย่างเดียว แล้วส่งผลที่ไม่มี secret ให้ผู้สอน
 
    ~~~text
-   ตรวจ ACR ของ lab แบบอ่านอย่างเดียวว่าอนุญาต ARM audience tokens สำหรับ managed-identity image pull หรือไม่
-   ตรวจชื่อ/resource ID ของ pull identity และ registry ที่จะใช้
-   ถ้า authentication-as-arm ไม่ enabled หรือ role ยังไม่พร้อม ให้หยุดและแจ้งผู้สอน
-   ไม่เปลี่ยน registry mode, role assignments หรือ authentication settings
+   ช่วยดูว่า Container App จะดึง image จาก ACR ของ lab ด้วย pull identity ได้ไหม
+   ขอชื่อกับ resource ID ของ identity และ registry
+   รอบนี้ขอตรวจอย่างเดียว
    ~~~
 
    คำสั่งตรวจอ้างอิง:
@@ -124,24 +137,31 @@ next: {"text": "Exercise 3", "link": "/exercises/day-04-azure/exercise-03"}
 3. เมื่อผู้สอนยืนยันว่าสิทธิ์พร้อม ให้ Codex แสดงแผน app ชั่วคราวจาก public quickstart image. ตรวจเป้าหมายและอนุมัติก่อนให้ทำ
 
    ~~~text
-   เตรียม app ชื่อที่ฉันยืนยันใน resource group/environment เดิม
-   ใช้ image mcr.microsoft.com/k8se/quickstart:latest ชั่วคราว port 80, external HTTPS ingress
-   CPU 0.25, memory 0.5Gi, min replicas 0 และ max 1
-   แนบ pull identity เดิม และตั้ง private registry ให้ใช้ identity นี้ ไม่ใช้ username/password
-   แสดงแผนและรอฉันยืนยันก่อนสร้างหรือแก้ resource
-   ใช้ app นี้ต่อใน Practice ถัดไป ไม่สร้าง app ที่สอง
+   อยากเปิดหน้า quickstart ชั่วคราวบน Container App ที่เราจะใช้ต่อในขั้นถัดไป
+   ช่ววางแผนโดยใช้ชื่อที่ฉันยืนยันใน resource group และ environment เดิม
+   ใช้ mcr.microsoft.com/k8se/quickstart:latest ที่พอร์ต 80 เปิดให้เข้าผ่าน HTTPS จากภายนอก
+   ขอฉันดูแผนและยืนยันก่อนลงมือ
    ~~~
 
 4. หลังยืนยันแผน ให้ Codex ดำเนินการเฉพาะขั้นที่แสดง แล้วตรวจผล
 
    ~~~text
-   ทำเฉพาะแผน app และ registry identity ที่ฉันอนุมัติเมื่อครู่
-   ถ้า resource หรือสิทธิ์ไม่ตรงให้หยุด ไม่สร้างของทดแทน
-   รายงาน Application URL และชื่อ pull identity โดยไม่แสดง secrets
+   สร้าง app และผูก registry ตามแผนได้เลย
+   ถ้า resource หรือสิทธิ์ไม่ตรงกับแผน ให้หยุดแล้วบอกว่าติดตรงไหน
+   ขอแค่ Application URL สำหรับเปิดหน้า quickstart กับชื่อ pull identity
    ~~~
 
 5. ใน Portal ค้นชื่อ Container App → เปิด `Identity` → `User assigned`. ตรวจชื่อ identity กับที่ได้รับ. เปิดหน้ารายละเอียด container/revision แล้วตรวจ registry และการใช้ managed identity ตามผลของ Codex หากหาเมนูไม่พบ ให้ค้นชื่อเมนูในแถบซ้ายหรือให้ผู้สอนชี้จากหน้าจอจริง
+
+   ![หน้า Identity ของ Container App เปิดแท็บ User assigned เพื่อดูรายการ managed identities](https://learn.microsoft.com/en-us/azure/container-apps/media/managed-identity/screenshot-user-assigned-identity.png)
+
+   [ภาพจาก Microsoft Learn · Managed identities](https://learn.microsoft.com/en-us/azure/container-apps/managed-identity#configure-managed-identities)
+
 6. กลับ `Overview` → เปิด `Application URL`. ตอนนี้ควรเป็นหน้า quickstart; เก็บ URL นี้ไว้ แต่ยังไม่ถือว่า Service Desk API ใช้งานได้
+
+   ![หน้า Hello World ที่ควรเห็นในเบราว์เซอร์หลังเปิด Application URL ของ Container App ชั่วคราว](https://learn.microsoft.com/en-us/azure/container-apps/media/get-started/azure-container-apps-quickstart.png)
+
+   [ภาพจาก Microsoft Learn · Container Apps portal quickstart](https://learn.microsoft.com/en-us/azure/container-apps/quickstart-portal#create-a-container-app)
 
 **Checkpoint:** app ชั่วคราวผูก pull identity และ registry ถูกต้อง โดยไม่มี ACR admin password; การดึง private image จะพิสูจน์ใน Practice ถัดไป
 
@@ -159,6 +179,8 @@ next: {"text": "Exercise 3", "link": "/exercises/day-04-azure/exercise-03"}
    database-url
    ~~~
 
+   [วิธีเปิดหน้า Add secret ใน Azure portal · Microsoft Learn](https://learn.microsoft.com/en-us/azure/container-apps/manage-secrets?tabs=azure-portal#defining-secrets)
+
 2. ทำซ้ำสำหรับ JWT_SECRET จาก `.env` ส่วนตัวชุดเดิม โดยใช้ชื่อด้านล่าง. ตรวจว่าเห็นชื่อ secret ทั้งสองก่อนทำต่อ ไม่เปิดแสดงค่า ไม่ใช้ setup login และไม่สร้าง key ใหม่เพื่อให้ deployment ผ่าน
 
    ~~~text
@@ -168,24 +190,38 @@ next: {"text": "Exercise 3", "link": "/exercises/day-04-azure/exercise-03"}
 3. ส่ง prompt ให้ Codex เตรียมการเปลี่ยน image และอ้าง secret ด้วยชื่อ ตรวจเป้าหมายแล้วจึงยืนยันให้ทำ
 
    ~~~text
-   เตรียมการเปลี่ยน app เดิมจาก quickstart เป็น ACR image service-desk-api:day4-v1 ที่ build แล้ว
-   ใช้ DATABASE_URL=secretref:database-url และ JWT_SECRET=secretref:jwt-secret ไม่อ่านค่า secret
-   ตั้ง CORS_ORIGINS=http://localhost:3000 และ APP_VERSION=v1
-   คง CPU 0.25/memory 0.5Gi/min 0/max 1 เปลี่ยน ingress target port เป็น 8000 และปิด insecure HTTP
-   ตรวจ probe port ถ้ามีให้ตรง API port รอ revision พร้อมหลัง image/config/ingress เปลี่ยนครบ
-   แสดงรายการเปลี่ยนก่อน แล้วรอฉันยืนยันเฉพาะขั้นนี้ ไม่ seed database
+   อยากให้ URL เดิมเปิด Service Desk API แทนหน้า quickstart ช่วยวางแผนเปลี่ยนไปใช้ ACR image service-desk-api:day4-v1
+   ใช้ฐานข้อมูลเดิมโดยไม่ seed และอ้าง secret ด้วยชื่อ DATABASE_URL=secretref:database-url และ JWT_SECRET=secretref:jwt-secret โดยไม่อ่านค่า
+   ตั้ง CORS_ORIGINS=http://localhost:3000 ให้ preview ต่อได้ และ APP_VERSION=v1 ให้เช็กจาก /health ได้
+
+   คงขนาด 0.25 vCPU, 0.5Gi และ 0–1 replicas ให้ HTTPS เข้าถึง API ที่พอร์ต 8000 และปิด insecure HTTP
+   ถ้ามี probe ให้ใช้พอร์ต API เดียวกัน และใส่ขั้นรอให้ revision พร้อมหลังเปลี่ยนครบ
+   ขอรายการที่จะเปลี่ยนก่อน แล้วรอฉันยืนยัน
    ~~~
 
 4. หลังตรวจแผน ส่งข้อความให้ทำเฉพาะรายการที่อนุมัติ
 
    ~~~text
-   ทำเฉพาะการเปลี่ยน image/configuration/ingress ที่ฉันเพิ่งอนุมัติ
-   รอ revision พร้อม แล้วสรุปชื่อ revision, image, HTTPS URL และผล health
-   ไม่พิมพ์ค่า environment ทั้งหมดหรืออ่าน secrets และไม่ถือว่า health ผ่านแทน DB/auth
+   เปลี่ยน image, การตั้งค่า และ ingress ตามที่ฉันเพิ่งอนุมัติได้เลย
+   พอ revision พร้อม ขอชื่อ revision, image, HTTPS URL และผล /health โดยไม่เปิดค่า secrets หรือแสดง environment ทั้งชุด
+   บอกฉันเมื่อพร้อมให้ลองล็อกอินและอ่านข้อมูลจริงตามขั้นถัดไป
    ~~~
 
-5. ใน Portal เปิด `Ingress` ตรวจ **Target port: 8000** และปิด **Insecure connections**. เปิดรายละเอียด revision ตรวจ image/tag และ environment variables ว่าอ้างชื่อ secret ถูกต้อง. API ใช้ port 8000 ภายใน ส่วน URL ของผู้ใช้เป็น HTTPS port 443
-6. ใน Edge เปิด Application URL แล้วเติม `/health` ต้องได้ status `ok` และ version `v1`. จากนั้นเติม `/docs`, กด `Authorize` และกรอก app user/password เดิมเอง. เรียก GET ของ UUID เดิมจาก Day 3 แล้วลอง POST ข้อมูลนี้
+5. ใน Portal เปิด `Ingress` ตรวจ **Target port: 8000** และปิด **Insecure connections**.
+
+   [วิธีตรวจ Target port และการตั้งค่า HTTPS ใน Ingress · Microsoft Learn](https://learn.microsoft.com/en-us/azure/container-apps/ingress-how-to?tabs=azure-portal#enable-ingress)
+
+6. เปิดรายละเอียด revision ตรวจ image/tag และ environment variables ว่าอ้างชื่อ secret ถูกต้อง. API ใช้ port 8000 ภายใน ส่วน URL ของผู้ใช้เป็น HTTPS port 443
+
+   ![หน้า Environment variables ใน Container App แสดงการเลือก Reference a secret และชื่อ secret ที่อ้างอิง](https://learn.microsoft.com/en-us/azure/container-apps/media/environment-variables/secret-env-var.png)
+
+   [ภาพจาก Microsoft Learn · Environment variables](https://learn.microsoft.com/en-us/azure/container-apps/environment-variables#add-environment-variables-on-existing-container-apps)
+
+7. ใน Microsoft Edge เปิด Application URL แล้วเติม `/health` เพื่อทดสอบการทำงานต้องได้ status `ok` และ version `v1`.
+8. จากนั้นเติม `/docs` เพื่อเข้าใช้งาน Swagger
+9. กด `Authorize` และกรอก app user/password เดิมเอง.
+10. เรียก GET ของ UUID เดิมจาก Day 3
+11. จากนั้นลอง POST ข้อมูลนี้
 
    ~~~json
    {
@@ -195,7 +231,7 @@ next: {"text": "Exercise 3", "link": "/exercises/day-04-azure/exercise-03"}
    }
    ~~~
 
-7. จด UUID จาก response, API URL, image tag และ revision. ส่งเฉพาะผลที่ไม่มี secret ให้ผู้สอนตรวจ หาก health ผ่านแต่ DB ล้ม ให้ผู้สอนตรวจ runtime login, TLS และ network จาก environment; ไม่ลด TLS หรือแก้ shared firewall เอง
+12. จด UUID จาก response, API URL, image tag และ revision. หาก health ผ่านแต่ database ไม่ทำงานอย่างที่ควรจะเป็น ให้ผู้สอนตรวจ runtime login, TLS และ network จาก environment
 
 **Checkpoint:** HTTPS health=200, login/read/create ผ่าน และ private image ถูก pull ได้จริง ไม่ใช่หน้า quickstart
 

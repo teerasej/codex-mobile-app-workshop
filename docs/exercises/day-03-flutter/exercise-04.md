@@ -14,13 +14,52 @@ next: {"text": "สรุปท้ายวัน", "link": "/exercises/day-03-f
 
 ## Scenario
 
-หน้าจอใน browser ผ่านแล้ว เราจะลองบน Android และเพิ่มความสามารถเปิดคู่มือใน browser ของอุปกรณ์ หากใช้ Mac ที่เตรียมพร้อมและผ่านกิจกรรมหลักแล้ว มี Practice เสริมให้เปิดแอปเดิมใน iPhone Simulator
+หน้าจอใน browser ผ่านแล้ว เราจะสร้างไอคอนสำหรับหน้าแอปของ Android เพิ่มปุ่มเปิดคู่มือ แล้วลองทั้งสองอย่างบน Android หากใช้ Mac ที่เตรียมพร้อมและผ่านกิจกรรมหลักแล้ว มี Practice เสริมให้เปิดแอปเดิมใน iPhone Simulator
 
 ใช้ `ApiService` และ Dio จาก Exercise 3 ต่อทั้ง web และ mobile โดยให้ Dio เลือก adapter ตามแพลตฟอร์ม เปลี่ยนเฉพาะวิธีรัน ไม่สร้างแอปใหม่
 
-## Practice 1 — เปิดคู่มือด้วย plugin
+## Practice 1 — สร้างภาพและใช้เป็นไอคอนแอป Android {#android-app-icon}
 
-<PracticeIllustration asset="d03-e04-p01" eager />
+<PracticeIllustration asset="d03-e04-app-icon" eager />
+
+**Primary target:** ใช้ภาพที่สร้างเองเป็นไอคอนสำหรับเปิด Service Desk Lite บน Android ได้
+
+### Steps
+
+1. ไอคอนเหมือนป้ายหน้าร้าน ควรมองออกแม้เห็นในขนาดเล็ก เปิด ChatGPT บนเว็บแล้วส่ง prompt นี้ในแชต ดูเพิ่มที่ [วิธีสร้างและดาวน์โหลดภาพด้วย ChatGPT Images](https://help.openai.com/en/articles/11084440-images-in-chatgpt)
+
+   ~~~text
+   สร้างภาพไอคอนสำหรับแอปแจ้งคำขอบริการชื่อ Service Desk Lite
+   ให้เป็นภาพสี่เหลี่ยมจัตุรัส มีสัญลักษณ์รูปใบคำขอบริการแบบเรียบ ๆ อยู่ตรงกลาง
+   ใช้พื้นหลังสีทึบและเว้นขอบ เพื่อให้เห็นสัญลักษณ์เมื่อย่อหรือตัดมุม
+   ไม่ใส่ข้อความ ตัวเลข โลโก้บริษัท หรือลายน้ำ
+   ~~~
+
+2. ดาวน์โหลดและบันทึกเป็น PNG จริงในโฟลเดอร์โปรเจกต์ตาม path นี้ หากเครื่องมือสร้างภาพใช้ไม่ได้ ให้ใช้ PNG สี่เหลี่ยมจัตุรัสจากผู้สอนและบันทึกว่าทำเฉพาะการตั้งค่าไอคอน หากยังไม่มีไฟล์ ให้บันทึก pending แล้วไป Practice 2
+
+   ~~~text
+   client/assets/icon/app-icon.png
+   ~~~
+
+3. เปิดโปรเจกต์เดิมใน Codex แล้วส่ง prompt นี้เพื่อสร้างไอคอนหลายขนาดจากภาพเดียว
+
+   ~~~text
+   ใช้ client/assets/icon/app-icon.png เป็นไอคอนเปิดแอป Service Desk Lite บน Android
+   ตรวจว่าเป็นไฟล์ PNG สี่เหลี่ยมจัตุรัสที่เปิดได้จริง ถ้าไฟล์ไม่มีหรือเปิดไม่ได้ ให้บอกฉันและหยุดก่อนแก้โปรเจกต์
+   เพิ่ม flutter_launcher_icons เป็น dev dependency ใน client/ เลือกรุ่นที่เข้ากับ Dart/Flutter ของโปรเจกต์ แล้วตั้งค่าเฉพาะ Android
+   รัน dart run flutter_launcher_icons จาก client/ ตรวจว่า AndroidManifest.xml อ้างถึงไฟล์ไอคอนที่มีอยู่จริง และ applicationId ใน Gradle ยังเป็นค่าเดิม
+   ขอรายชื่อไฟล์ภาพ ไฟล์ตั้งค่า และ Android launcher resources ที่เปลี่ยน เก็บ web, iOS และการตั้งค่า API ไว้ตามเดิม
+   ~~~
+
+4. เปิดไฟล์ไอคอนใน `client/android/app/src/main/res/` ตามที่ Codex รายงาน เทียบกับ PNG ต้นฉบับ แล้วเก็บโปรเจกต์นี้ไว้ใช้ต่อใน Practice 2 และ 3
+
+**Checkpoint:** มี PNG ต้นฉบับและไฟล์ launcher icon ของ Android ที่ตรงกับภาพนั้น เตรียมตรวจไอคอนจากแอปที่ติดตั้งจริงใน Practice 3
+
+อ่านเพิ่มได้ที่ [Flutter Launcher Icons](https://pub.dev/packages/flutter_launcher_icons)
+
+## Practice 2 — เปิดคู่มือด้วย plugin {#practice-1-—-เปิดคู่มือด้วย-plugin}
+
+<PracticeIllustration asset="d03-e04-p01" />
 
 **Primary target:** ใช้ Flutter plugin เรียกความสามารถของแพลตฟอร์มและจัดการกรณีเปิดไม่สำเร็จได้
 
@@ -29,7 +68,7 @@ next: {"text": "สรุปท้ายวัน", "link": "/exercises/day-03-f
 1. Plugin เหมือนยืมความสามารถของเครื่องแทนเขียนเองทั้งหมด ส่ง prompt ให้เพิ่ม package ใน client เดิม
 
    ~~~text
-   เพิ่ม url_launcher ให้แอปใน client/ หน่อย
+   อยากให้แอปเปิดคู่มือบนเว็บได้ ช่วยเพิ่ม url_launcher ให้แอปเดิมใน client/ ก่อน
    ~~~
 
    `url_launcher` 6.3.3 ที่ใช้ตรวจเอกสารรองรับ Android SDK 24+ และ iOS 13.0+ รุ่นที่ติดตั้งจริงให้ดู lockfile และ pub.dev ไม่เดารุ่นจากตัวอย่างนี้
@@ -37,18 +76,15 @@ next: {"text": "สรุปท้ายวัน", "link": "/exercises/day-03-f
 2. ส่ง prompt ให้เพิ่มปุ่มในหน้าที่มีอยู่
 
    ~~~text
-   เพิ่มปุ่ม “คู่มือ Flutter” ในหน้าหลังล็อกอิน กดแล้วเปิด https://docs.flutter.dev
-   ให้เปิดเมื่อผู้ใช้กดเท่านั้น ถ้าเปิดไม่ได้ให้โชว์ลิงก์ให้ copy แทน
-   ต้องใช้ได้ทั้ง web, Android และ iOS ไม่ต้องขอ permission เพิ่ม
-   ใช้ ApiService เดิมต่อไป แล้วเล่าให้ฟังสั้น ๆ ว่า plugin ต่างจากเขียน native เองยังไง
+   อยากให้หลังล็อกอินมีปุ่ม “คู่มือ Flutter” พอกดแล้วจะเปิด https://docs.flutter.dev
+   ถ้าเปิดไม่ได้ ให้เห็นลิงก์ไว้คัดลอก และบอกหน่อยว่า ใช้ได้บนเว็บ, Android และ iOS ได้เหมือนกันไหม
    ~~~
 3. ส่ง prompt ให้เริ่ม run ใหม่หลังเพิ่ม plugin การ Refresh browser อย่างเดียวไม่แทนการลงทะเบียน native plugin
 
    ~~~text
-   รีสตาร์ทแอป Flutter ใหม่เพื่อให้ plugin ทำงาน แล้วเปิดบน Edge
-   ใช้ localhost:3000 ต่อ API เดิมที่ http://127.0.0.1:8000
-   ปล่อย API ที่รันอยู่ไว้ และอย่าปิดอย่างอื่นที่ไม่เกี่ยว
-   ถ้ารันบน Mac ให้บอก URL ที่ต้องเปิดเอง
+   ฉันอยากลองกดปุ่มคู่มือจริง ช่วยหยุดแล้วเปิดเฉพาะ Flutter รอบใหม่ให้ plugin พร้อมใช้
+   เปิด preview บน Edge ที่ localhost:3000 และใช้ API ที่ยังรันอยู่ที่ http://127.0.0.1:8000
+   ถ้าใช้ Mac ให้รัน web-server แล้วส่งลิงก์ให้ฉันเปิดใน Edge เอง
    ~~~
 
    Sign in แล้วกดปุ่มคู่มือ ต้องเปิดเอกสาร ส่วน Android/iOS ปุ่มนี้ใช้ browser ตามค่าเริ่มต้นของอุปกรณ์
@@ -56,14 +92,13 @@ next: {"text": "สรุปท้ายวัน", "link": "/exercises/day-03-f
 4. ส่ง prompt ตรวจกรณีเปิดไม่สำเร็จ โดยไม่เปลี่ยน URL ไปเว็บสุ่ม
 
    ~~~text
-   เขียน test ให้ปุ่มคู่มือ จำลองกรณีเปิดลิงก์ไม่สำเร็จทั้งสองแบบ (ได้ false และเกิด error)
-   ต้องเห็นลิงก์ให้ copy ทั้งคู่ ไม่ต้องเรียก network จริง
-   รัน test แล้วสรุปผลให้ดู
+   ช่วยเขียนและรัน test ว่าถ้าปุ่มเปิดคู่มือไม่ได้ คนใช้ยังเห็นลิงก์ให้คัดลอก
+   ขอให้ลองทั้งตอน plugin ตอบ false และตอนเกิด error ใช้การจำลองทั้งสองแบบ แล้วบอกผลให้ดู
    ~~~
 
 **Checkpoint:** ปุ่มทำงานจาก user action; มี fallback เมื่อ platform เปิด URL ไม่ได้. นี่เป็นตัวอย่างใช้ plugin ไม่ใช่บทเรียนเขียน native plugin ใหม่
 
-## Practice 2 — รันและ build Android
+## Practice 3 — รันและ build Android {#practice-2-—-รันและ-build-android}
 
 <PracticeIllustration asset="d03-e04-p02" />
 
@@ -74,27 +109,28 @@ next: {"text": "สรุปท้ายวัน", "link": "/exercises/day-03-f
 1. เปิด Android emulator ที่เตรียมไว้ก่อนเรียน ถ้าใช้เครื่องจริงแทน ให้เสียบ USB และยืนยัน USB debugging บนเครื่อง ส่ง prompt ให้เลือกอุปกรณ์
 
    ~~~text
-   ดูหน่อยว่ามี Android เครื่องไหนพร้อมทดสอบบ้าง แล้วบอก device ID ของเครื่องที่จะใช้
-   ถ้ามีหลายเครื่องให้ถามฉันก่อน ถ้าไม่เจอหรือเครื่องยังไม่พร้อมให้บอกแล้วหยุด
-   อย่าติดตั้งอะไรเพิ่ม
+   ใช้เครื่องมือที่มีช่วยดูว่า Android เครื่องไหนพร้อมลองแอปแล้ว ขอชื่อเครื่องกับ device ID ด้วย
+   ถ้ามีหลายเครื่องให้ฉันเลือกก่อน ถ้ายังไม่มีเครื่องพร้อม ให้บอกว่าติดอะไรแล้วหยุดไว้
    ~~~
 
 2. ส่ง prompt ตรวจ Android configuration ที่จำเป็นสำหรับการฝึกวันนี้
 
    ~~~text
-   เช็คหน่อยว่าแอป Android ของเรามีสิทธิ์ใช้อินเทอร์เน็ตหรือยัง
+   ก่อนลองต่อ API ช่วยดูให้หน่อยว่าแอป Android ขอสิทธิ์ใช้อินเทอร์เน็ตไว้แล้วหรือยัง แล้วชี้ให้ฉันดูว่าตั้งไว้ที่ไหน
    ~~~
 3. ส่ง prompt ให้ต่อ Android กลับมาที่ API บน laptop แล้วรันแอป
 
    ~~~text
-   รันแอปบน Android เครื่องที่เลือกไว้ แล้วให้คุยกับ API บน laptop ที่ http://127.0.0.1:8000 ได้
-   ใช้ device ID จริงของเครื่องนั้น ห้ามเดาหรือไปเลือกเครื่องอื่นเอง
-   ถ้าเรียก API ไม่ได้ ให้หาสาเหตุก่อน แต่ห้ามปิด HTTPS verification
+   ช่วยเปิดแอปบน Android เครื่องที่ฉันเลือกไว้ โดยใช้ device ID ของเครื่องนั้น
+   ต่อพอร์ตกลับมาที่เครื่องนี้ด้วย adb reverse แล้วใช้ API_BASE_URL เป็น http://127.0.0.1:8000 สำหรับ debug
+   ถ้าต่อไม่ติด ช่วยหาว่าติดตรงไหนก่อน ใช้ HTTP เฉพาะตอน debug และคงการตรวจ HTTPS ไว้
    ~~~
 
    `adb reverse` เหมือนต่อท่อจาก port บน Android กลับมายัง laptop จึงใช้ loopback เดิมได้ ต้องต่อใหม่เมื่อการเชื่อมต่อถูก reset
 
-4. Sign in จาก Android สร้าง Request ด้วย **Title** นี้ ใส่ Description อย่างน้อย 10 ตัวอักษรและเลือก Category จากแบบฟอร์ม จากนั้นเปิด detail ตรวจ UUID ใน `/docs` ด้วยบัญชีเดียวกัน และกดปุ่มคู่มือ
+4. กลับไปที่ Android launcher เปิดรายการแอป แล้วหาไอคอนใหม่จาก Practice 1 ชื่อใต้ไอคอนอาจเป็น `service_desk_lite` ตามที่ตั้งไว้ แตะไอคอนแล้วตรวจว่า Service Desk Lite เปิดขึ้น ถ้ายังเห็นไอคอนเดิม ให้ตรวจว่ารัน build ล่าสุดบนเครื่องที่เลือกก่อน หากยังตรวจไม่ได้ ให้บันทึกผลไอคอนเป็น pending
+
+   Sign in จาก Android สร้าง Request ด้วย **Title** นี้ ใส่ Description อย่างน้อย 10 ตัวอักษรและเลือก Category จากแบบฟอร์ม จากนั้นเปิด detail ตรวจ UUID ใน `/docs` ด้วยบัญชีเดียวกัน และกดปุ่มคู่มือ
 
    ~~~text
    ทดสอบจาก Android
@@ -102,28 +138,26 @@ next: {"text": "สรุปท้ายวัน", "link": "/exercises/day-03-f
 5. ส่ง prompt ตรวจโปรเจกต์แล้วสร้างไฟล์ติดตั้งสำหรับฝึก
 
    ~~~text
-   หยุดแอปที่รันอยู่ (ปล่อย API ไว้) แล้วเช็คโค้ดและรัน test ก่อน
-   ถ้าไม่ผ่านให้สรุปปัญหา ยังไม่ต้อง build
-   ถ้าผ่านให้สร้าง debug APK ที่ต่อกับ http://127.0.0.1:8000
-   บอกผลเช็ค/test และไฟล์ APK อยู่ตรงไหน
+   ขอไฟล์ติดตั้ง Android สำหรับลองในห้องเรียน ช่วยหยุดเฉพาะแอปที่รันอยู่แล้วปล่อย API ไว้
+   เช็กโค้ดและรัน test ก่อน ถ้าติดอะไรให้บอกฉันและหยุดไว้
+   ถ้าผ่าน ให้ build debug APK ที่ใช้ API_BASE_URL เป็น http://127.0.0.1:8000 แล้วบอกผลกับตำแหน่งไฟล์
    ~~~
 
 6. ตรวจไฟล์ **client/build/app/outputs/flutter-apk/app-debug.apk**. ไฟล์นี้ผูกกับ local lab/adb reverse; Day 4 ต้อง rebuild ด้วย HTTPS API URL
 7. ส่ง prompt เตรียมส่งงานตาม workflow Day 1 แล้วตรวจ diff ก่อนยืนยันขั้นส่งงาน
 
    ~~~text
-   เตรียมส่งงาน feature/flutter-client ตาม workflow Day 1
-   ดู diff ว่ามีอะไรเปลี่ยนบ้าง และต้องไม่มี secrets, .env หรือไฟล์ build หลุดเข้ามา
-   จดผล test กับตำแหน่ง APK ลง docs/review-log.md (ห้ามใส่ secrets)
-   แสดงรายการไฟล์ที่จะ commit พร้อมแผนส่งงานให้ฉันตรวจก่อน แล้วค่อยทำจริง
-   ห้าม force push
+   ช่วยเตรียมส่งงานบน feature/flutter-client ตามที่ฝึก Day 1
+   จดผล test ที่อยู่ APK และผลตรวจไอคอนจาก Android launcher ลง docs/review-log.md
+   ให้ฉันตรวจ PNG ต้นฉบับ ไฟล์ตั้งค่า และ Android launcher resources ที่เปลี่ยน เก็บ APK ไว้นอก commit
+   ขอดูรายชื่อไฟล์ที่จะ commit กับแผนส่งงานก่อน รอฉันยืนยันแล้วค่อยส่งตามขั้นตอน Day 1 โดยใช้ push
    ~~~
 
-**Checkpoint:** Android เรียก API จริงได้และมี debug APK. Browser ผ่านอย่างเดียวไม่ถือว่าผ่าน Android checkpoint
+**Checkpoint:** Android เรียก API จริงได้และมี debug APK พร้อมบันทึกผลว่าเห็นและเปิดแอปจากไอคอนใหม่ได้หรือยัง Browser ผ่านอย่างเดียวไม่ถือว่าผ่าน Android checkpoint
 
 **ถ้าติดขัด:** ถ้าไม่มีอุปกรณ์พร้อม ให้จบ browser/tests และบันทึก Android pending. ถ้าพบ unauthorized ให้ยืนยัน USB debugging บนอุปกรณ์. หาก HTTP ใช้ไม่ได้ให้ตรวจ adb reverse/debug manifest ไม่เปิด cleartext ใน release
 
-## Practice 3 — รันและ build iOS Simulator (Optional · macOS) {#ios-simulator}
+## Practice 4 — รันและ build iOS Simulator (Optional · macOS) {#ios-simulator}
 
 <PracticeIllustration asset="d03-e04-p03" />
 
@@ -136,25 +170,26 @@ next: {"text": "สรุปท้ายวัน", "link": "/exercises/day-03-f
 1. ใช้ prompt เปิด API จาก [Exercise 3](/exercises/day-03-flutter/exercise-03#ก่อนเชื่อมข้อมูลจริง) บน **Mac เครื่องเดียวกับ Simulator** และตรวจ `/health` กับ `/docs` ว่าทำงาน จากนั้นส่ง prompt นี้ให้ Codex:
 
    ~~~text
-   เตรียมแอปเดิมให้รันบน iPhone Simulator ได้ โดยทำบน feature branch ตาม AGENTS.md
-   เช็คสถานะ branch ก่อน ถ้าไม่มี feature/ios-simulator ให้สร้างจาก main ที่มีงาน Day 3 ครบ ถ้ามีงานค้างให้หยุดถามก่อน
-   เช็คว่า Xcode และ Flutter พร้อมไหม ห้ามติดตั้งหรือดาวน์โหลดอะไรเพิ่ม ถ้าไม่พร้อมให้สรุปว่า optional pending
-   ถ้ายังไม่มีโฟลเดอร์ iOS ให้เพิ่มเฉพาะ iOS เข้าโปรเจกต์เดิม ถ้ามีแล้วอย่าเขียนทับ
-   โค้ด Android และ Web เดิมต้องไม่ถูกแตะ แสดง diff ให้ดูก่อน
-   ใช้ ApiService/Dio และ API_BASE_URL เดิม ไม่ตั้ง signing ส่วนตัว ไม่ปิด HTTPS verification
+   อยากลองแอปเดิมบน iPhone Simulator ช่วยอ่าน AGENTS.md แล้วดูว่างาน Git, Xcode และ Flutter พร้อมไหม
+   ถ้ามีงานค้างให้ถามฉันก่อน ถ้าเครื่องยังไม่พร้อมให้จด optional pending โดยใช้เฉพาะเครื่องมือที่มี
+
+   ถ้าพร้อม ให้ใช้ feature/ios-simulator หรือสร้างจาก main ที่มีงาน Day 3 ครบ
+   เติมเฉพาะส่วน iOS ถ้ายังไม่มี เก็บ iOS ที่มีอยู่ รวมถึง Android และ Web ไว้ตามเดิม
+   ใช้ ApiService, Dio และ API_BASE_URL เดิม คงการตรวจ HTTPS และใช้ Simulator โดยไม่ตั้ง signing ส่วนตัว
+   ขอให้ฉันดู diff ก่อน
    ~~~
 2. ส่ง prompt เปิด Simulator ที่เตรียมไว้ แล้วตรวจ ID จริง
 
    ~~~text
-   เปิด iPhone Simulator ที่เตรียมไว้ แล้วบอก device ID ของมัน
-   ถ้ามีหลายเครื่องให้ถามฉันก่อน และอย่าดาวน์โหลดอะไรเพิ่ม
+   ช่วยเปิด iPhone Simulator ที่มีอยู่แล้วและบอก device ID ให้หน่อย
+   ถ้ามีหลายเครื่องให้ฉันเลือกก่อน ใช้เฉพาะเครื่องที่เตรียมไว้
    ~~~
 
 3. ส่ง prompt รันแอปบน Simulator ที่เลือก
 
    ~~~text
-   รันแอปบน iPhone Simulator ที่เลือกไว้ ให้คุยกับ API บน Mac เครื่องนี้ที่ http://127.0.0.1:8000
-   ถ้ามีแอปรอบก่อนค้างอยู่ให้หยุดเฉพาะอันนั้น อย่าปิดอย่างอื่น
+   ช่วยเปิดแอปบน iPhone Simulator ที่ฉันเลือก ให้ใช้ API_BASE_URL เป็น http://127.0.0.1:8000 ของ Mac เครื่องนี้
+   ถ้าแอปรอบก่อนยังรันอยู่ ให้หยุดเฉพาะรอบนั้นก่อนเปิดใหม่
    ~~~
 
    iOS Simulator ติดต่อ API บน Mac เครื่องเดียวกันผ่าน loopback จึงไม่ใช้ `adb reverse` ของ Android
@@ -168,17 +203,18 @@ next: {"text": "สรุปท้ายวัน", "link": "/exercises/day-03-f
 5. ส่ง prompt สร้างไฟล์สำหรับ Simulator
 
    ~~~text
-   หยุดแอปที่รันอยู่ แล้วสร้างไฟล์แอปสำหรับ iPhone Simulator (debug) ที่ต่อกับ http://127.0.0.1:8000
-   ไม่ต้องตั้ง signing บอกผล build และไฟล์ .app อยู่ตรงไหน
+   ขอไฟล์แอป debug สำหรับ iPhone Simulator ที่ใช้ API_BASE_URL เป็น http://127.0.0.1:8000
+   ช่วยหยุดแอปรอบที่กำลังทดสอบแล้ว build สำหรับ Simulator ได้เลย ไม่ต้องตั้ง signing
+   เสร็จแล้วบอกผลกับที่อยู่ไฟล์ .app
    ~~~
 
    ปกติอยู่ที่ `client/build/ios/iphonesimulator/Runner.app` ไฟล์นี้ใช้กับ Simulator ไม่ใช่ IPA สำหรับ iPhone จริงหรือ App Store
 6. ส่ง prompt เก็บหลักฐานและเตรียมส่งเฉพาะ iOS source/config
 
    ~~~text
-   จด UUID, ผลปุ่มคู่มือ และตำแหน่ง .app ลง docs/review-log.md (ห้ามใส่ secrets)
-   แสดงรายการไฟล์ iOS ที่ต้อง commit ตาม workflow Day 1 โดยไม่รวมไฟล์ build หรือ signing
-   รอฉันตรวจก่อน แล้วค่อย commit/push/PR/merge
+   ช่วยจด UUID ที่เราตรวจ ผลตอนกดปุ่มคู่มือ และที่อยู่ไฟล์ .app ลง docs/review-log.md โดยไม่ใส่ค่าลับ
+   ขอดูรายชื่อไฟล์โค้ดและไฟล์ตั้งค่า iOS ที่จะส่งตามขั้นตอน Day 1 เก็บไฟล์ build และ signing ไว้ในเครื่อง
+   รอฉันตรวจและยืนยันก่อนเริ่ม commit, push, เปิด PR หรือ merge
    ~~~
 
 **Checkpoint:** **Optional** — แอปทำงานบน iPhone Simulator, UUID ตรงกับ API และมี `.app` สำหรับ Simulator ตามผล build จริง. หลักฐานนี้เพิ่มเติมจาก Android checkpoint ไม่ใช้แทนกัน
