@@ -23,7 +23,7 @@ next: {"text": "Exercise 4", "link": "/exercises/day-04-azure/exercise-04"}
 ### Steps
 
 1. เปิด `docs/deploy-api.yml.example` ในโปรเจค. Workflow ใช้ `workflow_dispatch` คือผู้เรียนกดเริ่มเอง ไม่ deploy อัตโนมัติทุกครั้งที่ push
-2. ขอคำยืนยันจากผู้สอนว่า OIDC ของ repository/main พร้อมแล้ว และ pipeline client ID ตรงกับที่ได้รับ. ใช้ **pipeline identity** สำหรับ GitHub deploy ส่วน **pull identity** ให้ Container App ดึง image. ถ้าเปลี่ยน repository/main หรือ subject ต้องให้ผู้สอนตรวจใหม่ รวม immutable owner/repository IDs ตาม [Azure readiness](/resources/readiness)
+2. แจ้งผู้สอนว่าเราจะใช้ private GitHub repository ใดกับ branch `main` ให้ผู้สอนตรวจ exact OIDC subject และ pipeline client ID ที่ได้รับ แล้วทำ **Preview deployment access** → **Prepare deployment access** ใน Instructor Console รอคำยืนยันก่อนรัน workflow ถ้าเปลี่ยน repository, branch หรือ subject ให้ผู้สอนตรวจใหม่ รวม immutable owner/repository IDs ตาม [Azure readiness](/resources/readiness)
 3. ใน Edge เปิด private GitHub repository → `Settings` → `Secrets and variables` → `Actions` → แท็บ `Secrets`. กด `New repository secret` ทีละรายการ กรอก **Name** จากแต่ละ block และ **Secret** จาก deployment ที่ได้รับ แล้วกด `Add secret`
 
    - Pipeline client ID

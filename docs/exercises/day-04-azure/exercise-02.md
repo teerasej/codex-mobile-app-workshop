@@ -182,7 +182,7 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
 
 ### Steps
 
-1. ใน Container App เปิด `Secrets` → `Add`. กรอก **Name** ตาม block นี้, เลือก **Type: Container Apps Secret**, ใส่ **Value** เป็น DATABASE_URL ของ runtime login เดิมด้วยตนเอง แล้วกด `Add`
+1. ใน Container App เปิด `Secrets` → `Add` แล้วตั้ง **Name** เป็น `database-url` ตามบล็อกด้านล่าง เลือก **Type** เป็น `Container Apps Secret` จากนั้นเปิดไฟล์ `api/.env` ส่วนตัวของโปรเจกต์ แล้วคัดลอกเฉพาะค่าหลัง `DATABASE_URL=` ของ runtime login เดิมไปวางในช่อง **Value** ด้วยตนเอง แล้วกด `Add`
 
    ~~~text
    database-url
@@ -196,10 +196,11 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
    jwt-secret
    ~~~
 
-3. ส่ง prompt ให้ Codex เตรียมการเปลี่ยน image และอ้าง secret ด้วยชื่อ ตรวจเป้าหมายแล้วจึงยืนยันให้ทำ
+3. ส่ง prompt ให้ Codex เตรียมการเปลี่ยน image และอ้าง secret ด้วยชื่อ ตรวจเป้าหมายแล้วจึงยืนยันให้ทำ หาก `AGENTS.md` ยังระบุให้รอ GitHub OIDC ก่อน deploy private image ให้แก้เฉพาะข้อ Day 4 ตาม [template ฉบับล่าสุด](/resources/agents-template) แล้วเริ่ม chat ใหม่ในโปรเจกต์เดิม ตรวจและยืนยันแผนใน chat นั้นก่อนทำ Step 4
 
    ~~~text
    อยากให้ URL เดิมเปิด Service Desk API แทนหน้า quickstart ช่วยวางแผนเปลี่ยนไปใช้ ACR image service-desk-api:day4-v1
+   งานนี้ deploy โดยตรงผ่าน Azure ใน Exercise 2 ตรวจว่า Container App ตั้งค่าให้ใช้ pull identity จาก deployment.txt กับ ACR นี้ และ identity มีสิทธิ์ pull แล้ว
    ใช้ฐานข้อมูลเดิมโดยไม่ seed และอ้าง secret ด้วยชื่อ DATABASE_URL=secretref:database-url และ JWT_SECRET=secretref:jwt-secret โดยไม่อ่านค่า
    ตั้ง CORS_ORIGINS=http://localhost:3000 ให้ preview ต่อได้ และ APP_VERSION=v1 ให้เช็กจาก /health ได้
 
@@ -212,6 +213,7 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
 
    ~~~text
    เปลี่ยน image, การตั้งค่า และ ingress ตามที่ฉันเพิ่งอนุมัติได้เลย
+   ใช้การ deploy โดยตรงผ่าน Azure ของ Exercise 2 ถ้าสิทธิ์ pull หรือการผูก ACR กับ pull identity ยังไม่พร้อม ให้หยุดและบอกว่าติดตรงไหน
    พอ revision พร้อม ขอชื่อ revision, image, HTTPS URL และผล /health โดยไม่เปิดค่า secrets หรือแสดง environment ทั้งชุด
    บอกฉันเมื่อพร้อมให้ลองล็อกอินและอ่านข้อมูลจริงตามขั้นถัดไป
    ~~~

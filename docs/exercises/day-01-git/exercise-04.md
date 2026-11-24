@@ -31,7 +31,7 @@ next: {"text": "สรุปท้ายวัน", "link": "/exercises/day-01-g
    จากนั้นสร้างและสลับไป branch docs/codex-working-agreement
    แล้วรายงานผล
    ```
-2. ให้เราเปิด `docs/agents-template.md` ใน starter แล้วอ่าน Instruction ทั้งหมด
+2. เปิด `docs/agents-template.md` ใน starter แล้วอ่าน Instruction ทั้งหมด เทียบข้อ Day 4 กับ [template ฉบับล่าสุด](/resources/agents-template) หากใช้ starter เก่า ให้นำข้อ Day 4 ฉบับล่าสุดมาแทนข้อเดิมใน template ก่อนคัดลอก
 3. ขอ Codex คัดลอกเป็น `AGENTS.md` ที่ root ของ **โปรเจคผู้เรียน** (เช่น `service-desk-lite`) แล้วเพิ่มชื่อ project และวิธีตรวจ API/Flutter ที่เราจะใช้. ยังไม่สร้าง code และไม่เพิ่มเงื่อนไขที่เราไม่ได้ตกลง
 
    ```text
