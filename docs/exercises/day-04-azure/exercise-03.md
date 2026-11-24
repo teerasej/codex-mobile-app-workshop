@@ -46,7 +46,7 @@ next: {"text": "Exercise 4", "link": "/exercises/day-04-azure/exercise-04"}
 
 4. เลือกแท็บ `Variables` → `New repository variable`. เพิ่ม **Name** ต่อไปนี้ โดยใส่ **Value** ตรง resource จาก Exercise 2 แล้วกด `Add variable` ทีละรายการ
 
-   - ชื่อ ACR ไม่ใช่ login server ที่ลงท้าย azurecr.io
+   - ใช้ค่า `ACR_NAME` จาก `deployment.txt` ในช่อง Value ส่วน `ACR_LOGIN_SERVER` ใช้เมื่ออ้างถึง image เต็ม
 
      ~~~text
      ACR_NAME

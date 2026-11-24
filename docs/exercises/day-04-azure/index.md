@@ -18,7 +18,7 @@ next: {"text": "Exercise 1", "link": "/exercises/day-04-azure/exercise-01"}
 
 Docker engine, Azure CLI และ [Azure readiness](/resources/readiness) ต้องพร้อมแล้ว. ใช้ subscription, student resource group, PostgreSQL และ pull/pipeline identities ที่ได้รับมอบหมาย; ทางเลือกใช้ทรัพยากรของตนต้องให้เจ้าของอนุมัติ. ผู้สอนเตรียมสิทธิ์และเครือข่ายก่อนช่วงที่ใช้งาน
 
-> **License / ค่าใช้จ่าย:** Azure Container Apps, ACR, database และ build อาจมีค่าใช้จ่าย. แผน lab ใช้ app ละ 0.25 vCPU/0.5Gi, min=0/max=1 บน Consumption-only และไม่สร้าง Log Analytics. Consumption-only เป็น environment แบบ legacy ที่ lab นี้เลือกไว้; หน้า Create ของ Azure อาจเลือก Workload profiles เป็นค่าเริ่มต้น จึงต้องตรวจแผนก่อนสร้าง. Docker Desktop และ GitHub Actions ต้องอยู่ในสิทธิ์ที่องค์กรอนุญาต
+> **License / ค่าใช้จ่าย** — Azure Container Apps, ACR, database และ build อาจมีค่าใช้จ่าย แผน lab ใช้ Environment แบบ Workload profiles (v2) ที่มีเฉพาะโปรไฟล์ Consumption แอปใช้ 0.25 vCPU, memory 0.5 GiB และ 0–1 replicas โดยไม่สร้าง Log Analytics การใช้ Docker Desktop และ GitHub Actions ต้องอยู่ในขอบเขตที่องค์กรอนุญาต
 
 | เวลา | Exercise | อธิบาย / ลงมือ / ตรวจและแก้ |
 | --- | --- | --- |
@@ -43,7 +43,7 @@ Docker engine, Azure CLI และ [Azure readiness](/resources/readiness) ต�
 2. ใช้ Microsoft Edge อ่านบทเรียน เปิด GitHub, API docs และ Azure portal ด้วยบัญชีของตน. ให้ Codex ช่วยรันงานในเครื่องจาก prompt ทีละขั้น; คำสั่งที่แสดงเป็นตัวอย่างสำหรับอ่านตรวจ ไม่ต้องจำหรือคัดลอก placeholder ไปใช้
 3. ก่อนสร้างหรือแก้ Azure ให้ตรวจ subscription, resource group, resource ที่จะเปลี่ยน และค่าใช้จ่าย แล้วจึงยืนยันเฉพาะขั้นนั้น. ถ้าบัญชีนี้ได้รับอนุญาตให้อ่านอย่างเดียว ให้ดูค่าตามบทเรียนและบันทึก deployment ว่า **ยังไม่ได้ทดลอง**
 4. Secret กรอกเองในช่องส่วนตัว. ให้ Docker อ่าน env file โดยตรงได้ แต่ไม่ให้ Codex เปิดหรือพิมพ์ค่าใน `.env`. ไม่รัน seed บน Cloud และไม่แก้ shared PostgreSQL หรือ resources ส่วนกลาง
-5. หลัง ACR พร้อม แจ้งผู้สอนเพื่อตรวจสิทธิ์ดึง image และ GitHub OIDC ของ repository/main จริง. รอคำยืนยันก่อน deploy private image; หลัง deploy จึงส่ง API URL และผลทดสอบที่ไม่มี secret ให้ผู้สอนตรวจ
+5. เปิด ACR ที่ผู้สอนระบุใน `deployment.txt` แล้วให้ผู้สอนยืนยัน `AcrPull` ของ pull identity ก่อน deploy private image ตรวจ GitHub OIDC ของ repository/branch `main` แยกใน Exercise 3 เมื่อ deploy แล้วจึงส่ง API URL และผลทดสอบที่ไม่มี secret ให้ผู้สอน
 
 ## เปิดแบบฝึกหัด
 

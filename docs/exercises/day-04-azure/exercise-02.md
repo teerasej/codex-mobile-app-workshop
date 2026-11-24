@@ -41,36 +41,45 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
    ขอดู subscription, region, resource group และ pull identity ที่ฉันยืนยันไว้ จะเอาไปเทียบกับ deployment.txt
    ~~~
 
-2. จดชื่อ resource ที่จะใช้ตลอดวันร่วมกับผู้สอน: resource group เดิม, ACR, environment และ app. ACR ใช้ตัวอักษร/ตัวเลขไม่ใส่ hyphen; ชื่อ ACR ต้องไม่ซ้ำทั้ง Azure. ใช้ pull/pipeline identities ที่ได้รับ ไม่สร้างซ้ำ
+2. เปิด `deployment.txt` จาก Student ZIP แล้วจด `RESOURCE_GROUP`, `ACR_NAME`, `ACR_LOGIN_SERVER` และ `PULL_IDENTITY_RESOURCE_ID` สำหรับ lab ของตน ใช้ registry ที่ผู้สอนเตรียมไว้
 
-   > **ใช้ subscription ของตนเอง:** ให้เจ้าของอนุมัติงบและให้ผู้ดูแลเตรียม resource group/identities/roles ก่อนเริ่ม. Private PostgreSQL ต้องใช้ environment/network ที่ IT เตรียมไว้ ไม่แก้ shared firewall จากแบบฝึกหัดนี้
+   ถ้าไม่มีค่า ACR หรือเปิด registry แล้วเจอ `403` ให้แจ้งผู้สอนพร้อมรหัสผู้เรียน, Resource Group, ชื่อ ACR และข้อความผิดพลาดที่ตัด token ออก ผู้สอนตรวจสิทธิ์ของบัญชีที่ใช้ build และ `AcrPull` ของ pull identity แยกกัน
 
-3. ขอให้ Codex เสนอแผนสร้าง registry/environment ตาม lab โดยยังไม่ลงมือ
+   > **ใช้ subscription ของตนเอง** ให้เจ้าของอนุมัติงบและให้ผู้ดูแลเตรียม resource group กับ identities ก่อน หากยังไม่มี ACR ที่กำหนดไว้ ให้ขอแผนสร้าง ACR Basic ใน group ของตน โดยปิด admin และ anonymous pull ใช้ RBAC Registry Permissions และให้ผู้ดูแล grant `AcrPull` ที่ ACR แก่ pull identity เดิม
 
-   ~~~text
-   ช่วยวางแผนเตรียมที่เก็บ image กับที่รันแอป โดยใช้ subscription, region และชื่อที่ฉันยืนยันไว้
-   ใช้ resource group กับ pull และ pipeline identities เดิม
-
-   ตามแผน lab ขอ ACR Basic ที่ปิด admin และ Container Apps แบบ Consumption-only
-   ใช้แบบไม่มี Log Analytics, dedicated profile หรือ private endpoint ถ้าใช้เครือข่ายส่วนตัว ให้ใช้ environment ที่ IT เตรียมไว้
-   ขอเห็นคำสั่ง เป้าหมาย และจุดที่อาจมีค่าใช้จ่ายก่อน แล้วรอฉันยืนยัน เก็บ PostgreSQL กับ resources ส่วนกลางไว้ตามเดิม
-   ~~~
-
-4. ตรวจแผนกับผู้สอน เมื่อได้รับอนุมัติแล้วจึงส่ง prompt ให้สร้างทีละ resource
+3. ขอให้ Codex ตรวจ ACR ที่ได้รับ แล้ววางแผน Container Apps Environment
 
    ~~~text
-   ทำตามแผน ACR กับ environment ที่ฉันเพิ่งอนุมัติได้เลยทีละขั้น
-   เช็กว่า Azure CLI ใช้ containerapp extension ได้ก่อน ถ้าติดสิทธิ์, provider, quota หรือชื่อ ให้หยุดแล้วบอกว่าติดตรงไหน
-   ใช้ subscription และ resource group ที่ตกลงไว้ เสร็จแล้วช่วยยืนยันว่าเป็น Consumption-only และ logs destination เป็น none
+   ใช้ subscription, region, resource group, ACR_NAME และ ACR_LOGIN_SERVER จาก deployment.txt ของฉัน
+   รอบนี้ตรวจ ACR แบบอ่านอย่างเดียว ขอให้ยืนยันว่าเป็น Basic ปิด admin และ login server ตรงกับไฟล์
+   วางแผน Container Apps Environment แบบ Workload profiles (v2) ที่มีเฉพาะโปรไฟล์ Consumption
+   ใช้แบบไม่มี Log Analytics, Dedicated profile หรือ private endpoint หาก PostgreSQL ใช้เครือข่ายส่วนตัว ให้ใช้ Environment ที่ IT เตรียมไว้
+   ขอเห็นคำสั่ง เป้าหมาย และจุดที่อาจมีค่าใช้จ่ายก่อน แล้วรอฉันยืนยัน
    ~~~
 
-   คำสั่งสร้าง environment อ้างอิงสำหรับแผนนี้; ให้ Codex เติมค่าจริงที่ยืนยันแล้ว:
+4. ตรวจแผนกับผู้สอน เมื่อได้รับอนุมัติแล้วให้ใช้ Environment เดิมที่ตรงกับแผน หรือสร้างตามคำสั่งที่ตรวจแล้ว
+
+   ~~~text
+   ทำตามแผน Environment ที่ฉันอนุมัติใน subscription และ resource group ที่ตกลงไว้
+   ตรวจว่า az containerapp env create --help แสดง --enable-workload-profiles และ --logs-destination
+   ถ้าติดสิทธิ์, provider, quota หรือชื่อ ให้หยุดแล้วบอกว่าติดตรงไหน
+   ตรวจ Environment ว่าสร้างสำเร็จ มีเฉพาะโปรไฟล์ Consumption และไม่ได้ตั้งปลายทางส่ง logs
+   ถ้า IT เตรียม Environment ไว้แล้ว ให้ตรวจตัวเดิมตามค่าที่ IT อนุมัติ
+   ~~~
+
+   ให้ Codex เติมค่าจริงที่ยืนยันแล้วในคำสั่งอ้างอิงด้านล่าง ใช้คำสั่งสร้างเฉพาะเมื่อยังไม่มี Environment ที่ได้รับอนุมัติ หากใช้เครือข่ายส่วนตัว ให้ใช้ Environment ที่ IT ระบุ
 
    ~~~shell
-   az containerapp env create --name <ENV_NAME> --resource-group <LAB_RG> --location <REGION> --enable-workload-profiles false --logs-destination none
+   az containerapp env create --subscription "<SUBSCRIPTION_ID>" --resource-group "<LAB_RG>" --name "<ENV_NAME>" --location "<REGION>" --enable-workload-profiles true --logs-destination none
    ~~~
 
-   Consumption-only เป็นแบบ legacy ที่ lab นี้เลือกไว้ ไม่ใช่ค่าเริ่มต้นของทุกหน้า Create. หากหน้า Portal แสดงค่าต่างจากแผน อย่ากดสร้างซ้ำ ให้ผู้สอนช่วยตรวจ
+   ตรวจ Environment ที่สร้างสำหรับ lab ด้วยคำสั่งแบบอ่านอย่างเดียว
+
+   ~~~shell
+   az containerapp env show --subscription "<SUBSCRIPTION_ID>" --resource-group "<LAB_RG>" --name "<ENV_NAME>" --query "{state:properties.provisioningState,profiles:properties.workloadProfiles[].name,logsDestination:properties.appLogsConfiguration.destination}" --output json
+   ~~~
+
+   ควรเห็น `state` เป็น `Succeeded` และ `profiles` มีรายการเดียวคือ `Consumption` ค่า `logsDestination` อาจแสดงเป็น `null` หรือ `none` ซึ่งหมายถึงไม่มีปลายทางส่ง logs หากผลต่างจากแผน ให้ผู้สอนตรวจ Environment ที่มีอยู่ก่อนสร้างหรือแก้ไข
 
 5. ให้ Codex build image บน ACR จาก root โปรเจค
 
@@ -85,7 +94,7 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
    az acr build --registry <ACR_NAME> --image service-desk-api:day4-v1 --file api/Dockerfile --platform linux/amd64 .
    ~~~
 
-6. ใน Edge เปิด Azure portal → ค้นชื่อ ACR → `Repositories` → เลือก image ต่อไปนี้ แล้วตรวจ tag จากผล build
+6. ใน Edge เปิด [Resource groups ใน Azure portal](https://portal.azure.com/#view/HubsExtension/BrowseResourceGroups) แล้วเลือกกลุ่มที่ตรงกับ `RESOURCE_GROUP` ใน `deployment.txt` จากรายการ resources ในกลุ่ม ให้เปิด ACR ที่สร้างไว้ เลือก `Repositories` แล้วตรวจว่า repository และ tag ตรงกับผล build
 
    ~~~text
    service-desk-api
@@ -95,13 +104,13 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
    day4-v1
    ~~~
 
-   จด `Login server` จากหน้า Overview และ image tag ใน review log โดยไม่บันทึกรหัสผ่าน
-
    ใช้ชื่อ registry ของตนเอง แล้วตรวจว่า `service-desk-api` มี tag `day4-v1` ชื่อและ tag ในภาพเป็นตัวอย่างของ Microsoft Learn
 
    ![หน้า Repositories ของ Azure Container Registry แสดงรายการ repository และ tags](https://learn.microsoft.com/en-us/azure/container-registry/media/container-registry-repositories/container-registry-repositories.png)
 
    [ภาพจาก Microsoft Learn · Repositories and tags](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-repositories)
+
+7. กลับไปที่ `Overview` ของ ACR แล้ว **จด `Login server` และ image tag ที่ตรวจจาก Step 6** ลงใน review log โดยไม่บันทึกรหัสผ่าน
 
    ![หน้า Overview ของ Azure Container Registry แสดงค่า Login server](https://learn.microsoft.com/en-us/azure/container-registry/media/container-registry-get-started-portal/container-registry-overview.png)
 
@@ -117,7 +126,7 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
 
 ### Steps
 
-1. แจ้งผู้สอนรหัสผู้เรียน, GitHub owner/repository/main และชื่อ ACR. รอผู้สอนยืนยันสิทธิ์ pull identity, pipeline identity และ OIDC ก่อน deploy private image. GitHub subject ต้องตรง repository จริง รวม immutable owner/repository IDs เมื่อ repository ใช้รูปแบบนั้น; ไม่คาดเดาจากชื่อ
+1. แจ้งผู้สอนรหัสผู้เรียนและชื่อ ACR ที่ใช้ ให้ผู้สอนยืนยันว่า pull identity ใน `deployment.txt` มี `AcrPull` ที่ขอบเขตของ ACR นี้ หากยังไม่ได้รับสิทธิ์ ให้ผู้สอนตรวจใน Instructor Console ก่อนนำ private image ขึ้นแอป ส่วน GitHub OIDC จะตรวจใน Exercise 3 เมื่อทราบ repository และ branch จริง
 2. ให้ Codex ตรวจ prerequisite ของ ACR แบบอ่านอย่างเดียว แล้วส่งผลที่ไม่มี secret ให้ผู้สอน
 
    ~~~text
@@ -138,7 +147,7 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
 
    ~~~text
    อยากเปิดหน้า quickstart ชั่วคราวบน Container App ที่เราจะใช้ต่อในขั้นถัดไป
-   ช่ววางแผนโดยใช้ชื่อที่ฉันยืนยันใน resource group และ environment เดิม
+   ช่วยวางแผนโดยใช้ชื่อที่ฉันยืนยันใน resource group และ environment เดิม เลือกโปรไฟล์ Consumption สำหรับ environment ของ lab
    ใช้ mcr.microsoft.com/k8se/quickstart:latest ที่พอร์ต 80 เปิดให้เข้าผ่าน HTTPS จากภายนอก
    ขอฉันดูแผนและยืนยันก่อนลงมือ
    ~~~

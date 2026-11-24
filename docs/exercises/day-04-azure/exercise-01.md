@@ -59,7 +59,7 @@ API ทำงานบน laptop แล้ว เราจะใส่ code แ�
 2. ขอให้ Codex เริ่มการทำงานของ container โดยส่ง env file ให้ Docker อ่านโดยตรง
 
    ~~~text
-   ทำสอบ API ที่อยู่ใน Image ที่เพิ่ง build เสร็จ ช่วยเปิดเป็น container ชื่อ service-desk-api-local
+   ทดสอบ API ที่อยู่ใน Image ที่เพิ่ง build เสร็จ ช่วยเปิดเป็น container ชื่อ service-desk-api-local
 
    ทำจาก root ตามตัวอย่าง เปิดพอร์ต 8000 ให้เข้าถึงได้จากเครื่องนี้ที่ 127.0.0.1 เท่านั้น
    ให้ Docker รับ api/.env โดยตรงผ่าน --env-file
