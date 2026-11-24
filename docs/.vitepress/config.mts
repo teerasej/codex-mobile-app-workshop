@@ -148,7 +148,7 @@ export default withMermaid(defineConfig({
         "link": "/exercises/day-04-azure/exercise-02"
       },
       {
-        "text": "3. Deploy จาก GitHub",
+        "text": "3. ตรวจรุ่น API ที่เปิดบน Azure",
         "link": "/exercises/day-04-azure/exercise-03"
       },
       {

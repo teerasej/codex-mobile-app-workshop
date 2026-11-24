@@ -88,4 +88,4 @@ API ทำงานบน laptop แล้ว เราจะใส่ code แ�
 
 **Checkpoint:** health, login และ authenticated read/create ผ่านจาก container และพบ UUID เดิมใน PostgreSQL
 
-**ถ้าติดขัด:** Connection refused ให้ตรวจ bind host/port. ถ้า health ผ่านแต่ข้อมูลล้ม ให้ตรวจ database/config กับผู้สอน. Apple Silicon build สำหรับ local ได้; image ของ Azure จะ build บน ACR เป็น `linux/amd64` ใน Exercise 2
+**ถ้าติดขัด:** Connection refused ให้ตรวจ bind host/port. ถ้า health ผ่านแต่ข้อมูลล้ม ให้ตรวจ database/config กับผู้สอน. เก็บ image และ tag ที่ทดสอบแล้วไว้สำหรับ Exercise 2 หากเป็น `linux/amd64` จะใช้ image เดิมได้ หากเป็น ARM64 ให้เตรียม image สำหรับ Azure ผ่าน ACR Tasks

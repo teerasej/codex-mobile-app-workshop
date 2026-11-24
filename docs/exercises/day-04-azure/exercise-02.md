@@ -17,11 +17,13 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
 
 > ทำขั้นสร้าง/แก้ resource เฉพาะ lab ที่เจ้าของอนุมัติ. ถ้าได้รับสิทธิ์ให้อ่านอย่างเดียว ให้ตรวจหน้าจอและบันทึกขั้น deploy ว่ายังไม่ได้ทดลอง ไม่กดสร้างหรือแก้สิทธิ์เพื่อทำตามตัวอย่าง
 
+ถ้าคุณมี ACR image หรือ Container App พร้อมจากขั้นที่ทำไปแล้ว ให้ตรวจค่าที่ใช้อยู่และทำต่อจาก checkpoint ล่าสุด
+
 ## Practice 1 — เตรียม registry และ image
 
 <PracticeIllustration asset="d04-e02-p01" eager />
 
-**Primary target:** Build และระบุ image ที่เก็บอยู่ใน ACR ของตนได้
+**Primary target:** นำ image ที่ทดสอบในเครื่องเข้า ACR ของ lab และระบุ tag ที่พร้อม deploy ได้
 
 ### Steps
 
@@ -81,18 +83,35 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
 
    ควรเห็น `state` เป็น `Succeeded` และ `profiles` มีรายการเดียวคือ `Consumption` ค่า `logsDestination` อาจแสดงเป็น `null` หรือ `none` ซึ่งหมายถึงไม่มีปลายทางส่ง logs หากผลต่างจากแผน ให้ผู้สอนตรวจ Environment ที่มีอยู่ก่อนสร้างหรือแก้ไข
 
-5. ให้ Codex build image บน ACR จาก root โปรเจค
+5. เริ่มจาก image ที่ build และทดสอบแล้วใน Exercise 1 ให้ Codex ตรวจชื่อ tag และ platform ในเครื่องก่อน
 
    ~~~text
-   ช่วย build image service-desk-api:day4-v1 ด้วย ACR Tasks ใน registry ที่เราเพิ่งตรวจ
-   ทำจาก root ตามตัวอย่าง ใช้ api/Dockerfile กับ linux/amd64 และกัน .env กับ secrets ออกจากไฟล์ที่ส่งไป build
-   ขอผล build, loginServer และ tag ที่ได้จริง เดี๋ยวค่อยสร้าง Container App ในขั้นถัดไป
-   ถ้า Tasks ใช้ไม่ได้ ให้หยุดแล้วบอกสิ่งที่ต้องแจ้ง
+   ใช้ image ของ Service Desk API ที่ฉัน build แล้วจาก Exercise 1
+   ตรวจชื่อ tag และ platform ของ image ใน Docker แล้วเทียบกับ ACR ของ lab ที่ฉันยืนยันไว้
+   ขอแผนส่ง image เข้า ACR และรอให้ฉันอนุมัติก่อน push หรือเริ่ม ACR Tasks
+   ถ้ามี image รุ่นเดียวกันใน ACR แล้ว ให้ตรวจ tag, digest และ platform แล้วใช้ต่อได้
+   ถ้า local tag ของฉันต่างจากตัวอย่าง ให้ใช้ local tag ที่ตรวจพบ
    ~~~
 
    ~~~shell
-   az acr build --registry <ACR_NAME> --image service-desk-api:day4-v1 --file api/Dockerfile --platform linux/amd64 .
+   docker image inspect service-desk-api:day4-v1 --format '{{.Os}}/{{.Architecture}}'
    ~~~
+
+   - **ถ้าได้ `linux/amd64` และมีสิทธิ์ push** ให้ sign in เข้า ACR ด้วย Azure CLI ของ lab, tag image เดิม แล้ว push ไปยัง Login server ที่ตรวจแล้ว ให้ Codex แทนค่าตัวอย่างในวงเล็บมุมก่อนรัน
+
+     ~~~shell
+     az acr login --name "<ACR_NAME>"
+     docker tag service-desk-api:day4-v1 "<ACR_LOGIN_SERVER>/service-desk-api:day4-v1"
+     docker push "<ACR_LOGIN_SERVER>/service-desk-api:day4-v1"
+     ~~~
+
+   - **ถ้าได้ `linux/arm64`** ให้ใช้ ACR Tasks จาก root ของโปรเจกต์เพื่อ build สำหรับ Azure โดยตรง ตรวจ `.dockerignore` ก่อนว่าไม่ส่ง `.env` หรือ credentials ขึ้นไป หากติดสิทธิ์ push หรือ ACR Tasks ให้ผู้สอนตรวจสิทธิ์ของ lab หรือเตรียม image `linux/amd64` ใน ACR ให้ใช้
+
+     ~~~shell
+     az acr build --registry "<ACR_NAME>" --image service-desk-api:day4-v1 --file api/Dockerfile --platform linux/amd64 .
+     ~~~
+
+   ใช้ tag นี้เมื่อยังว่างหรือเป็น image รุ่นที่ยืนยันแล้ว หาก tag ถูกใช้กับคนละรุ่น ให้ตกลงชื่อ tag ใหม่และใช้ชื่อเดียวกันในขั้นต่อไป [Docker push ไปยัง ACR](https://learn.microsoft.com/en-us/azure/container-apps/tutorial-code-to-cloud) · [Platform ที่ Container Apps รองรับ](https://learn.microsoft.com/en-us/azure/container-apps/containers)
 
 6. ใน Edge เปิด [Resource groups ใน Azure portal](https://portal.azure.com/#view/HubsExtension/BrowseResourceGroups) แล้วเลือกกลุ่มที่ตรงกับ `RESOURCE_GROUP` ใน `deployment.txt` จากรายการ resources ในกลุ่ม ให้เปิด ACR ที่สร้างไว้ เลือก `Repositories` แล้วตรวจว่า repository และ tag ตรงกับผล build
 
@@ -104,19 +123,19 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
    day4-v1
    ~~~
 
-   ใช้ชื่อ registry ของตนเอง แล้วตรวจว่า `service-desk-api` มี tag `day4-v1` ชื่อและ tag ในภาพเป็นตัวอย่างของ Microsoft Learn
+   ใช้ชื่อ registry ของตนเอง แล้วตรวจว่า `service-desk-api` มี tag ที่ตกลงไว้ ซึ่งในตัวอย่างคือ `day4-v1` ชื่อและ tag ในภาพเป็นตัวอย่างของ Microsoft Learn
 
    ![หน้า Repositories ของ Azure Container Registry แสดงรายการ repository และ tags](https://learn.microsoft.com/en-us/azure/container-registry/media/container-registry-repositories/container-registry-repositories.png)
 
    [ภาพจาก Microsoft Learn · Repositories and tags](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-repositories)
 
-7. กลับไปที่ `Overview` ของ ACR แล้ว **จด `Login server` และ image tag ที่ตรวจจาก Step 6** ลงใน review log โดยไม่บันทึกรหัสผ่าน
+7. กลับไปที่ `Overview` ของ ACR แล้ว **จด `Login server` และ image tag ที่ตรวจจาก Step 6 พร้อม digest ที่ระบบแสดง** ลงใน review log โดยไม่บันทึกรหัสผ่าน
 
    ![หน้า Overview ของ Azure Container Registry แสดงค่า Login server](https://learn.microsoft.com/en-us/azure/container-registry/media/container-registry-get-started-portal/container-registry-overview.png)
 
    [ภาพจาก Microsoft Learn · Container registry quickstart](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal#create-a-container-registry)
 
-**Checkpoint:** ACR build ผ่านและเห็น repository/tag ที่ตรงกันใน Portal
+**Checkpoint:** เห็น image `linux/amd64` พร้อม repository/tag และ digest ที่ตรวจแล้วใน ACR ของ lab
 
 ## Practice 2 — สร้าง Container App และสิทธิ์ดึง image
 
@@ -126,7 +145,7 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
 
 ### Steps
 
-1. แจ้งผู้สอนรหัสผู้เรียนและชื่อ ACR ที่ใช้ ให้ผู้สอนยืนยันว่า pull identity ใน `deployment.txt` มี `AcrPull` ที่ขอบเขตของ ACR นี้ หากยังไม่ได้รับสิทธิ์ ให้ผู้สอนตรวจใน Instructor Console ก่อนนำ private image ขึ้นแอป ส่วน GitHub OIDC จะตรวจใน Exercise 3 เมื่อทราบ repository และ branch จริง
+1. แจ้งผู้สอนรหัสผู้เรียนและชื่อ ACR ที่ใช้ ให้ผู้สอนยืนยันว่า pull identity ใน `deployment.txt` มี `AcrPull` ที่ขอบเขตของ ACR นี้ หากยังไม่ได้รับสิทธิ์ ให้ผู้สอนตรวจใน Instructor Console ก่อนนำ private image ขึ้นแอป
 2. ให้ Codex ตรวจ prerequisite ของ ACR แบบอ่านอย่างเดียว แล้วส่งผลที่ไม่มี secret ให้ผู้สอน
 
    ~~~text
@@ -143,7 +162,7 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
 
    ผู้ดูแลเตรียม `AcrPull` หรือ role ที่ตรง registry policy. Contributor ไม่ได้ให้สิทธิ์สร้าง role assignments; ไม่เปิด ACR admin หรือแก้ ABAC เพื่อข้ามปัญหา
 
-3. เมื่อผู้สอนยืนยันว่าสิทธิ์พร้อม ให้ Codex แสดงแผน app ชั่วคราวจาก public quickstart image. ตรวจเป้าหมายและอนุมัติก่อนให้ทำ
+3. เมื่อผู้สอนยืนยันว่าสิทธิ์พร้อม ให้ Codex แสดงแผน app ชั่วคราวจาก public quickstart image หากมี Container App ที่ lab อนุมัติแล้ว ให้ใช้ตัวเดิมและตรวจ registry binding กับ pull identity ตรวจเป้าหมายและอนุมัติก่อนให้ทำ
 
    ~~~text
    อยากเปิดหน้า quickstart ชั่วคราวบน Container App ที่เราจะใช้ต่อในขั้นถัดไป
@@ -166,7 +185,7 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
 
    [ภาพจาก Microsoft Learn · Managed identities](https://learn.microsoft.com/en-us/azure/container-apps/managed-identity#configure-managed-identities)
 
-6. กลับ `Overview` → เปิด `Application URL`. ตอนนี้ควรเป็นหน้า quickstart; เก็บ URL นี้ไว้ แต่ยังไม่ถือว่า Service Desk API ใช้งานได้
+6. กลับ `Overview` → เปิด `Application URL` ถ้าเพิ่งสร้างแอป ควรเห็นหน้า Quickstart ถ้าแอปเดิมรัน Service Desk API อยู่แล้ว ให้ตรวจ `/health` และใช้ URL เดิมต่อ
 
    ![หน้า Hello World ที่ควรเห็นในเบราว์เซอร์หลังเปิด Application URL ของ Container App ชั่วคราว](https://learn.microsoft.com/en-us/azure/container-apps/media/get-started/azure-container-apps-quickstart.png)
 
@@ -199,7 +218,7 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
 3. ส่ง prompt ให้ Codex เตรียมการเปลี่ยน image และอ้าง secret ด้วยชื่อ ตรวจเป้าหมายแล้วจึงยืนยันให้ทำ หาก `AGENTS.md` ยังระบุให้รอ GitHub OIDC ก่อน deploy private image ให้แก้เฉพาะข้อ Day 4 ตาม [template ฉบับล่าสุด](/resources/agents-template) แล้วเริ่ม chat ใหม่ในโปรเจกต์เดิม ตรวจและยืนยันแผนใน chat นั้นก่อนทำ Step 4
 
    ~~~text
-   อยากให้ URL เดิมเปิด Service Desk API แทนหน้า quickstart ช่วยวางแผนเปลี่ยนไปใช้ ACR image service-desk-api:day4-v1
+   อยากให้ URL เดิมเปิด Service Desk API แทนหน้า quickstart ช่วยวางแผนเปลี่ยนไปใช้ ACR image และ tag ที่ฉันตรวจแล้วใน Practice 1
    งานนี้ deploy โดยตรงผ่าน Azure ใน Exercise 2 ตรวจว่า Container App ตั้งค่าให้ใช้ pull identity จาก deployment.txt กับ ACR นี้ และ identity มีสิทธิ์ pull แล้ว
    ใช้ฐานข้อมูลเดิมโดยไม่ seed และอ้าง secret ด้วยชื่อ DATABASE_URL=secretref:database-url และ JWT_SECRET=secretref:jwt-secret โดยไม่อ่านค่า
    ตั้ง CORS_ORIGINS=http://localhost:3000 ให้ preview ต่อได้ และ APP_VERSION=v1 ให้เช็กจาก /health ได้
@@ -242,7 +261,7 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
    }
    ~~~
 
-12. จด UUID จาก response, API URL, image tag และ revision. หาก health ผ่านแต่ database ไม่ทำงานอย่างที่ควรจะเป็น ให้ผู้สอนตรวจ runtime login, TLS และ network จาก environment
+12. จด UUID จาก response, API URL, image tag และ revision เก็บ UUID นี้ไว้ตรวจซ้ำใน Exercise 3. หาก health ผ่านแต่ database ไม่ทำงานอย่างที่ควรจะเป็น ให้ผู้สอนตรวจ runtime login, TLS และ network จาก environment
 
 **Checkpoint:** HTTPS health=200, login/read/create ผ่าน และ private image ถูก pull ได้จริง ไม่ใช่หน้า quickstart
 

@@ -22,7 +22,7 @@ API เปิดแล้ว เราจะลองจากมุมผู้
 
 ### Steps
 
-1. ส่ง API URL จาก Exercise 3 ที่ไม่มี secret ให้ Codex แล้วขอเปิด browser preview ใหม่
+1. ส่ง HTTPS API URL ที่ deploy ใน Exercise 2 และตรวจใน Exercise 3 โดยไม่แนบ secret ให้ Codex แล้วขอเปิด browser preview ใหม่
 
    ~~~text
    อยากลองแอปกับ API บน Azure จาก browser ก่อน ช่วยปิดเฉพาะ API หรือ container ในเครื่องกับ Flutter preview เดิมของเรา

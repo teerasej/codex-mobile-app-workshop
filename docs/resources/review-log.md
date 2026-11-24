@@ -32,8 +32,8 @@ next: false
 - API unit / live contract / expired-token checks: Not run
 - Flutter browser / Edge profile used: Not run
 - Android device / debug APK: Not run
-- Exact GitHub OIDC subject / verified owner-repository IDs: Not run
-- Instructor-confirmed deployment access / OIDC / private image pull: Not run
+- Optional GitHub Actions / instructor-verified OIDC subject and deployment access: Not run
+- Core Azure deployment / assigned pull identity / private image pull: Not run
 - Day 4 resource verification / HTTPS API data operations: Not run
 - Restart persistence / commit-image-version-revision match: Not run
 

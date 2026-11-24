@@ -15,7 +15,7 @@ next: false
 1. อัปเดต ChatGPT desktop app จากช่องทางองค์กรหรือ [official quickstart](https://learn.chatgpt.com/docs/quickstart) และลงชื่อเข้าใช้
 2. ตรวจว่าเลือก **Codex** ได้ และเพิ่ม local folder เป็น project ได้. ChatGPT project ที่แนบไฟล์เฉย ๆ ไม่เท่ากับ local project ที่แก้ไฟล์บนเครื่อง
 3. เปิดโฟลเดอร์ทดลองว่าง แล้วขอให้อ่านรายชื่อไฟล์และสร้าง `hello.txt` หนึ่งไฟล์ ตรวจใน File Explorer/Finder. ทดสอบนี้ห้ามใช้โฟลเดอร์บริษัทที่มีข้อมูลจริง
-4. ลงชื่อเข้า GitHub และตรวจว่าสร้าง **private repository**, push branch, เปิด/merge PR และใช้ GitHub Actions ได้. ผู้ดูแลอาจจำกัด Actions หรือ app authentication
+4. ลงชื่อเข้า GitHub และตรวจว่าสร้าง **private repository**, push branch, เปิด/merge PR ได้. ตรวจสิทธิ์ GitHub Actions เพิ่มเฉพาะถ้าจะทำแบบฝึกเสริม Day 4
 5. ตรวจสิทธิ์และ usage ของ ChatGPT/Codex กับผู้จัดก่อนเรียน ไม่มีการสมมติว่าทุกแผนใช้ได้ไม่จำกัด. GitHub private repo/Actions มี quota และอาจมีค่าใช้จ่ายเกินสิทธิ์
 
 > หากไม่มี Codex/local project ให้แจ้งผู้จัดก่อนเรียน เพราะ Chat ทั่วไปที่ตอบ code อย่างเดียวไม่ทำขั้นตอนแก้ไฟล์/รัน test ให้ครบตาม guide นี้ ดู [Projects](https://learn.chatgpt.com/docs/projects) และ [Windows desktop](https://learn.chatgpt.com/docs/windows/windows-app)
@@ -72,25 +72,29 @@ Windows ใช้ PowerShell native; macOS ใช้ Terminal. ไม่เป�
 
 Day 4 ผู้เรียนสร้างและ deploy แอปเอง; การเตรียม account/database/identities ไม่ได้หมายความว่ามีแอปพร้อมแล้ว
 
-- ใช้ subscription/region/student resource group และ pipeline/pull identities จาก `deployment.txt` ของ Student ZIP. ผู้เรียนมี Contributor เฉพาะกลุ่มของตน ไม่ต้องมีสิทธิ์สร้าง resource group ใหม่หรือแตะ shared infrastructure
+- ใช้ subscription/region/student resource group และ pull identity จาก `deployment.txt` ของ Student ZIP. ผู้เรียนมี Contributor เฉพาะกลุ่มของตน ไม่ต้องมีสิทธิ์สร้าง resource group ใหม่หรือแตะ shared infrastructure
 - ตรวจ quota สำหรับ Container Apps และ ACR Basic/Tasks ให้ผู้ดูแลตรวจว่า `Microsoft.App`, `Microsoft.ContainerRegistry` และ `Microsoft.ManagedIdentity` อยู่ในสถานะ Registered ที่ subscription
 - Environment ที่สร้างสำหรับ lab ใช้ Workload profiles (v2) โดยมีเฉพาะโปรไฟล์ `Consumption` และตั้ง logs destination เป็น `none` ไม่สร้าง Log Analytics, Dedicated profile หรือ private endpoint แอปใช้ 0.25 vCPU, memory 0.5 GiB และ 0–1 replicas ถ้า IT เตรียม Environment สำหรับ private network ไว้แล้ว ให้ใช้ค่าที่ IT อนุมัติ
-- **Azure access ก่อน Day 4** ผู้สอนเตรียม Basic ACR, `Contributor` สำหรับบัญชีฝึกและ pipeline identity ใน resource group ของแต่ละคน และ `AcrPull` สำหรับ pull identity ที่ขอบเขตของ ACR ให้เทียบ `ACR_NAME` และ `ACR_LOGIN_SERVER` กับ `deployment.txt` ถ้าค่าว่างหรือ Portal แจ้ง `403` ให้แจ้งผู้สอนพร้อมรหัสผู้เรียนและข้อความผิดพลาดที่ตัด token ออก
-- **GitHub OIDC ก่อน Exercise 3** ให้ผู้สอนตรวจ subject ของ repository และ branch `main` จาก GitHub จริงแยกจากการเตรียม ACR รอคำยืนยันก่อนรัน deployment workflow
-- ผู้สอนตรวจ exact OIDC subject ของ repository/main ตาม [GitHub immutable subject claims](https://docs.github.com/en/actions/reference/security/oidc#immutable-subject-claims) รวม owner/repository IDs เมื่อใช้รูปแบบ immutable. ผู้เรียนแจ้ง repository/main และรอการยืนยันสิทธิ์ ไม่ต้องคำนวณ subject หรือจัดการ federation เอง
-- Pipeline AZURE_CLIENT_ID ต้องตรง identity ที่ได้รับ ไม่ใช่ pull identity. หากเปลี่ยน repository/owner หรือรูปแบบ subject ให้ทบทวน access ใหม่ก่อนรัน Actions; ไม่เปลี่ยน GitHub OIDC settings กลับเป็นรูปแบบเก่าหรือขยาย trust เพื่อข้าม error
+- **Azure access ก่อน Day 4** ผู้สอนเตรียม Basic ACR, `Contributor` สำหรับบัญชีฝึกใน resource group ของแต่ละคน และ `AcrPull` สำหรับ pull identity ที่ขอบเขตของ ACR ให้เทียบ `ACR_NAME` และ `ACR_LOGIN_SERVER` กับ `deployment.txt` ถ้าค่าว่างหรือ Portal แจ้ง `403` ให้แจ้งผู้สอนพร้อมรหัสผู้เรียนและข้อความผิดพลาดที่ตัด token ออก
+- **ส่ง image เข้า ACR:** ตรวจสิทธิ์ push ใน ACR ของ lab สำหรับ image ที่เป็น `linux/amd64` และสิทธิ์ใช้ ACR Tasks หากต้อง build ใหม่สำหรับ Azure ผู้สอนเตรียม image ให้ได้หากบัญชีผู้เรียนใช้ทั้งสองทางไม่ได้
 - **หลัง deploy API:** แจ้งผู้สอนตรวจ app/registry/identity/HTTPS health และบันทึก API URL. ต้อง login/create/read และตรวจ persistence แยกจาก health; การตรวจนี้ไม่สร้างหรือแก้สิทธิ์แทนขั้นเตรียม
 - ACR ต้องอนุญาต ARM audience tokens สำหรับ managed-identity image pull ให้ Codex ตรวจแบบอ่านอย่างเดียว; หากยังไม่ enabled ให้ผู้ดูแล registry จัดการตามแผนสิทธิ์ก่อนเรียน ผู้เรียนไม่เปลี่ยน authentication settings เพื่อข้ามปัญหา
 - Contributor ไม่ได้รวมสิทธิ์ role assignment. ให้ผู้สอน/ผู้ดูแลเตรียม AcrPull ที่ ACR ของ lab; registry แบบ ABAC ต้องใช้ role ตาม policy ไม่เปลี่ยน mode เพื่อข้ามปัญหา
 - ตรวจ Container Apps → PostgreSQL ผ่าน TLS จริง แม้ laptop จะเชื่อมได้แล้ว. Shared public server ใช้ firewall ตามแผนชั้นเรียน; private network ใช้ environment/VNet ที่ IT เตรียม ไม่แก้ shared firewall หรือลด TLS จากบัญชีผู้เรียน
-- GitHub Actions runner ต้องเข้าถึง ACR/Azure management และใช้ ACR Tasks ได้. หากองค์กรปิด ACR Tasks ให้ผู้จัดเตรียม runner ที่อนุญาตก่อนเรียน
 - กำหนดเจ้าของค่าใช้จ่ายและวัน cleanup. min replicas=0 ไม่ทำให้ค่า ACR/database/logs เป็นศูนย์; ไม่ลบ shared server หรือ resource group อื่นจาก exercise
 
-> **ใช้ subscription ของตนเอง:** เจ้าของอนุมัติ region/budget/resource group ใหม่ ให้ผู้ดูแลเตรียม pipeline/pull identities, OIDC และ roles ข้างต้น. ผู้เรียนสร้าง group/identity ได้เฉพาะเมื่อได้รับสิทธิ์และอนุมัติ ไม่ใช้ account ของเพื่อน. ถ้าใช้ private PostgreSQL ให้ IT เตรียม environment/network ก่อนเรียน
+> **ใช้ subscription ของตนเอง:** เจ้าของอนุมัติ region/budget/resource group ใหม่ ให้ผู้ดูแลเตรียม pull identity และสิทธิ์ Azure/ACR ตามข้างต้น. ผู้เรียนสร้าง group/identity ได้เฉพาะเมื่อได้รับสิทธิ์และอนุมัติ ไม่ใช้ account ของเพื่อน. ถ้าใช้ private PostgreSQL ให้ IT เตรียม environment/network ก่อนเรียน
 
-สิ่งที่ใส่ใน private GitHub repository ภายหลัง: Secrets `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID`; Variables `ACR_NAME`, `RESOURCE_GROUP`, `CONTAINER_APP_NAME`. ใช้ pipeline client ID เดิม ไม่สร้าง Azure client secret สำหรับ OIDC และไม่ใส่ DATABASE_URL/JWT_SECRET ใน workflow
+**Checkpoint ก่อน Day 4:** เป้าหมาย lab, ค่าใช้จ่าย, network, สิทธิ์ส่ง image และ pull identity พร้อม หากมีสิทธิ์อ่านอย่างเดียว ให้ตรวจตัวอย่างของผู้สอนและบันทึกว่า deploy ยังไม่ได้ทดลอง
 
-**Checkpoint ก่อน Day 4:** target/owner/budget/network/permissions พร้อม และมีผู้รับผิดชอบตรวจ exact GitHub subject กับสิทธิ์หลัง ACR พร้อม. ถ้าไม่พร้อมหรือได้รับสิทธิ์อ่านอย่างเดียว ให้เรียนอ่าน log/revision จากผู้สอนและบันทึก deployment ว่ายังไม่ได้ทดลอง
+### GitHub Actions — ทางเลือกสำหรับ Exercise 3 {#optional-github-actions-readiness}
+
+ผู้สอนเตรียมส่วนนี้ล่วงหน้าเมื่อจะให้ผู้เรียนลอง deploy ผ่าน private GitHub repository ผู้เรียนทำ Exercise หลักบน Azure ต่อได้ระหว่างรอ
+
+- ตรวจ exact OIDC subject ของ repository และ branch `main` จาก GitHub รวม immutable owner/repository IDs เมื่อใช้งาน แล้วทำ **Preview deployment access** → **Prepare deployment access** สำหรับ pipeline identity ของ lab [GitHub immutable subject claims](https://docs.github.com/en/actions/reference/security/oidc#immutable-subject-claims)
+- ตรวจสิทธิ์ pipeline identity ใน ACR และ Container App เดิม รวมถึงการเข้าถึง ACR Tasks จาก runner และตรวจว่า API รายงาน `APP_VERSION` จาก `/health`
+- ตั้ง repository secrets `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID` และ variables `ACR_NAME`, `RESOURCE_GROUP`, `CONTAINER_APP_NAME` ให้ตรง lab ใช้ pipeline client ID เดิม และเก็บ `DATABASE_URL` กับ `JWT_SECRET` ไว้ใน Container App ตาม Exercise 2
+- ส่งลิงก์ private repo และหน้า Actions ให้ผู้เรียนหลังยืนยันว่าพร้อม หากเปลี่ยน repository หรือรูปแบบ subject ให้ตรวจและเตรียมสิทธิ์ใหม่ตามจริง
 
 ## 5. คำสั่งและข้อความลับ
 

@@ -1,6 +1,6 @@
-# Copy to .github/workflows/deploy-api.yml only in the learner repository on Day 4.
+# Optional Day 4 GitHub Actions practice. Copy to .github/workflows/deploy-api.yml after instructor approval.
 # Reuse the assigned resource group, pipeline identity and pull identity.
-# Ask the instructor to confirm deployment access before private-image deployment.
+# The instructor confirms OIDC and completes Preview and Prepare deployment access before dispatch.
 # Trust the exact GitHub-confirmed main-branch subject; new repos include immutable owner/repo IDs.
 # Never guess a legacy name-only subject or change GitHub OIDC settings to bypass a mismatch.
 # Requires an existing Container App/ACR and the assigned pipeline/pull identities.
@@ -29,13 +29,13 @@ jobs:
       - name: Test API without Azure database access
         run: |
           python -m pip install -r api/requirements.lock.txt
-          python -m pytest api/tests -q
+          python -m pytest api/tests --ignore=api/tests/integration -q
       - uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      - name: Build immutable image and update existing app
+      - name: Build commit-tagged image and update existing app
         shell: bash
         run: |
           set -euo pipefail

@@ -23,13 +23,13 @@ next: false
 | gitignore.template | .gitignore | Day 1 |
 | dockerignore.template | .dockerignore | Day 4 |
 | Dockerfile | api/Dockerfile | Day 4 |
-| deploy-api.yml.example | docs/deploy-api.yml.example | Day 4 คัดลอกเป็น workflow |
+| deploy-api.yml.example | docs/deploy-api.yml.example | Day 4 แบบฝึกเสริม GitHub Actions |
 | check_api.py | scripts/check_api.py | Day 2 และ Day 4 |
 | [change-request.md](/resources/change-request) | docs/change-request.md | หลัง core checkpoints |
 
 ## สิ่งที่ Codex กับผู้เรียนสร้างระหว่างฝึก
 
-Day 1 สร้าง Git history และ AGENTS.md. Day 2 สร้าง api/app, tests และ requirements.lock.txt. Day 3 สร้าง client. Day 4 จึงคัดลอก workflow เข้า .github/workflows และ deploy ตามสิทธิ์ของตน. ไม่ใช่ไฟล์ที่หายจาก ZIP
+Day 1 สร้าง Git history และ AGENTS.md. Day 2 สร้าง api/app, tests และ requirements.lock.txt. Day 3 สร้าง client. Day 4 deploy ผ่าน Azure ได้ทันทีเมื่อสิทธิ์และ image พร้อม ถ้าเลือกแบบฝึกเสริม GitHub Actions จึงค่อยใช้ workflow ตัวอย่าง
 
 requirements.txt เป็นรายการ dependencies เริ่มต้น ไม่ใช่ชุด versions ที่ซ้อมครบแล้ว. ผู้จัดต้องซ้อมบน Python 3.12/Windows และ Linux build แล้วบันทึก lockfile ที่ใช้จริงก่อนนำหลักสูตรไปสอนซ้ำ
 
@@ -39,7 +39,7 @@ requirements.txt เป็นรายการ dependencies เริ่มต�
 
 Student ZIP เป็นคนละไฟล์กับ public starter: คัดลอกเฉพาะ `api/.env` ของตนเมื่อยังไม่มีไฟล์ และใช้ค่าที่ไม่เป็นความลับใน `deployment.txt` สำหรับ Day 4. อย่าแตกทับทั้งโปรเจคหรือแทน `.gitignore` ของ starter ด้วยไฟล์จาก Student ZIP; อย่าวาง private ZIP/README, `.env`, XLSX หรือ passwords ใน Git/chat
 
-ก่อน Day 4 แจ้งผู้สอนตรวจ **GitHub OIDC subject ของ repository/main จริง** รวม immutable owner/repository IDs และรอยืนยัน deployment access. Template ไม่คำนวณ subject จากชื่อ และไม่เปลี่ยน GitHub settings เพื่อให้ trust แบบเก่าผ่าน. อ่าน [Azure readiness](/resources/readiness) ก่อนคัดลอก workflow
+ดาวน์โหลด template ฉบับล่าสุดแล้วปรับเฉพาะกติกา Day 4 ใน `AGENTS.md` ของโปรเจกต์เดิมได้ ใช้ [Azure readiness](/resources/readiness) ตรวจขั้นหลัก และดู [GitHub Actions readiness](/resources/readiness#optional-github-actions-readiness) เฉพาะเมื่อจะทำแบบฝึกเสริม
 
 ## API check script
 

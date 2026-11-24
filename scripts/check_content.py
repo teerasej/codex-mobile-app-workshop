@@ -18,7 +18,8 @@ for day in path:
   assert sections,p
   practices+=len(sections)
   for section in sections:
-   if '(Optional · macOS)' in section.splitlines()[0]:optional.append(p.relative_to(docs).as_posix())
+   if re.search(r'\(Optional · (macOS|GitHub Actions)\)', section.splitlines()[0]):
+    optional.append(p.relative_to(docs).as_posix())
    assert '**Primary target:**' in section,p
    assert '**Checkpoint:**' in section,p
    assert '### Steps' in section,p
@@ -26,8 +27,8 @@ for day in path:
   if j==4:assert f'/exercises/{day["slug"]}/summary' in s,p
  assert 'summary' in (folder/'exercise-04.md').read_text()
 assert len(path)==4 and sum(len(x['exercises']) for x in path)==16
-assert practices-len(optional)==41 and len(optional)==1,(practices,optional)
-assert optional==['exercises/day-03-flutter/exercise-04.md'],optional
+assert practices-len(optional)==40 and len(optional)==2,(practices,optional)
+assert optional==['exercises/day-03-flutter/exercise-04.md', 'exercises/day-04-azure/exercise-03.md'],optional
 images=json.loads((docs/'.vitepress/theme/practice-images.json').read_text())
 used=[]
 for p in (docs/'exercises').glob('*/exercise-*.md'):
@@ -79,4 +80,4 @@ with zipfile.ZipFile(public/'service-desk-starter.zip') as z:
   s=z.read(item).decode();assert not re.search(r'/[Uu]sers/[^/\s;]+/',s),item
  for name,sample in mapping.items():
   assert z.read('service-desk-lite/'+name)==(public/sample).read_bytes(),name
-print('PASS: 4 days, 16 exercises, 41 core + 1 optional practices, 42 illustrations, daily handoffs and 15 starter entries')
+print('PASS: 4 days, 16 exercises, 40 core + 2 optional practices, 42 illustrations, daily handoffs and 15 starter entries')

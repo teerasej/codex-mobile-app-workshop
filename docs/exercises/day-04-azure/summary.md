@@ -11,27 +11,29 @@ next: {"text": "โจทย์ต่อยอด", "link": "/resources/change-r
 ## ใจความสำคัญ
 
 - Container แพ็ก API พร้อมสิ่งที่ต้องใช้รัน; local verification ต้องมาก่อนส่งขึ้น Cloud
-- API ที่ส่งต่อจาก Day 3 ต้องมี auth, PostgreSQL persistence และ APP_VERSION พร้อม; API แบบ memory ยังไม่ผ่านจุดนี้
+- API ที่ส่งต่อจาก Day 3 ต้องมี auth และ PostgreSQL persistence; API แบบ memory ยังไม่ผ่านจุดนี้
 - ACR เก็บ image; Container Apps รัน image โดยใช้ configuration และ runtime secrets
-- Pipeline identity ใช้ deploy ส่วน image-pull identity ใช้ดึง image; หน้าที่และสิทธิ์ต่างกัน
-- Commit SHA, image tag, app version และ revision ช่วยตามรอยรุ่นที่เปิดบริการ
+- การ deploy ผ่าน Azure ใช้สิทธิ์บัญชี lab ของผู้เรียน ส่วน Container App ใช้ pull identity ดึง image จาก ACR
+- จด ACR image tag, revision และ health version เพื่อชี้รุ่นที่เปิดบริการ เพิ่ม commit SHA เมื่อยืนยันได้ว่าใช้ build image รุ่นนั้น
 - HTTPS, auth, database และ Android ต้องตรวจร่วมกัน; /health อย่างเดียวไม่พิสูจน์งานทั้งหมด
 
 ## ก่อนจบวัน ตรวจหลักฐาน
 
 - ☐ HTTPS API เชื่อม PostgreSQL ได้ พร้อม read/create ที่ authenticated
 - ☐ private ACR image เป็น linux/amd64 และ Container App ดึงด้วย identity ที่ได้รับ
-- ☐ ชี้ commit SHA, ACR tag, version และ ready revision ที่สัมพันธ์กัน
+- ☐ ชี้ ACR tag, health version และ ready revision ที่รับ traffic ได้
 - ☐ ปิด local API แล้ว Android ยังอ่าน/สร้าง Request ผ่าน HTTPS ได้
 - ☐ ชี้ 404 log และข้อมูลที่ยังอยู่หลัง restart
 - ☐ มี review log, งานค้าง และเจ้าของค่าใช้จ่าย/แผน cleanup ของ lab
 
-ช่องที่ยังไม่ผ่านให้บันทึกตามจริง พร้อมสาเหตุและสิ่งที่ต้องทำต่อ ไม่เปลี่ยนเป็น “ผ่าน” เพียงเพราะ Codex รายงานว่างานเสร็จ. ถ้าตรวจ Portal แบบอ่านอย่างเดียว ให้เขียนว่า deploy, workflow, cloud create/read และ restart **ยังไม่ได้ทดลอง**; การเห็นค่าในหน้าจอไม่แทนผลเหล่านี้
+ช่องที่ยังไม่ผ่านให้บันทึกตามจริง พร้อมสาเหตุและสิ่งที่ต้องทำต่อ ไม่เปลี่ยนเป็น “ผ่าน” เพียงเพราะ Codex รายงานว่างานเสร็จ. ถ้าตรวจ Portal แบบอ่านอย่างเดียว ให้เขียนว่า deploy, cloud create/read และ restart **ยังไม่ได้ทดลอง**; การเห็นค่าในหน้าจอไม่แทนผลเหล่านี้
+
+ถ้าทำ GitHub Actions แบบเสริม ให้แนบลิงก์ workflow run และผลตรวจว่า commit SHA ตรงกับ tag และ health version
 
 ## สิ่งที่เก็บไว้ใช้ต่อ
 
 - Source repository, tests และ requirements.lock.txt
-- Dockerfile, workflow และชื่อ configuration/secrets (เก็บเฉพาะชื่อ)
+- Dockerfile และชื่อ configuration/secrets (เก็บเฉพาะชื่อ)
 - APK path, image SHA, revision, UUID และ docs/review-log.md
 
 เก็บ password/token/connection string ในช่องทางส่วนตัว ไม่ใส่ใน review log หรือ repository
