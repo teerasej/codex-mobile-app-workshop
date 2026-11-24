@@ -45,15 +45,15 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
 
 2. เปิด `deployment.txt` จาก Student ZIP แล้วจด `RESOURCE_GROUP`, `ACR_NAME`, `ACR_LOGIN_SERVER` และ `PULL_IDENTITY_RESOURCE_ID` สำหรับ lab ของตน ใช้ registry ที่ผู้สอนเตรียมไว้
 
-   ถ้าไม่มีค่า ACR หรือเปิด registry แล้วเจอ `403` ให้แจ้งผู้สอนพร้อมรหัสผู้เรียน, Resource Group, ชื่อ ACR และข้อความผิดพลาดที่ตัด token ออก ผู้สอนตรวจสิทธิ์ของบัญชีที่ใช้ build และ `AcrPull` ของ pull identity แยกกัน
+   ถ้าไฟล์เดิมไม่มีข้อมูล ACR ให้เปิด [Resource groups ใน Azure portal](https://portal.azure.com/#view/HubsExtension/BrowseResourceGroups) เลือกกลุ่มตาม `RESOURCE_GROUP` แล้วเปิด Container Registry ที่ผู้สอนเตรียมไว้ ดูชื่อ resource และ `Login server` ในหน้า `Overview` หากไม่พบ ACR มีหลายตัวและไม่แน่ใจว่าตัวใดเป็นของ lab หรือเจอ `403` ให้แจ้งผู้สอนพร้อมรหัสผู้เรียน ชื่อกลุ่ม ชื่อ ACR ถ้าทราบ และข้อความผิดพลาดที่ตัด token ออก
 
    > **ใช้ subscription ของตนเอง** ให้เจ้าของอนุมัติงบและให้ผู้ดูแลเตรียม resource group กับ identities ก่อน หากยังไม่มี ACR ที่กำหนดไว้ ให้ขอแผนสร้าง ACR Basic ใน group ของตน โดยปิด admin และ anonymous pull ใช้ RBAC Registry Permissions และให้ผู้ดูแล grant `AcrPull` ที่ ACR แก่ pull identity เดิม
 
 3. ขอให้ Codex ตรวจ ACR ที่ได้รับ แล้ววางแผน Container Apps Environment
 
    ~~~text
-   ใช้ subscription, region, resource group, ACR_NAME และ ACR_LOGIN_SERVER จาก deployment.txt ของฉัน
-   รอบนี้ตรวจ ACR แบบอ่านอย่างเดียว ขอให้ยืนยันว่าเป็น Basic ปิด admin และ login server ตรงกับไฟล์
+   ใช้ subscription, region, resource group และข้อมูล ACR ที่ฉันตรวจจาก deployment.txt หรือหน้า Overview ของ registry
+   รอบนี้ตรวจ ACR แบบอ่านอย่างเดียว ขอให้ยืนยันว่าเป็น Basic ปิด admin และ login server ตรงกับค่าที่ฉันตรวจแล้ว
    วางแผน Container Apps Environment แบบ Workload profiles (v2) ที่มีเฉพาะโปรไฟล์ Consumption
    ใช้แบบไม่มี Log Analytics, Dedicated profile หรือ private endpoint หาก PostgreSQL ใช้เครือข่ายส่วนตัว ให้ใช้ Environment ที่ IT เตรียมไว้
    ขอเห็นคำสั่ง เป้าหมาย และจุดที่อาจมีค่าใช้จ่ายก่อน แล้วรอฉันยืนยัน
@@ -113,7 +113,7 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
 
    ใช้ tag นี้เมื่อยังว่างหรือเป็น image รุ่นที่ยืนยันแล้ว หาก tag ถูกใช้กับคนละรุ่น ให้ตกลงชื่อ tag ใหม่และใช้ชื่อเดียวกันในขั้นต่อไป [Docker push ไปยัง ACR](https://learn.microsoft.com/en-us/azure/container-apps/tutorial-code-to-cloud) · [Platform ที่ Container Apps รองรับ](https://learn.microsoft.com/en-us/azure/container-apps/containers)
 
-6. ใน Edge เปิด [Resource groups ใน Azure portal](https://portal.azure.com/#view/HubsExtension/BrowseResourceGroups) แล้วเลือกกลุ่มที่ตรงกับ `RESOURCE_GROUP` ใน `deployment.txt` จากรายการ resources ในกลุ่ม ให้เปิด ACR ที่สร้างไว้ เลือก `Repositories` แล้วตรวจว่า repository และ tag ตรงกับผล build
+6. ใน Edge เปิด [Resource groups ใน Azure portal](https://portal.azure.com/#view/HubsExtension/BrowseResourceGroups) แล้วเลือกกลุ่มที่ตรงกับ `RESOURCE_GROUP` ใน `deployment.txt` จากรายการ resources ในกลุ่ม ให้เปิด ACR ที่สร้างไว้ เลือก `Repositories` แล้วตรวจว่า repository และ tag ตรงกับ image ที่ push หรือผล ACR Tasks
 
    ~~~text
    service-desk-api
@@ -129,7 +129,7 @@ ACR เป็นคลังที่เก็บ image และ pull identity 
 
    [ภาพจาก Microsoft Learn · Repositories and tags](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-repositories)
 
-7. กลับไปที่ `Overview` ของ ACR แล้ว **จด `Login server` และ image tag ที่ตรวจจาก Step 6 พร้อม digest ที่ระบบแสดง** ลงใน review log โดยไม่บันทึกรหัสผ่าน
+7. กลับไปที่ `Overview` ของ ACR แล้ว **จดชื่อ ACR, `Login server`, image tag ที่ตรวจจาก Step 6 และ digest ที่ระบบแสดง** ลงใน review log โดยไม่บันทึกรหัสผ่าน
 
    ![หน้า Overview ของ Azure Container Registry แสดงค่า Login server](https://learn.microsoft.com/en-us/azure/container-registry/media/container-registry-get-started-portal/container-registry-overview.png)
 
