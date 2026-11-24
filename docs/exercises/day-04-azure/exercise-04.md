@@ -123,7 +123,7 @@ API เปิดแล้ว เราจะลองจากมุมผู้
    00000000-0000-4000-8000-000000000000
    ~~~
 
-4. ตรวจ resource settings ว่า CPU=0.25 vCPU, memory=0.5Gi, min replicas=0/max=1 ตรงแผน. Environment ของ lab ใช้ Consumption-only และไม่เก็บ Log Analytics; จึงดู stream ระหว่างทดสอบและอาจเจอ cold start หลังไม่มีคนเรียก ไม่เพิ่มขนาดหรือทำ load test ในขั้นนี้
+4. ตรวจว่าแอปใช้โปรไฟล์ `Consumption`, CPU 0.25 vCPU, memory 0.5 GiB, min replicas 0 และ max replicas 1 หากแอปลดเหลือ 0 replicas ให้เรียก `/health` เพื่อเริ่ม replica แล้วเลือก replica นั้นใน Log stream อาจต้องรอช่วง cold start ดู logs สดระหว่างทดสอบ เพราะ Environment ของ lab ไม่ส่ง logs ไปเก็บใน Log Analytics ใช้ขนาดตามแผนตลอดขั้นนี้
 
    ภาพแสดงตำแหน่งของตัวเลือกจำนวน replicas ในแท็บ `Scale` ให้เทียบค่าของ lab กับตัวเลขในขั้นตอนนี้
 
